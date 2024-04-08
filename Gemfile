@@ -124,9 +124,9 @@ group :development, :test do
 
   # rspec-rails is a testing framework for Rails 5+.
   # Read more: https://github.com/rspec/rspec-rails
-  gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.3'
   gem 'faker', '~> 3.3', '>= 3.3.1'
+  gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
 end
 
 group :development do
@@ -146,8 +146,11 @@ group :development do
   # Automatic Ruby code style checking tool
   # Read more: https://docs.rubocop.org/
   gem 'rubocop', '~> 1.62', '>= 1.62.1', require: false
+  gem 'rubocop-capybara', '~> 2.20', require: false
+  gem 'rubocop-factory_bot', '~> 2.25', '>= 2.25.1', require: false
   gem 'rubocop-performance', '~> 1.21', require: false
-  gem 'rubocop-rails', '~> 2.24', '>= 2.24.1'
+  gem 'rubocop-rails', '~> 2.24', '>= 2.24.1', require: false
+  gem 'rubocop-rspec', '~> 2.29', '>= 2.29.1', require: false
 end
 
 group :test do

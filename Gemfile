@@ -121,6 +121,12 @@ group :development, :test do
   gem 'bullet', '~> 7.1', '>= 7.1.6'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
+
+  # rspec-rails is a testing framework for Rails 5+.
+  # Read more: https://github.com/rspec/rspec-rails
+  gem 'rspec-rails', '~> 6.1', '>= 6.1.2'
+  gem 'factory_bot_rails', '~> 6.4', '>= 6.4.3'
+  gem 'faker', '~> 3.3', '>= 3.3.1'
 end
 
 group :development do

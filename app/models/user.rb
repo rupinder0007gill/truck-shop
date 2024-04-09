@@ -20,7 +20,6 @@
 #  invitation_token       :string
 #  invitations_count      :integer          default(0)
 #  invited_by_type        :string
-#  is_admin               :boolean          default(FALSE)
 #  last_name              :string
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
@@ -33,6 +32,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  invited_by_id          :bigint
+#  role_id                :bigint
 #
 # Indexes
 #
@@ -43,7 +43,12 @@
 #  index_users_on_invited_by            (invited_by_type,invited_by_id)
 #  index_users_on_invited_by_id         (invited_by_id)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_role_id               (role_id)
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (role_id => roles.id)
 #
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -51,4 +56,53 @@ class User < ApplicationRecord
   # We removed ":registerable" in this case...as they need to receive an invite
   devise :invitable, :database_authenticatable, :lockable,
          :recoverable, :rememberable, :validatable, :trackable
+
+  ##############################################################################
+  ### Attributes ###############################################################
+
+  ##############################################################################
+  ### Constants ################################################################
+
+  ##############################################################################
+  ### Includes and Extensions ##################################################
+
+  ##############################################################################
+  ### Callbacks ################################################################
+  after_initialize :set_default_role, if: :new_record?
+
+  ##############################################################################
+  ### Associations #############################################################
+  belongs_to :role
+
+  ##############################################################################
+  ### Validations ##############################################################
+  validates :first_name, :last_name, presence: true
+
+  ##############################################################################
+  ### Scopes ###################################################################
+
+  ##############################################################################
+  ### Other ####################################################################
+
+  ##############################################################################
+  ### Class Methods ############################################################
+
+  ##############################################################################
+  ### Instance Methods #########################################################
+
+  #########
+
+  # protected
+
+  #########
+
+  #######
+
+  private
+
+  #######
+
+  def set_default_role
+    self.role ||= Role.find_by(name: 'Technician')
+  end
 end

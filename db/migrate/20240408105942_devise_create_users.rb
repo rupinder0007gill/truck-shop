@@ -6,7 +6,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
       ## Fields
       t.string :first_name
       t.string :last_name
-      t.boolean :is_admin, default: false
 
       ## Database authenticatable
       t.string :email,              null: false, default: ''

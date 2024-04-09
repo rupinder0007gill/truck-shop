@@ -7,11 +7,15 @@ module AppSeeds
   class Users
     class << self
       def seed
+        admin = Role.create(name: 'Admin')
+        manager = Role.create(name: 'Manager')
+        techinician = Role.create(name: 'Technician')
         User.create([
-                      { first_name: 'Admin', last_name: 'Account', email: 'admin@test.com', password: 'test1234', is_admin: true },
-                      { first_name: 'Rupinder', last_name: 'Gill', email: 'rupinder0007gill@gmail.com', password: 'test1234', is_admin: true },
-                      { first_name: 'Bhupendra', last_name: 'Singh', email: 'aventumcormac@gmail.com', password: 'test1234', is_admin: true },
-                      { first_name: 'Technician', last_name: 'Account', email: 'technician@test.com', password: 'test1234' }
+                      { first_name: 'Admin', last_name: 'Account', email: 'admin@test.com', password: 'test1234', role: admin },
+                      { first_name: 'Rupinder', last_name: 'Gill', email: 'rupinder0007gill@gmail.com', password: 'test1234', role: admin },
+                      { first_name: 'Bhupendra', last_name: 'Singh', email: 'aventumcormac@gmail.com', password: 'test1234', role: admin },
+                      { first_name: 'Manager', last_name: 'Account', email: 'manager@test.com', password: 'test1234', role: manager },
+                      { first_name: 'Technician', last_name: 'Account', email: 'technician@test.com', password: 'test1234', role: techinician }
                     ])
       end
     end

@@ -14,6 +14,10 @@ gem 'dotenv', '~> 2.8', '>= 2.8.1', require: './config/dotenv'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
+# Simple authorization solution for Rails. All permissions are stored in a single location.
+# Read more: https://github.com/CanCanCommunity/cancancan
+gem 'cancancan', '~> 3.5'
+
 # Unobtrusive nested forms handling, using jQuery. Use this and discover cocoon-heaven.
 # Read more: https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2', '>= 1.2.15'

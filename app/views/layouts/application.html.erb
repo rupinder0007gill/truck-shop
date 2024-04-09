@@ -3,37 +3,69 @@
 
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>TruckShop</title>
+    <meta name="application-name" content="<%= website_name.titleize %>">
+    <title><%= website_name.titleize %></title>
 
+    <!-- ===============================================-->
+    <!--    Tweeter-->
+    <!-- ===============================================-->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta property="og:title" content="">
+
+    <!-- ===============================================-->
+    <!--    OG-->
+    <!-- ===============================================-->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:description" content="">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- ===============================================-->
+    <!--    csrf_meta-->
+    <!-- ===============================================-->
     <%= csrf_meta_tags %>
+
+    <!-- ===============================================-->
+    <!--    csp_meta-->
+    <!-- ===============================================-->
     <%= csp_meta_tag %>
 
+    <!-- ===============================================-->
+    <!--    stylesheet-->
+    <!-- ===============================================-->
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
-    <meta name="theme-color" content="#ffffff">
-    <%# <script src="assets/js/config.js"></script> %>
-    <%# <script src="vendors/simplebar/simplebar.min.js"></script> %>
-
-
-    <!-- ===============================================-->
-    <!--    Stylesheets-->
-    <!-- ===============================================-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700%7cPoppins:300,400,500,600,700,800,900&amp;display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <main class="main" id="top">
+      <div class="container-fluid" data-layout="container">
+        <%- if user_signed_in? %>
+          <%= render partial: 'layouts/partials/sidebar' %>
+          <div class="content">
+            <%= render partial: 'layouts/partials/header' %>
+            <%= render partial: 'layouts/partials/flash' %>
+            <%= yield %>
+            <%= render partial: 'layouts/partials/footer' %>
+            <%= render partial: 'layouts/partials/modal' %>
+          </div>
+        <%- else %>
+          <%= render partial: 'layouts/partials/flash' %>
+          <%= yield %>
+        <%- end %>
+      </div>
+    </main>
 
     <div class="offcanvas offcanvas-end settings-panel border-0" id="settings-offcanvas" tabindex="-1" aria-labelledby="settings-offcanvas">
       <div class="offcanvas-header settings-panel-header bg-shape">

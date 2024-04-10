@@ -4,3 +4,4 @@ import './anchor';
 import './echarts';
 import './fontawesome';
 import './lodash';
+import './dayjs';

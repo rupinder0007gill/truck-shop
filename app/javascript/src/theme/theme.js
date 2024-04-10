@@ -1794,11 +1794,11 @@ document.querySelectorAll('.datetimepicker').forEach(function (item) {
         calendarContainer.classList.remove('predefinedRange');
       }
     }
-    var instance = window.flatpickr(element, _objectSpread(_objectSpread({}, options), {}, {
-      onOpen: showPredefinedRanges,
-      onClose: hidePredefinedRanges
-    }));
-    return instance;
+    // var instance = window.flatpickr(element, _objectSpread(_objectSpread({}, options), {}, {
+    //   onOpen: showPredefinedRanges,
+    //   onClose: hidePredefinedRanges
+    // }));
+    // return instance;
   }
   var options = utils.getData(item, 'options');
   initializeFlatpickr(item, options);
@@ -11198,10 +11198,7 @@ var sessionByBrowserChartInit = function sessionByBrowserChartInit() {
             borderColor: utils.getColor('gray-100')
           },
           label: {
-            show: false,
-            emphasis: {
-              show: false
-            }
+            show: false
           },
           labelLine: {
             show: false
@@ -13973,6 +13970,12 @@ document.addEventListener('turbo:load', function () {
   totalSalesInit();
   bandwidthSavedInit();
   topProductsInit();
+  audienceChartInit();
+  realTimeUsersChartInit();
+  sessionByBrowserChartInit();
+  activeUsersChartReportInit();
+  trafficChannelChartInit();
+  mostLeadsInit();
 
   // need to confirm first
   scrollbarInit();

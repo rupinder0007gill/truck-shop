@@ -1,1 +1,2 @@
-import 'lodash';
+import _ from 'lodash';
+window._ = _;

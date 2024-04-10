@@ -22,6 +22,14 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
+#                              users_users GET    /users/users(.:format)                                                                            users/users#index
+#                                          POST   /users/users(.:format)                                                                            users/users#create
+#                           new_users_user GET    /users/users/new(.:format)                                                                        users/users#new
+#                          edit_users_user GET    /users/users/:id/edit(.:format)                                                                   users/users#edit
+#                               users_user GET    /users/users/:id(.:format)                                                                        users/users#show
+#                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
+#                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
+#                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
@@ -64,4 +72,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#index'
+
+  namespace :users do
+    resources :users do
+    end
+  end
 end

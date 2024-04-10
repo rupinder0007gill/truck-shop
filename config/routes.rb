@@ -64,4 +64,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#index'
+  resources :home do
+    collection do
+      get :analytics
+      get :crm
+      get :ecommerce
+      get :lms
+      get :management
+      get :saas
+    end
+  end
 end

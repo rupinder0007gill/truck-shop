@@ -1,5 +1,6 @@
-class Users::UsersController < ApplicationController
+# frozen_string_literal: true
 
+class Users::UsersController < ApplicationController
   def index
     @users = User.all
   end
@@ -12,7 +13,7 @@ class Users::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to users_user_path, notice: "User was successfully created."
+      redirect_to users_user_path, notice: 'User was successfully created.'
     else
       render :new
     end

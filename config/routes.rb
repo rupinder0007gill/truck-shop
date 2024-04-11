@@ -30,6 +30,20 @@
 #                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
 #                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
 #                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
+#                     analytics_home_index GET    /home/analytics(.:format)                                                                         home#analytics
+#                           crm_home_index GET    /home/crm(.:format)                                                                               home#crm
+#                     ecommerce_home_index GET    /home/ecommerce(.:format)                                                                         home#ecommerce
+#                           lms_home_index GET    /home/lms(.:format)                                                                               home#lms
+#                    management_home_index GET    /home/management(.:format)                                                                        home#management
+#                          saas_home_index GET    /home/saas(.:format)                                                                              home#saas
+#                               home_index GET    /home(.:format)                                                                                   home#index
+#                                          POST   /home(.:format)                                                                                   home#create
+#                                 new_home GET    /home/new(.:format)                                                                               home#new
+#                                edit_home GET    /home/:id/edit(.:format)                                                                          home#edit
+#                                     home GET    /home/:id(.:format)                                                                               home#show
+#                                          PATCH  /home/:id(.:format)                                                                               home#update
+#                                          PUT    /home/:id(.:format)                                                                               home#update
+#                                          DELETE /home/:id(.:format)                                                                               home#destroy
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh

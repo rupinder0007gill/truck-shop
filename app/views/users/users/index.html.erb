@@ -1,30 +1,30 @@
 <main class="container">
   <div class="header">
-    <h1>Customers</h1>
-    <%= link_to "Create a New Customer",
+    <h1>Members</h1>
+    <%= link_to "Create a New Member(manager/technician)",
                 new_users_user_path,
                 class: "btn btn--primary" %>
   </div>
   <div class="body">
-  	<% if @users_user %>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Phone</th>
-        <th>email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users_user.each do |user| %>
-        <tr>
-          <td><%= user.name %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No results to display :(</p>
-<% end %>
+  	<% if @users.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No results to display :(</p>
+    <% end %>
   </div>
 </main>

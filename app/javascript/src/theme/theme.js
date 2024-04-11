@@ -1794,11 +1794,11 @@ document.querySelectorAll('.datetimepicker').forEach(function (item) {
         calendarContainer.classList.remove('predefinedRange');
       }
     }
-    var instance = window.flatpickr(element, _objectSpread(_objectSpread({}, options), {}, {
-      onOpen: showPredefinedRanges,
-      onClose: hidePredefinedRanges
-    }));
-    return instance;
+    // var instance = window.flatpickr(element, _objectSpread(_objectSpread({}, options), {}, {
+    //   onOpen: showPredefinedRanges,
+    //   onClose: hidePredefinedRanges
+    // }));
+    // return instance;
   }
   var options = utils.getData(item, 'options');
   initializeFlatpickr(item, options);
@@ -6870,29 +6870,25 @@ var assignmentScoresInit = function assignmentScoresInit() {
           type: 'pie',
           radius: ['85%', '60%'],
           avoidLabelOverlap: false,
-          hoverAnimation: false,
+          emphasis: {
+            scale: false
+          },
           itemStyle: {
             borderWidth: 2,
             borderColor: utils.getColor('gray-100')
           },
           label: {
-            normal: {
-              show: false,
-              position: 'center',
-              textStyle: {
-                fontSize: '20',
-                fontWeight: '500',
-                color: utils.getGrays()['700']
-              }
-            },
+            show: false,
+            position: 'center',
+            fontSize: 20,
+            fontWeight: 500,
+            color: utils.getGrays()['700'],
             emphasis: {
               show: false
             }
           },
           labelLine: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           data: data
         }]
@@ -7205,7 +7201,9 @@ var avgEnrollmentRateInit = function avgEnrollmentRateInit() {
           },
           symbol: 'circle',
           symbolSize: 10,
-          hoverAnimation: true
+          emphasis: {
+            scale: true
+          }
         }, {
           name: 'Regular Paid Course',
           type: 'line',
@@ -7220,7 +7218,9 @@ var avgEnrollmentRateInit = function avgEnrollmentRateInit() {
           },
           symbol: 'circle',
           symbolSize: 10,
-          hoverAnimation: true,
+          emphasis: {
+            scale: true
+          },
           areaStyle: {
             color: {
               type: 'linear',
@@ -7641,13 +7641,13 @@ var browsedCoursesInit = function browsedCoursesInit() {
           itemStyle: {
             emphasis: {
               color: utils.getSubtleColors().info,
-              barBorderRadius: [5, 5, 0, 0],
+              borderRadius: [5, 5, 0, 0],
               borderWidth: 1,
               borderColor: utils.getGrays()[300]
             },
             normal: {
               color: utils.getSubtleColors().primary,
-              barBorderRadius: [5, 5, 0, 0],
+              borderRadius: [5, 5, 0, 0],
               borderWidth: 1,
               borderColor: utils.getGrays()[300]
             }
@@ -7660,7 +7660,7 @@ var browsedCoursesInit = function browsedCoursesInit() {
           data: [320, 420, 800, 100, 1000, 930, 720, 1020, 800, 320, 450, 150, 320, 420, 800, 100, 1000, 930, 720, 1020, 800, 320, 450, 150],
           itemStyle: {
             normal: {
-              barBorderRadius: [5, 5, 0, 0],
+              borderRadius: [5, 5, 0, 0],
               color: utils.getColors().primary,
               borderWidth: 1,
               borderColor: utils.getColors().primary
@@ -8000,7 +8000,9 @@ var closedVsGoalInit = function closedVsGoalInit() {
           symbolSize: 5,
           symbol: 'circle',
           smooth: false,
-          hoverAnimation: true,
+          emphasis: {
+            scale: true
+          },
           lineStyle: {
             color: utils.rgbaColor(utils.getColor('primary'))
           },
@@ -8015,7 +8017,9 @@ var closedVsGoalInit = function closedVsGoalInit() {
           symbolSize: 5,
           symbol: 'circle',
           smooth: false,
-          hoverAnimation: true,
+          emphasis: {
+            scale: true
+          },
           lineStyle: {
             color: utils.rgbaColor(utils.getColor('warning'))
           },
@@ -8128,9 +8132,7 @@ var courseEnrollmentsInit = function courseEnrollmentsInit() {
           barWidth: '15%',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           z: 10,
           emphasis: {
@@ -8138,7 +8140,7 @@ var courseEnrollmentsInit = function courseEnrollmentsInit() {
           },
           itemStyle: {
             normal: {
-              barBorderRadius: [2, 2, 0, 0]
+              borderRadius: [2, 2, 0, 0]
             }
           }
         }, {
@@ -8146,9 +8148,7 @@ var courseEnrollmentsInit = function courseEnrollmentsInit() {
           barWidth: '15%',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           z: 10,
           emphasis: {
@@ -8156,7 +8156,7 @@ var courseEnrollmentsInit = function courseEnrollmentsInit() {
           },
           itemStyle: {
             normal: {
-              barBorderRadius: [2, 2, 0, 0]
+              borderRadius: [2, 2, 0, 0]
             }
           }
         }, {
@@ -8164,9 +8164,7 @@ var courseEnrollmentsInit = function courseEnrollmentsInit() {
           barWidth: '15%',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           z: 10,
           emphasis: {
@@ -8174,7 +8172,7 @@ var courseEnrollmentsInit = function courseEnrollmentsInit() {
           },
           itemStyle: {
             normal: {
-              barBorderRadius: [2, 2, 0, 0]
+              borderRadius: [2, 2, 0, 0]
             }
           }
         }],
@@ -8356,7 +8354,7 @@ var revenueChartInit = function revenueChartInit() {
             color: utils.getColor('primary')
           },
           itemStyle: {
-            barBorderRadius: [4, 4, 0, 0],
+            borderRadius: [4, 4, 0, 0],
             color: utils.getGrays()['100'],
             borderColor: utils.getGrays()['300'],
             borderWidth: 1
@@ -8663,7 +8661,7 @@ var echartsDistributionOfPerformanceInit = function echartsDistributionOfPerform
           emphasis: emphasisStyle,
           data: data2,
           itemStyle: {
-            barBorderRadius: [3, 3, 0, 0]
+            borderRadius: [3, 3, 0, 0]
           }
         }],
         barWidth: '15px',
@@ -8866,7 +8864,9 @@ var grossRevenueChartInit = function grossRevenueChartInit() {
           },
           symbol: 'none',
           smooth: false,
-          hoverAnimation: true
+          emphasis: {
+            scale: true
+          }
         }, {
           name: 'currentMonth',
           type: 'line',
@@ -8880,7 +8880,9 @@ var grossRevenueChartInit = function grossRevenueChartInit() {
           },
           symbol: 'none',
           smooth: false,
-          hoverAnimation: true
+          emphasis: {
+            scale: true
+          }
         }],
         grid: {
           right: '8px',
@@ -9878,29 +9880,25 @@ var marketShareEcommerceInit = function marketShareEcommerceInit() {
           type: 'pie',
           radius: ['100%', '80%'],
           avoidLabelOverlap: false,
-          hoverAnimation: false,
+          emphasis: {
+            scale: false
+          },
           itemStyle: {
             borderWidth: 2,
             borderColor: utils.getColor('gray-100')
           },
           label: {
-            normal: {
-              show: false,
-              position: 'center',
-              textStyle: {
-                fontSize: '20',
-                fontWeight: '500',
-                color: utils.getGrays()['700']
-              }
-            },
+            show: false,
+            position: 'center',
+            fontSize: 20,
+            fontWeight: 500,
+            color: utils.getGrays()['700'],
             emphasis: {
               show: false
             }
           },
           labelLine: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           data: [{
             value: 5300000,
@@ -9956,29 +9954,24 @@ var marketShareInit = function marketShareInit() {
           type: 'pie',
           radius: ['100%', '87%'],
           avoidLabelOverlap: false,
-          hoverAnimation: false,
+          emphasis: {
+            scale: false
+          },
           itemStyle: {
             borderWidth: 2,
             borderColor: utils.getColor('gray-100')
           },
-          label: {
-            normal: {
+          emphasis: {
+            label: {
               show: false,
               position: 'center',
-              textStyle: {
-                fontSize: '20',
-                fontWeight: '500',
-                color: utils.getGrays()['100']
-              }
-            },
-            emphasis: {
-              show: false
+              fontSize: 20,
+              fontWeight: 500,
+              color: utils.getGrays()['100'],
             }
           },
           labelLine: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           data: [{
             value: 5300000,
@@ -10178,29 +10171,25 @@ var mostLeadsInit = function mostLeadsInit() {
           type: 'pie',
           radius: ['100%', '67%'],
           avoidLabelOverlap: false,
-          hoverAnimation: false,
+          emphasis: {
+            scale: false
+          },
           itemStyle: {
             borderWidth: 2,
             borderColor: utils.getColor('gray-100')
           },
           label: {
-            normal: {
-              show: false,
-              position: 'center',
-              textStyle: {
-                fontSize: '20',
-                fontWeight: '500',
-                color: utils.getGrays()['700']
-              }
-            },
+            show: false,
+            position: 'center',
+            fontSize: 20,
+            fontWeight: 500,
+            color: utils.getGrays()['700'],
             emphasis: {
               show: false
             }
           },
           labelLine: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           data: [{
             value: 60,
@@ -10632,31 +10621,23 @@ var reportForThisWeekInit = function reportForThisWeekInit() {
           barWidth: '12%',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           z: 10,
           itemStyle: {
-            normal: {
-              barBorderRadius: [10, 10, 0, 0],
-              color: utils.getColors().primary
-            }
+            borderRadius: [10, 10, 0, 0],
+            color: utils.getColors().primary
           }
         }, {
           type: 'bar',
           barWidth: '12%',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           itemStyle: {
-            normal: {
-              barBorderRadius: [4, 4, 0, 0],
-              color: utils.getGrays()[300]
-            }
+            borderRadius: [4, 4, 0, 0],
+            color: utils.getGrays()[300]
           }
         }],
         grid: {
@@ -10826,7 +10807,9 @@ var returningCustomerRateInit = function returningCustomerRateInit() {
           },
           symbol: 'none',
           smooth: false,
-          hoverAnimation: true
+          emphasis: {
+            scale: true
+          }
         }, {
           name: 'Returning',
           type: 'line',
@@ -10856,7 +10839,9 @@ var returningCustomerRateInit = function returningCustomerRateInit() {
           },
           symbol: 'none',
           smooth: false,
-          hoverAnimation: true
+          emphasis: {
+            scale: true
+          }
         }],
         grid: {
           right: '7px',
@@ -11205,23 +11190,18 @@ var sessionByBrowserChartInit = function sessionByBrowserChartInit() {
           type: 'pie',
           radius: ['100%', '65%'],
           avoidLabelOverlap: false,
-          hoverAnimation: false,
+          emphasis: {
+            scale: false
+          },
           itemStyle: {
             borderWidth: 2,
             borderColor: utils.getColor('gray-100')
           },
           label: {
-            normal: {
-              show: false
-            },
-            emphasis: {
-              show: false
-            }
+            show: false
           },
           labelLine: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           data: dataset.week
         }]
@@ -11937,7 +11917,7 @@ var sessionByCountryChartInit = function sessionByCountryChartInit() {
           type: 'bar',
           data: data[1],
           itemStyle: {
-            barBorderRadius: [3, 3, 0, 0],
+            borderRadius: [3, 3, 0, 0],
             color: utils.getColors().primary
           },
           barWidth: 15
@@ -12088,7 +12068,7 @@ var ticketVolumeChartInit = function ticketVolumeChartInit() {
           stack: 'total',
           data: [6, 3, 6, 4, 12, 7, 5, 3, 2, 4],
           itemStyle: {
-            barBorderRadius: [2, 2, 0, 0]
+            borderRadius: [2, 2, 0, 0]
           },
           emphasis: {
             itemStyle: {
@@ -12336,31 +12316,23 @@ var topProductsInit = function topProductsInit() {
           barWidth: '10px',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           z: 10,
           itemStyle: {
-            normal: {
-              barBorderRadius: [10, 10, 0, 0],
-              color: utils.getColors().primary
-            }
+            borderRadius: [10, 10, 0, 0],
+            color: utils.getColors().primary
           }
         }, {
           type: 'bar',
           barWidth: '10px',
           barGap: '30%',
           label: {
-            normal: {
-              show: false
-            }
+            show: false
           },
           itemStyle: {
-            normal: {
-              barBorderRadius: [4, 4, 0, 0],
-              color: utils.getGrays()[300]
-            }
+            borderRadius: [4, 4, 0, 0],
+            color: utils.getGrays()[300]
           }
         }],
         grid: {
@@ -12463,7 +12435,9 @@ var totalOrderInit = function totalOrderInit() {
             borderColor: utils.getColors().primary,
             borderWidth: 2
           },
-          hoverAnimation: true,
+          emphasis: {
+            scale: true
+          },
           data: [20, 40, 100, 120],
           // connectNulls: true,
           smooth: 0.6,
@@ -12618,7 +12592,9 @@ var totalSalesEcommerce = function totalSalesEcommerce() {
           },
           symbol: 'circle',
           symbolSize: 10,
-          hoverAnimation: true,
+          emphasis: {
+            scale: true
+          },
           areaStyle: {
             color: {
               type: 'linear',
@@ -12648,7 +12624,9 @@ var totalSalesEcommerce = function totalSalesEcommerce() {
           },
           symbol: 'circle',
           symbolSize: 10,
-          hoverAnimation: true
+          emphasis: {
+            scale: true
+          }
         }],
         grid: {
           right: '18px',
@@ -12784,7 +12762,9 @@ var totalSalesInit = function totalSalesInit() {
           symbol: 'circle',
           symbolSize: 10,
           smooth: false,
-          hoverAnimation: true,
+          emphasis: {
+            scale: true
+          },
           areaStyle: {
             color: {
               type: 'linear',
@@ -12959,7 +12939,7 @@ var trafficChannelChartInit = function trafficChannelChartInit() {
           stack: 'total',
           data: [820, 832, 901, 934, 1290, 1330, 1320],
           itemStyle: {
-            barBorderRadius: [5, 5, 0, 0]
+            borderRadius: [5, 5, 0, 0]
           }
         }],
         grid: {
@@ -13981,223 +13961,135 @@ var weeklyGoalsInit = function weeklyGoalsInit() {
 };
 
 /* -------------------------------------------------------------------------- */
-/*                                Weekly Sales                                */
-/* -------------------------------------------------------------------------- */
-
-var weeklySalesInit = function weeklySalesInit() {
-  var ECHART_BAR_WEEKLY_SALES = '.echart-bar-weekly-sales';
-  var $echartBarWeeklySales = document.querySelector(ECHART_BAR_WEEKLY_SALES);
-  if ($echartBarWeeklySales) {
-    // Get options from data attribute
-    var userOptions = utils.getData($echartBarWeeklySales, 'options');
-    var data = [120, 200, 150, 80, 70, 110, 120];
-
-    // Max value of data
-    // const yMax = Math.max(...data);
-
-    // const dataBackground = data.map(() => yMax);
-    var chart = window.echarts.init($echartBarWeeklySales);
-
-    // Default options
-    var getDefaultOptions = function getDefaultOptions() {
-      return {
-        tooltip: {
-          trigger: 'axis',
-          padding: [7, 10],
-          formatter: '{b0} : {c0}',
-          transitionDuration: 0,
-          backgroundColor: utils.getGrays()['100'],
-          borderColor: utils.getGrays()['300'],
-          textStyle: {
-            color: utils.getGrays()['1100']
-          },
-          borderWidth: 1,
-          position: function position(pos, params, dom, rect, size) {
-            return getPosition(pos, params, dom, rect, size);
-          }
-        },
-        xAxis: {
-          type: 'category',
-          data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-          boundaryGap: false,
-          axisLine: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisPointer: {
-            type: 'none'
-          }
-        },
-        yAxis: {
-          type: 'value',
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            show: false
-          },
-          axisLabel: {
-            show: false
-          },
-          axisTick: {
-            show: false
-          },
-          axisPointer: {
-            type: 'none'
-          }
-        },
-        series: [{
-          type: 'bar',
-          showBackground: true,
-          backgroundStyle: {
-            borderRadius: 10
-          },
-          barWidth: '5px',
-          itemStyle: {
-            barBorderRadius: 10,
-            color: utils.getColors().primary
-          },
-          data: data,
-          z: 10,
-          emphasis: {
-            itemStyle: {
-              color: utils.getColors().primary
-            }
-          }
-        }],
-        grid: {
-          right: 5,
-          left: 10,
-          top: 0,
-          bottom: 0
-        }
-      };
-    };
-    echartSetOption(chart, userOptions, getDefaultOptions);
-  }
-};
-
-/* -------------------------------------------------------------------------- */
 /*                            Theme Initialization                            */
 /* -------------------------------------------------------------------------- */
 document.addEventListener('turbo:load', function () {
+  handleNavbarVerticalCollapsed();
+  basicEchartsInit();
+  marketShareInit();
+  totalSalesInit();
+  bandwidthSavedInit();
+  topProductsInit();
+  audienceChartInit();
+  realTimeUsersChartInit();
+  sessionByBrowserChartInit();
+  activeUsersChartReportInit();
+  trafficChannelChartInit();
+  mostLeadsInit();
 
-docReady(detectorInit);
-docReady(handleNavbarVerticalCollapsed);
-docReady(totalOrderInit);
-docReady(weeklySalesInit);
-docReady(marketShareInit);
-docReady(totalSalesInit);
-docReady(topProductsInit);
-docReady(navbarTopDropShadow);
-docReady(tooltipInit);
-docReady(popoverInit);
-docReady(toastInit);
-docReady(progressAnimationToggle);
-docReady(glightboxInit);
-docReady(plyrInit);
-docReady(initMap);
-docReady(dropzoneInit);
-docReady(choicesInit);
-docReady(formValidationInit);
-docReady(barChartInit);
-docReady(leafletActiveUserInit);
-docReady(countupInit);
-docReady(copyLink);
-docReady(navbarDarkenOnScroll);
-docReady(typedTextInit);
-docReady(tinymceInit);
-docReady(chatInit);
-docReady(quantityInit);
-docReady(navbarComboInit);
-docReady(swiperInit);
-docReady(ratingInit);
-docReady(kanbanInit);
-docReady(fullCalendarInit);
-docReady(appCalendarInit);
-docReady(managementCalendarInit);
-docReady(lottieInit);
-docReady(wizardInit);
-docReady(searchInit);
-docReady(cookieNoticeInit);
-docReady(themeControl);
-docReady(dropdownOnHover);
-docReady(marketShareEcommerceInit);
-docReady(productShareDoughnutInit);
-docReady(totalSalesEcommerce);
-docReady(avgEnrollmentRateInit);
-docReady(bandwidthSavedInit);
-docReady(salesByPosLocationInit);
-docReady(returningCustomerRateInit);
-docReady(candleChartInit);
-docReady(grossRevenueChartInit);
-docReady(scrollbarInit);
-docReady(iconCopiedInit);
-docReady(reportForThisWeekInit);
-docReady(basicEchartsInit);
-docReady(chartScatter);
-docReady(chartDoughnut);
-docReady(chartPie);
-docReady(chartPolar);
-docReady(chartRadar);
-docReady(chartCombo);
-docReady(dropdownMenuInit);
-docReady(audienceChartInit);
-docReady(sessionByBrowserChartInit);
-docReady(sessionByCountryChartInit);
-docReady(activeUsersChartReportInit);
-docReady(trafficChannelChartInit);
-docReady(bounceRateChartInit);
-docReady(usersByTimeChartInit);
-docReady(sessionByCountryMapInit);
-docReady(mostLeadsInit);
-docReady(closedVsGoalInit);
-docReady(leadConversionInit);
-docReady(dealStorageFunnelInit);
-docReady(revenueChartInit);
-docReady(locationBySessionInit);
-docReady(realTimeUsersChartInit);
-docReady(linePaymentChartInit);
-docReady(chartBubble);
-docReady(chartLine);
-docReady(treeviewInit);
-docReady(scrollInit);
-docReady(echartsUnresolvedTicketsInit);
-docReady(echartsNumberOfTicketsInit);
-docReady(echartsCustomerSatisfactionInit);
-docReady(echartsDistributionOfPerformanceInit);
-docReady(echartsSatisfactionSurveyInit);
-docReady(echartsReceivedTicketsInit);
-docReady(topCustomersChartInit);
-docReady(ticketVolumeChartInit);
-docReady(echartTicketPriority);
-docReady(userByLocationInit);
-docReady(courseEnrollmentsInit);
-docReady(weeklyGoalsInit);
-docReady(assignmentScoresInit);
-docReady(browsedCoursesInit);
-docReady(courseStatusInit);
-docReady(bottomBarInit);
-docReady(marketingExpensesInit);
-docReady(chartHalfDoughnutInit);
-docReady(trendingKeywordsInit);
-docReady(D3PackedBubbleInit);
-docReady(dataTablesInit);
-docReady(select2Init);
-docReady(hideOnCollapseInit);
-docReady(unresolvedTicketsTabInit);
-docReady(inputmaskInit);
-docReady(emojiMartInit);
-docReady(nouisliderInit);
-docReady(bulkSelectInit);
-docReady(advanceAjaxTableInit);
-docReady(listInit);
-docReady(sortableInit);
+  // need to confirm first
+  scrollbarInit();
+});
+
+// docReady(detectorInit);
+// docReady(handleNavbarVerticalCollapsed);
+// docReady(totalOrderInit);
+// docReady(marketShareInit);
+// docReady(totalSalesInit);
+// docReady(topProductsInit);
+// docReady(navbarTopDropShadow);
+// docReady(tooltipInit);
+// docReady(popoverInit);
+// docReady(toastInit);
+// docReady(progressAnimationToggle);
+// docReady(glightboxInit);
+// docReady(plyrInit);
+// docReady(initMap);
+// docReady(dropzoneInit);
+// docReady(choicesInit);
+// docReady(formValidationInit);
+// docReady(barChartInit);
+// docReady(leafletActiveUserInit);
+// docReady(countupInit);
+// docReady(copyLink);
+// docReady(navbarDarkenOnScroll);
+// docReady(typedTextInit);
+// docReady(tinymceInit);
+// docReady(chatInit);
+// docReady(quantityInit);
+// docReady(navbarComboInit);
+// docReady(swiperInit);
+// docReady(ratingInit);
+// docReady(kanbanInit);
+// docReady(fullCalendarInit);
+// docReady(appCalendarInit);
+// docReady(managementCalendarInit);
+// docReady(lottieInit);
+// docReady(wizardInit);
+// docReady(searchInit);
+// docReady(cookieNoticeInit);
+// docReady(themeControl);
+// docReady(dropdownOnHover);
+// docReady(marketShareEcommerceInit);
+// docReady(productShareDoughnutInit);
+// docReady(totalSalesEcommerce);
+// docReady(avgEnrollmentRateInit);
+// docReady(bandwidthSavedInit);
+// docReady(salesByPosLocationInit);
+// docReady(returningCustomerRateInit);
+// docReady(candleChartInit);
+// docReady(grossRevenueChartInit);
+// docReady(scrollbarInit);
+// docReady(iconCopiedInit);
+// docReady(reportForThisWeekInit);
+// docReady(basicEchartsInit);
+// docReady(chartScatter);
+// docReady(chartDoughnut);
+// docReady(chartPie);
+// docReady(chartPolar);
+// docReady(chartRadar);
+// docReady(chartCombo);
+// docReady(dropdownMenuInit);
+// docReady(audienceChartInit);
+// docReady(sessionByBrowserChartInit);
+// docReady(sessionByCountryChartInit);
+// docReady(activeUsersChartReportInit);
+// docReady(trafficChannelChartInit);
+// docReady(bounceRateChartInit);
+// docReady(usersByTimeChartInit);
+// docReady(sessionByCountryMapInit);
+// docReady(mostLeadsInit);
+// docReady(closedVsGoalInit);
+// docReady(leadConversionInit);
+// docReady(dealStorageFunnelInit);
+// docReady(revenueChartInit);
+// docReady(locationBySessionInit);
+// docReady(realTimeUsersChartInit);
+// docReady(linePaymentChartInit);
+// docReady(chartBubble);
+// docReady(chartLine);
+// docReady(treeviewInit);
+// docReady(scrollInit);
+// docReady(echartsUnresolvedTicketsInit);
+// docReady(echartsNumberOfTicketsInit);
+// docReady(echartsCustomerSatisfactionInit);
+// docReady(echartsDistributionOfPerformanceInit);
+// docReady(echartsSatisfactionSurveyInit);
+// docReady(echartsReceivedTicketsInit);
+// docReady(topCustomersChartInit);
+// docReady(ticketVolumeChartInit);
+// docReady(echartTicketPriority);
+// docReady(userByLocationInit);
+// docReady(courseEnrollmentsInit);
+// docReady(weeklyGoalsInit);
+// docReady(assignmentScoresInit);
+// docReady(browsedCoursesInit);
+// docReady(courseStatusInit);
+// docReady(bottomBarInit);
+// docReady(marketingExpensesInit);
+// docReady(chartHalfDoughnutInit);
+// docReady(trendingKeywordsInit);
+// docReady(D3PackedBubbleInit);
+// docReady(dataTablesInit);
+// docReady(select2Init);
+// docReady(hideOnCollapseInit);
+// docReady(unresolvedTicketsTabInit);
+// docReady(inputmaskInit);
+// docReady(emojiMartInit);
+// docReady(nouisliderInit);
+// docReady(bulkSelectInit);
+// docReady(advanceAjaxTableInit);
+// docReady(listInit);
+// docReady(sortableInit);
 //# sourceMappingURL=theme.js.map
 
-});

@@ -11,6 +11,7 @@
     "autoprefixer": "^10.4.19",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "dayjs": "^1.11.10",
     "echarts": "^5.5.0",
     "esbuild": "^0.20.2",
     "jquery": "^3.7.1",

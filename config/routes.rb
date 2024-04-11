@@ -74,7 +74,17 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :users do
-    resources :users do
+    resources :users
+  end
+
+  resources :home do
+    collection do
+      get :analytics
+      get :crm
+      get :ecommerce
+      get :lms
+      get :management
+      get :saas
     end
   end
 end

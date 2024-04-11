@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_09_054221) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_11_052630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,31 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_09_054221) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.string "manufacturar_name"
+    t.string "product_identification_number"
+    t.string "product_summary"
+    t.datetime "release_date"
+    t.string "warranty_length"
+    t.string "warranty_policy"
+    t.integer "discount_percentage"
+    t.bigint "price_cents"
+    t.bigint "selling_price_cents"
+    t.bigint "total_stocks", default: 0
+    t.bigint "available_stocks", default: 0
+    t.bigint "used_stocks", default: 0
+    t.integer "status", default: 0, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_products_on_deleted_at"
+    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -111,5 +136,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_09_054221) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "products", "users"
   add_foreign_key "users", "roles"
 end

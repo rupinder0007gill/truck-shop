@@ -53,6 +53,10 @@ gem 'jsbundling-rails', '~> 1.2', '>= 1.2.1'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
+# This library provides integration of RubyMoney - Money gem with Rails
+# Read more: https://github.com/RubyMoney/money-rails
+gem 'money-rails', '~> 1.15'
+
 # Paranoia is a re-implementation of acts_as_paranoid for Rails 5, 6, and 7, using much, much, much less code. You would use either plugin / gem if you wished that when you called destroy on an Active Record object that it didn't actually destroy it, but just "hid" the record. Paranoia does this by setting a deleted_at field to the current time when you destroy a record, and hides it by scoping all queries on your model to only include records which do not have a deleted_at field.
 # Read more: https://github.com/rubysherpas/paranoia
 gem 'paranoia', '~> 2.6', '>= 2.6.3'

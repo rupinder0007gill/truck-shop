@@ -9954,14 +9954,12 @@ var marketShareInit = function marketShareInit() {
           type: 'pie',
           radius: ['100%', '87%'],
           avoidLabelOverlap: false,
-          emphasis: {
-            scale: false
-          },
           itemStyle: {
             borderWidth: 2,
             borderColor: utils.getColor('gray-100')
           },
           emphasis: {
+            scale: false,
             label: {
               show: false,
               position: 'center',

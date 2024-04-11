@@ -5,8 +5,8 @@ import "./controllers"
 import * as moment from 'moment';
 window.moment = moment;
 
-import '@popperjs/core'
-import * as bootstrap from "bootstrap"
+import { detectOverflow } from '@popperjs/core';
+import * as bootstrap from "bootstrap";
 
 import "trix"
 import "@rails/actiontext"

@@ -1,0 +1,13 @@
+<%= form_with model: @users_user, data: { turbo_frame: 'user' } do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :phone %>
+    <%= form.text_area :phone %>
+  </div>
+  <div>
+    <%= form.submit 'Create User' %>
+  </div>
+<% end %>

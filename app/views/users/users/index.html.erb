@@ -6,19 +6,28 @@
                 class: "btn btn--primary" %>
   </div>
   <div class="body">
-  	<% if @users.any? %>
+    <% if @users.any? %>
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <% @users.each do |user| %>
             <tr>
-              <td><%= user.name %></td>
+              <td><%= user.first_name %></td>
+              <td><%= user.last_name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.role.name %></td>
+              <td><%= link_to 'Edit', edit_users_user_path(user), class: "btn btn-outline-primary"%></td>
+              <td>
+              <%= link_to 'Delete', users_user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-outline-danger"%>
+              </td>
             </tr>
           <% end %>
         </tbody>

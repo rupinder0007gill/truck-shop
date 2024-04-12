@@ -1,4 +1,4 @@
-<%= form_with(model: product, url: url, data: { controller: 'flatpicker' }) do |form| %>
+<%= form_with(model: product, url: url, data: { controller: 'product' }) do |form| %>
   <div class="card mb-3">
     <div class="card-body">
       <div class="row flex-between-center">
@@ -34,6 +34,10 @@
               <%= form.text_field :name, class: 'form-control' %>
             </div>
             <div class="col-12 mb-3">
+              <%= form.label :status, 'Status:', class: 'form-label' %>
+              <%= form.select :status, Product.statuses.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
+            </div>
+            <div class="col-12 mb-3">
               <%= form.label :manufacturar_name, 'Manufacturar name:', class: 'form-label' %>
               <%= form.text_field :manufacturar_name, class: 'form-control' %>
             </div>
@@ -61,8 +65,8 @@
             <div class="row">
               <% product.images.each do |image| %>
                 <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
-                <div class="col-4">
-                  <%= image_tag image %>
+                <div class="col-4 mb-2">
+                  <%= image_tag image.variant(resize_to_fill: [1098, 717], saver: { gravity: 'Center' }), class: 'w-100' %>
                 </div>
               <% end %>
             </div>
@@ -196,7 +200,7 @@
             <div class="row gx-2">
               <div class="col-8 mb-3">
                 <%= form.label :price, 'Base Price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product regular price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
-                <%= form.text_field :price, class: 'form-control' %>
+                <%= form.text_field :price, class: 'form-control', data: { product_target: 'price '} %>
               </div>
               <div class="col-4">
                 <%= form.label :currency, 'Currency:', class: 'form-label' %>
@@ -210,12 +214,12 @@
               </div>
               <div class="col-12 mb-4">
                 <%= form.label :discount_percentage, 'Discount in percentage:', class: 'form-label' %>
-                <%= form.text_field :discount_percentage, class: 'form-control' %>
+                <%= form.text_field :discount_percentage, class: 'form-control', data: { product_target: 'discount_percentage '} %>
               </div>
               <div class="col-12">
                 <%= form.label :selling_price, 'Final price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product final price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
-                <%= form.hidden_field :selling_price, class: 'form-control' %>
-                <%= form.text_field :final_price, class: 'form-control', disabled: true %>
+                <%= form.hidden_field :selling_price, class: 'form-control', data: { product_target: 'selling_price '} %>
+                <%= form.text_field :final_price, value: product.selling_price, class: 'form-control', data: { product_target: 'final_price '}, disabled: true %>
               </div>
             </div>
           </div>
@@ -232,7 +236,7 @@
               </div>
               <div class="col-12 mb-3">
                 <%= form.label :add_stock, 'Add Stock:', class: 'form-label' %>
-                <%= form.text_field :add_stock, class: 'form-control' %>
+                <%= form.number_field :add_stock, class: 'form-control' %>
               </div>
             </div>
           </div>

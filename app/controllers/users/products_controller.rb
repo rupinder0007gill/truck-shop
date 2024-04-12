@@ -13,7 +13,7 @@ class Users::ProductsController < ApplicationController
 
   # GET /users/products/new
   def new
-    @product = current_user.products.new
+    @product = current_user.products.new(discount_percentage: 0)
   end
 
   # GET /users/products/1/edit
@@ -61,6 +61,6 @@ class Users::ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:name, :manufacturar_name, :product_identification_number, :product_summary, :release_date, :warranty_length, :warranty_policy, :discount_percentage, :price, :selling_price, :status, :add_stock, images: [])
+    params.require(:product).permit(:name, :manufacturar_name, :product_identification_number, :product_summary, :description, :release_date, :warranty_length, :warranty_policy, :discount_percentage, :price, :selling_price, :selling_price_cents, :status, :add_stock, images: [])
   end
 end

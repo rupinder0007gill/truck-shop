@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::UsersController < ApplicationController
-  before_action :set_user, only: [ :edit, :update, :destroy]
+  before_action :set_user, only: %i[edit update destroy]
 
   def index
     @users = User.all
@@ -11,6 +11,8 @@ class Users::UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit; end
+
   def create
     @user = User.new(user_params)
     if @user.save!
@@ -18,9 +20,6 @@ class Users::UsersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update

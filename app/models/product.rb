@@ -39,18 +39,18 @@ class Product < ApplicationRecord
   ##############################################################################
   ### Attributes ###############################################################
   monetize :price_cents
-  # monetize :selling_price_cents, as: "selling_price"
+  monetize :selling_price_cents, disable_validation: true
 
   ##############################################################################
   ### Constants ################################################################
-  attr_accessor :add_stock, :selling_price
+  attr_accessor :add_stock
 
   ##############################################################################
   ### Includes and Extensions ##################################################
 
-  before_save :sanitize_slug
   ##############################################################################
   ### Callbacks ################################################################
+  before_save :sanitize_slug, :set_selling_price, :add_stocks
   before_create :init_slug
 
   ##############################################################################
@@ -94,6 +94,19 @@ class Product < ApplicationRecord
   private
 
   #######
+  def set_selling_price
+    discount_price = 0
+    discount_price = (price_cents * discount_percentage) / 100 if price.present? && discount_percentage.present?
+    self.selling_price = Money.new((price_cents - discount_price), 'CAD')
+  end
+
+  def add_stocks
+    return unless add_stock.present? && add_stock.to_i.positive?
+
+    self.total_stocks = total_stocks + add_stock.to_i
+    self.available_stocks = available_stocks + add_stock.to_i
+  end
+
   def init_slug
     i = 1
     slug = name.parameterize

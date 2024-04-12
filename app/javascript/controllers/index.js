@@ -9,3 +9,6 @@ application.register("flatpicker", FlatpickerController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import ProductController from "./product_controller"
+application.register("product", ProductController)

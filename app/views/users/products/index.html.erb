@@ -100,10 +100,15 @@
                   <%= link_to product.name, users_product_path(product), class: 'text-1100' %>
                 </h5>
                 <%# <p class="fs-10 mb-3"><a class="text-500" href="#!">Computer &amp; Accessories</a></p> %>
-                <h5 class="fs-md-7 text-warning mb-0 d-flex align-items-center mb-3"> $1199.5
-                  <del class="ms-2 fs-10 text-500">$2399 </del>
+                <h5 class="fs-md-7 text-warning mb-0 d-flex align-items-center mb-3"> <%= humanized_money_with_symbol product.selling_price %>
+                  <del class="ms-2 fs-10 text-500"><%= humanized_money_with_symbol product.price %> </del>
                 </h5>
-                <p class="fs-10 mb-1">Stock: <strong class="text-success">Available</strong>
+                <p class="fs-10 mb-1">
+                  Stock: <%- if product.available_stocks > 0 %>
+                          <strong class="text-success">Available</strong>
+                        <%- else %>
+                          <strong class="text-danger">Out of stock</strong>
+                        <%- end %>
                 </p>
               </div>
             </div>

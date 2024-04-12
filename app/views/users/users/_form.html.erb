@@ -1,27 +1,208 @@
-<%= form_with model: @user, url: users_users_path, data: { turbo_frame: 'user' } do |form| %>
-  <div>
-    <div>
-      <%= form.label :first_name %>
-      <%= form.text_field :first_name %>
+<%= form_with model: user, url: url, data: { turbo_frame: 'user' } do |form| %>
+<div class="row g-0">
+  <div class="col-lg-12 pe-lg-2">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">User Profile</h5>
+      </div>
+      <div class="card-body bg-body-tertiary">
+        <form class="row g-3">
+          <div class="col-lg-6">
+            <label class="form-label" for="first-name">First Name</label>
+            <%= form.text_field :first_name, class: 'form-control' %>
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label" for="last-name">Last Name</label>
+            <%= form.text_field :last_name, class: 'form-control' %>
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label" for="email1">Email</label>
+            <%= form.text_field :email, class: 'form-control' %>
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label" for="email2">Phone</label>
+            <%= form.text_field :phone, class: 'form-control' %>
+          </div>
+          <div class="col-lg-6">
+            <label class="form-label" for="email2">Password</label>
+            <%= form.password_field :password, class: 'form-control' %>
+          </div>
+          <div class="col-lg-12">
+            <label class="form-label" for="email3">Role</label>
+            <%= form.collection_select :role, Role.all, :id, :name, class: 'form-select' %>
+          </div>
+          <div class="col-12 d-flex justify-content-end">
+            <%= form.submit 'Update', class: 'btn btn-primary' %>
+          </div>
+        </form>
+      </div>
     </div>
-    <div>
-      <%= form.label :last_name %>
-      <%= form.text_field :last_name %>
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">Experiences</h5>
+      </div>
+      <div class="card-body bg-body-tertiary"><a class="mb-4 d-block d-flex align-items-center" href="#experience-form1" data-bs-toggle="collapse" aria-expanded="false" aria-controls="experience-form1"><span class="circle-dashed"><span class="fas fa-plus"></span></span><span class="ms-3">Add new experience</span></a>
+        <div class="collapse" id="experience-form1">
+          <form class="row">
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="company">Company</label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm" id="company" type="text" />
+            </div>
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="position">Position</label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm" id="position" type="text" />
+            </div>
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="city">City </label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm" id="city" type="text" />
+            </div>
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="exp-description">Description </label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <textarea class="form-control form-control-sm" id="exp-description" rows="3"> </textarea>
+            </div>
+            <div class="col-9 col-sm-7 offset-3 mb-3">
+              <div class="form-check mb-0 lh-1">
+                <input class="form-check-input" type="checkbox" id="experience-current" checked="checked" />
+                <label class="form-check-label mb-0" for="experience-current">I currently work here
+                </label>
+              </div>
+            </div>
+            <div class="col-3 text-lg-end">
+              <label class="form-label" for="experience-form2">From </label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm text-500 datetimepicker" id="experience-form2" type="text" placeholder="dd/mm/yy" data-options='{"dateFormat":"d/m/y","disableMobile":true}' />
+            </div>
+            <div class="col-3 text-lg-end">
+              <label class="form-label" for="experience-to">To </label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm text-500 datetimepicker" id="experience-to" type="text" placeholder="dd/mm/yy" data-options='{"dateFormat":"d/m/y","disableMobile":true}' />
+            </div>
+            <div class="col-9 col-sm-7 offset-3">
+              <button class="btn btn-primary" type="button">Save</button>
+            </div>
+          </form>
+          <div class="border-dashed-bottom my-4"></div>
+        </div>
+        <div class="d-flex"><a href="#!">
+          <%= image_tag 'logo/g.png', class: 'img-fluid', alt: '', width: '56' %>
+        </a>
+          <div class="flex-1 position-relative ps-3">
+            <h6 class="fs-9 mb-0">Big Data Engineer<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+            </h6>
+            <p class="mb-1"> <a href="#!">Google</a></p>
+            <p class="text-1000 mb-0">Apr 2012 - Present &bull; 6 yrs 9 mos</p>
+            <p class="text-1000 mb-0">California, USA</p>
+            <div class="border-bottom border-dashed my-3"></div>
+          </div>
+        </div>
+        <div class="d-flex"><a href="#!">
+          <%= image_tag 'logo/apple.png', class: 'img-fluid', alt: '', width: '56' %></a>
+          <div class="flex-1 position-relative ps-3">
+            <h6 class="fs-9 mb-0">Software Engineer<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+            </h6>
+            <p class="mb-1"> <a href="#!">Apple</a></p>
+            <p class="text-1000 mb-0">Jan 2012 - Apr 2012 &bull; 4 mos</p>
+            <p class="text-1000 mb-0">California, USA</p>
+            <div class="border-bottom border-dashed my-3"></div>
+          </div>
+        </div>
+        <div class="d-flex"><a href="#!"> <%= image_tag 'logo/nike.png', class: 'img-fluid', alt: '', width: '56' %></a>
+          <div class="flex-1 position-relative ps-3">
+            <h6 class="fs-9 mb-0">Mobile App Developer<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span>
+            </h6>
+            <p class="mb-1"> <a href="#!">Nike</a></p>
+            <p class="text-1000 mb-0">Jan 2011 - Apr 2012 &bull; 1 yr 4 mos</p>
+            <p class="text-1000 mb-0">Beaverton, USA</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <%= form.label :email %>
-      <%= form.text_field :email %>
-    </div>
-    <div>
-      <%= form.label :password %>
-      <%= form.password_field :password %>
-    </div>
-    <div>
-      <%= form.label :role %>
-      <%= form.collection_select :role, Role.all, :id, :name %>
-    </div>
-    <div>
-      <%= form.submit %>
+    <div class="card mb-3 mb-lg-0">
+      <div class="card-header">
+        <h5 class="mb-0">Educations</h5>
+      </div>
+      <div class="card-body bg-body-tertiary"><a class="mb-4 d-block d-flex align-items-center" href="#education-form" data-bs-toggle="collapse" aria-expanded="false" aria-controls="education-form"><span class="circle-dashed"><span class="fas fa-plus"></span></span><span class="ms-3">Add new education</span></a>
+        <div class="collapse" id="education-form">
+          <form class="row">
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="school">School</label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm" id="school" type="text" />
+            </div>
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="degree">Degree</label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm" id="degree" type="text" />
+            </div>
+            <div class="col-3 mb-3 text-lg-end">
+              <label class="form-label" for="field">Field</label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm" id="field" type="text" />
+            </div>
+            <div class="col-3 text-lg-end">
+              <label class="form-label" for="edu-form3">From </label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm datetimepicker" id="edu-form3" type="text" placeholder="dd/mm/yy" data-options='{"dateFormat":"d/m/y"}' />
+            </div>
+            <div class="col-3 text-lg-end">
+              <label class="form-label" for="edu-to">To </label>
+            </div>
+            <div class="col-9 col-sm-7 mb-3">
+              <input class="form-control form-control-sm datetimepicker" id="edu-to" type="text" placeholder="dd/mm/yy" data-options='{"dateFormat":"d/m/y"}' />
+            </div>
+            <div class="col-9 col-sm-7 offset-3">
+              <button class="btn btn-primary" type="button">Save</button>
+            </div>
+          </form>
+          <div class="border-dashed-bottom my-3"></div>
+        </div>
+        <div class="d-flex"><a href="#!">
+            <div class="avatar avatar-3xl">
+              <div class="avatar-name rounded-circle"><span>SU</span></div>
+            </div>
+          </a>
+          <div class="flex-1 position-relative ps-3">
+            <h6 class="fs-9 mb-0"> <a href="#!">Stanford University<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span></a></h6>
+            <p class="mb-1">Computer Science and Engineering</p>
+            <p class="text-1000 mb-0">2010 - 2014 • 4 yrs</p>
+            <p class="text-1000 mb-0">California, USA</p>
+            <div class="border-bottom border-dashed my-3"></div>
+          </div>
+        </div>
+        <div class="d-flex"><a href="#!">
+        <%= image_tag 'logo/staten.png', class: 'img-fluid', alt: '', width: '56' %></a>
+          <div class="flex-1 position-relative ps-3">
+            <h6 class="fs-9 mb-0"> <a href="#!">Staten Island Technical High School<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span></a></h6>
+            <p class="mb-1">Higher Secondary School Certificate, Science</p>
+            <p class="text-1000 mb-0">2008 - 2010 &bull; 2 yrs</p>
+            <p class="text-1000 mb-0">New York, USA</p>
+            <div class="border-bottom border-dashed my-3"></div>
+          </div>
+        </div>
+        <div class="d-flex"><a href="#!"> <%= image_tag 'logo/tj-heigh-school.png', class: 'img-fluid', alt: '', width: '56' %></a>
+          <div class="flex-1 position-relative ps-3">
+            <h6 class="fs-9 mb-0"> <a href="#!">Thomas Jefferson High School for Science and Technology<span data-bs-toggle="tooltip" data-bs-placement="top" title="Verified"><small class="fa fa-check-circle text-primary" data-fa-transform="shrink-4 down-2"></small></span></a></h6>
+            <p class="mb-1">Secondary School Certificate, Science</p>
+            <p class="text-1000 mb-0">2003 - 2008 &bull; 5 yrs</p>
+            <p class="text-1000 mb-0">Alexandria, USA</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 <% end %>

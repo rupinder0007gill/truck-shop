@@ -1,5 +1,5 @@
 class Clients::CustomersController < ApplicationController
-  before_action :set_customer, only: %i[edit update destroy]
+  before_action :set_customer, only: %i[edit update destroy show]
 
 
   def index
@@ -11,6 +11,9 @@ class Clients::CustomersController < ApplicationController
   end
 
   def edit; end
+
+  def show
+  end
 
   def create
     @customer = Customer.new(customer_params)

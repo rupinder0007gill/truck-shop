@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_12_051743) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_13_143958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,37 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_051743) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "order_products", force: :cascade do |t|
+    t.bigint "quantity"
+    t.bigint "price_cents"
+    t.bigint "final_price_cents"
+    t.bigint "order_id"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_order_products_on_deleted_at"
+    t.index ["order_id"], name: "index_order_products_on_order_id"
+    t.index ["product_id"], name: "index_order_products_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "status"
+    t.string "transaction_id"
+    t.bigint "price_cents"
+    t.bigint "tax_cents"
+    t.bigint "total_price_cents"
+    t.bigint "discount_cents"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_orders_on_deleted_at"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -137,6 +168,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_051743) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "order_products", "orders"
+  add_foreign_key "order_products", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "products", "users"
   add_foreign_key "users", "roles"
 end

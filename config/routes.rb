@@ -22,6 +22,14 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
+#                             users_orders GET    /users/orders(.:format)                                                                           users/orders#index
+#                                          POST   /users/orders(.:format)                                                                           users/orders#create
+#                          new_users_order GET    /users/orders/new(.:format)                                                                       users/orders#new
+#                         edit_users_order GET    /users/orders/:id/edit(.:format)                                                                  users/orders#edit
+#                              users_order GET    /users/orders/:id(.:format)                                                                       users/orders#show
+#                                          PATCH  /users/orders/:id(.:format)                                                                       users/orders#update
+#                                          PUT    /users/orders/:id(.:format)                                                                       users/orders#update
+#                                          DELETE /users/orders/:id(.:format)                                                                       users/orders#destroy
 #                           users_products GET    /users/products(.:format)                                                                         users/products#index
 #                                          POST   /users/products(.:format)                                                                         users/products#create
 #                        new_users_product GET    /users/products/new(.:format)                                                                     users/products#new
@@ -96,6 +104,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :users do
+    resources :orders
     resources :products
     resources :users
   end

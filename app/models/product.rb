@@ -57,6 +57,8 @@ class Product < ApplicationRecord
   ### Associations #############################################################
   has_many_attached :images
   has_rich_text :description
+  has_many :order_products, dependent: :destroy
+  has_many :orders, through: :order_products
   belongs_to :user
 
   ##############################################################################
@@ -67,8 +69,8 @@ class Product < ApplicationRecord
 
   ##############################################################################
   ### Scopes ###################################################################
-  scope :published_articles, -> { where(status: 1) }
-  scope :draft_articles, -> { where(status: 0) }
+  scope :published_products, -> { where(status: 1) }
+  scope :draft_products, -> { where(status: 0) }
 
   ##############################################################################
   ### Other ####################################################################

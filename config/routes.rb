@@ -38,6 +38,14 @@
 #                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
 #                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
 #                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
+#                        clients_customers GET    /clients/customers(.:format)                                                                      clients/customers#index
+#                                          POST   /clients/customers(.:format)                                                                      clients/customers#create
+#                     new_clients_customer GET    /clients/customers/new(.:format)                                                                  clients/customers#new
+#                    edit_clients_customer GET    /clients/customers/:id/edit(.:format)                                                             clients/customers#edit
+#                         clients_customer GET    /clients/customers/:id(.:format)                                                                  clients/customers#show
+#                                          PATCH  /clients/customers/:id(.:format)                                                                  clients/customers#update
+#                                          PUT    /clients/customers/:id(.:format)                                                                  clients/customers#update
+#                                          DELETE /clients/customers/:id(.:format)                                                                  clients/customers#destroy
 #                     analytics_home_index GET    /home/analytics(.:format)                                                                         home#analytics
 #                           crm_home_index GET    /home/crm(.:format)                                                                               home#crm
 #                     ecommerce_home_index GET    /home/ecommerce(.:format)                                                                         home#ecommerce
@@ -98,6 +106,10 @@ Rails.application.routes.draw do
   namespace :users do
     resources :products
     resources :users
+  end
+
+  namespace :clients do
+    resources :customers
   end
 
   resources :home do

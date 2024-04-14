@@ -22,6 +22,15 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
+#                      deliver_users_order GET    /users/orders/:id/deliver(.:format)                                                               users/orders#deliver
+#                             users_orders GET    /users/orders(.:format)                                                                           users/orders#index
+#                                          POST   /users/orders(.:format)                                                                           users/orders#create
+#                          new_users_order GET    /users/orders/new(.:format)                                                                       users/orders#new
+#                         edit_users_order GET    /users/orders/:id/edit(.:format)                                                                  users/orders#edit
+#                              users_order GET    /users/orders/:id(.:format)                                                                       users/orders#show
+#                                          PATCH  /users/orders/:id(.:format)                                                                       users/orders#update
+#                                          PUT    /users/orders/:id(.:format)                                                                       users/orders#update
+#                                          DELETE /users/orders/:id(.:format)                                                                       users/orders#destroy
 #                           users_products GET    /users/products(.:format)                                                                         users/products#index
 #                                          POST   /users/products(.:format)                                                                         users/products#create
 #                        new_users_product GET    /users/products/new(.:format)                                                                     users/products#new
@@ -38,14 +47,6 @@
 #                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
 #                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
 #                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
-#                        clients_customers GET    /clients/customers(.:format)                                                                      clients/customers#index
-#                                          POST   /clients/customers(.:format)                                                                      clients/customers#create
-#                     new_clients_customer GET    /clients/customers/new(.:format)                                                                  clients/customers#new
-#                    edit_clients_customer GET    /clients/customers/:id/edit(.:format)                                                             clients/customers#edit
-#                         clients_customer GET    /clients/customers/:id(.:format)                                                                  clients/customers#show
-#                                          PATCH  /clients/customers/:id(.:format)                                                                  clients/customers#update
-#                                          PUT    /clients/customers/:id(.:format)                                                                  clients/customers#update
-#                                          DELETE /clients/customers/:id(.:format)                                                                  clients/customers#destroy
 #                     analytics_home_index GET    /home/analytics(.:format)                                                                         home#analytics
 #                           crm_home_index GET    /home/crm(.:format)                                                                               home#crm
 #                     ecommerce_home_index GET    /home/ecommerce(.:format)                                                                         home#ecommerce
@@ -104,12 +105,13 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :users do
+    resources :orders do
+      member do
+        get :deliver
+      end
+    end
     resources :products
     resources :users
-  end
-
-  namespace :clients do
-    resources :customers
   end
 
   resources :home do

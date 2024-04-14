@@ -68,7 +68,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_13_143958) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "status"
+    t.integer "status", default: 0, null: false
+    t.integer "payment_method", default: 0, null: false
     t.string "transaction_id"
     t.bigint "price_cents"
     t.bigint "tax_cents"

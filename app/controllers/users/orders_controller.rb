@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::OrdersController < ApplicationController
-  before_action :set_order, only: %i[show edit update destroy]
+  before_action :set_order, only: %i[show edit update destroy deliver]
 
   # GET /users/orders or /users/orders.json
   def index
@@ -13,7 +13,7 @@ class Users::OrdersController < ApplicationController
 
   # GET /users/orders/new
   def new
-    @order = current_user.orders.new
+    @order = current_user.orders.new(price: 0, tax: 0, discount: 0, total_price: 0)
   end
 
   # GET /users/orders/1/edit
@@ -52,6 +52,16 @@ class Users::OrdersController < ApplicationController
     end
   end
 
+  def deliver
+    redirect_to users_orders_url, alert: 'You are not authorized to perform this action, please ask to admin to update status' and return if current_user.role.name != 'Admin'
+
+    @order.update(status: :delivered)
+
+    respond_to do |format|
+      format.html { redirect_to users_orders_url, notice: 'Order was successfully delivered.' }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -61,6 +71,6 @@ class Users::OrdersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def order_params
-    params.require(:order).permit(:status, :price, :tax, :discount, :total_price, :description, :file, order_products_attributes: %i[id product_id quantity price final_price _destroy])
+    params.require(:order).permit(:status, :price, :tax, :discount, :total_price, :description, :file, :transaction_id, :payment_method, order_products_attributes: %i[id product_id quantity price final_price _destroy])
   end
 end

@@ -8,8 +8,9 @@
 #  archived_at       :datetime
 #  deleted_at        :datetime
 #  discount_cents    :bigint
+#  payment_method    :integer          default("cash"), not null
 #  price_cents       :bigint
-#  status            :integer
+#  status            :integer          default("placed"), not null
 #  tax_cents         :bigint
 #  total_price_cents :bigint
 #  created_at        :datetime         not null
@@ -42,6 +43,7 @@ class Order < ApplicationRecord
 
   ##############################################################################
   ### Callbacks ################################################################
+  before_save :update_products_stocks
 
   ##############################################################################
   ### Associations #############################################################
@@ -50,8 +52,8 @@ class Order < ApplicationRecord
   has_many :order_products, dependent: :destroy
   has_many :products, through: :order_products
   accepts_nested_attributes_for :order_products, allow_destroy: true, reject_if: proc { |attributes|
-                                                                                        (attributes['order_product_product_id'].blank?)
-                                                                                       }
+                                                                                   attributes['product_id'].blank?
+                                                                                 }
   belongs_to :user
 
   ##############################################################################
@@ -69,6 +71,12 @@ class Order < ApplicationRecord
     delivered: 1
   }
 
+  enum payment_method: {
+    cash: 0,
+    card: 1,
+    online: 2
+  }
+
   ##############################################################################
   ### Class Methods ############################################################
 
@@ -83,7 +91,15 @@ class Order < ApplicationRecord
 
   #######
 
-  # private
+  private
 
   #######
+  def update_products_stocks
+    return unless status_changed? && status == 'delivered'
+
+    order_products.each do |order_product|
+      product = order_product.product
+      product.update(total_stocks: (product.total_stocks + order_product.quantity), available_stocks: (product.available_stocks + order_product.quantity))
+    end
+  end
 end

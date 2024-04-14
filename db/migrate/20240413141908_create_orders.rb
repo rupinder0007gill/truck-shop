@@ -4,7 +4,8 @@ class CreateOrders < ActiveRecord::Migration[7.1]
   def change
     create_table :orders do |t|
       ## Fields
-      t.integer :status
+      t.integer :status, default: 0, null: false
+      t.integer :payment_method, default: 0, null: false
       t.string :transaction_id
       t.integer :price_cents, limit: 8
       t.integer :tax_cents, limit: 8

@@ -22,6 +22,7 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
+#                      deliver_users_order GET    /users/orders/:id/deliver(.:format)                                                               users/orders#deliver
 #                             users_orders GET    /users/orders(.:format)                                                                           users/orders#index
 #                                          POST   /users/orders(.:format)                                                                           users/orders#create
 #                          new_users_order GET    /users/orders/new(.:format)                                                                       users/orders#new
@@ -104,7 +105,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :users do
-    resources :orders
+    resources :orders do
+      member do
+        get :deliver
+      end
+    end
     resources :products
     resources :users
   end

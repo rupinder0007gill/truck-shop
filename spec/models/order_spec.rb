@@ -8,8 +8,9 @@
 #  archived_at       :datetime
 #  deleted_at        :datetime
 #  discount_cents    :bigint
+#  payment_method    :integer          default("cash"), not null
 #  price_cents       :bigint
-#  status            :integer
+#  status            :integer          default("placed"), not null
 #  tax_cents         :bigint
 #  total_price_cents :bigint
 #  created_at        :datetime         not null

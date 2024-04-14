@@ -49,7 +49,9 @@ class Order < ApplicationRecord
   has_rich_text :description
   has_many :order_products, dependent: :destroy
   has_many :products, through: :order_products
-  accepts_nested_attributes_for :order_products, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :order_products, allow_destroy: true, reject_if: proc { |attributes|
+                                                                                        (attributes['order_product_product_id'].blank?)
+                                                                                       }
   belongs_to :user
 
   ##############################################################################

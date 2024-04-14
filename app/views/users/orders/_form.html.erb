@@ -1,4 +1,4 @@
-<%= form_with(model: order, url: url) do |form| %>
+<%= form_with(model: order, url: url, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |form| %>
   <% if order.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -53,6 +53,13 @@
       </div>
     </div>
   </div>
+
+  <template data-nested-form-target="template">
+    <%= form.fields_for :order_products, order.order_products.build(price_cents: 0, final_price_cents: 0, quantity: 1), child_index: 'NEW_RECORD' do |order_product_fields| %>
+      <%= render "order_product_form", f: order_product_fields %>
+    <% end %>
+  </template>
+
   <div class="card mb-3">
     <div class="card-body">
       <div class="table-responsive fs-10">
@@ -61,37 +68,22 @@
             <tr>
               <th class="text-900 border-0">Products</th>
               <th class="text-900 border-0 text-center">Quantity</th>
-              <th class="text-900 border-0 text-end">Rate</th>
-              <th class="text-900 border-0 text-end">Amount</th>
+              <th class="text-900 border-0 text-center">Rate</th>
+              <th class="text-900 border-0 text-center">Amount</th>
+              <th class="text-900 border-0 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border-200">
-              <td class="align-middle">
-                <h6 class="mb-0 text-nowrap">Platinum web hosting package9</h6>
-                <p class="mb-0">Down 35mb, Up 100mb</p>
-              </td>
-              <td class="align-middle text-center">2</td>
-              <td class="align-middle text-end">$65.00</td>
-              <td class="align-middle text-end">$130.00</td>
-            </tr>
-            <tr class="border-200">
-              <td class="align-middle">
-                <h6 class="mb-0 text-nowrap">2 Page website design</h6>
-                <p class="mb-0">Includes basic wireframes and responsive templates</p>
-              </td>
-              <td class="align-middle text-center">1</td>
-              <td class="align-middle text-end">$2,100.00</td>
-              <td class="align-middle text-end">$2,100.00</td>
-            </tr>
+            <%= form.fields_for :order_products do |order_product_fields| %>
+              <%= render "order_product_form", f: order_product_fields %>
+            <% end %>
+
+            <!-- Inserted elements will be injected before that target. -->
+            <tr data-nested-form-target="target"></tr>
             <tr>
-              <td class="align-middle">
-                <h6 class="mb-0 text-nowrap">Mobile App Development</h6>
-                <p class="mb-0">Includes responsive navigation</p>
+              <td colspan="5">
+                <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Product</button>
               </td>
-              <td class="align-middle text-center">8</td>
-              <td class="align-middle text-end">$5,00.00</td>
-              <td class="align-middle text-end">$4,000.00</td>
             </tr>
           </tbody>
         </table>
@@ -101,7 +93,7 @@
           <table class="table table-sm table-borderless fs-10 text-end">
             <tr>
               <th class="text-900">Subtotal:</th>
-              <td class="fw-semi-bold">$6,230.00 </td>
+              <td class="fw-semi-bold">$<%= form.number_field :price, class: 'form-control' %></td>
             </tr>
             <tr>
               <th class="text-900">Tax 5%:</th>

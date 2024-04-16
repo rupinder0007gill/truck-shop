@@ -3,6 +3,23 @@
 # == Route Map
 #
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
+#                     new_customer_session GET    /customers/sign_in(.:format)                                                                      devise/sessions#new
+#                         customer_session POST   /customers/sign_in(.:format)                                                                      devise/sessions#create
+#                 destroy_customer_session DELETE /customers/sign_out(.:format)                                                                     devise/sessions#destroy
+#                    new_customer_password GET    /customers/password/new(.:format)                                                                 devise/passwords#new
+#                   edit_customer_password GET    /customers/password/edit(.:format)                                                                devise/passwords#edit
+#                        customer_password PATCH  /customers/password(.:format)                                                                     devise/passwords#update
+#                                          PUT    /customers/password(.:format)                                                                     devise/passwords#update
+#                                          POST   /customers/password(.:format)                                                                     devise/passwords#create
+#                      new_customer_unlock GET    /customers/unlock/new(.:format)                                                                   devise/unlocks#new
+#                          customer_unlock GET    /customers/unlock(.:format)                                                                       devise/unlocks#show
+#                                          POST   /customers/unlock(.:format)                                                                       devise/unlocks#create
+#               accept_customer_invitation GET    /customers/invitation/accept(.:format)                                                            devise/invitations#edit
+#               remove_customer_invitation GET    /customers/invitation/remove(.:format)                                                            devise/invitations#destroy
+#                  new_customer_invitation GET    /customers/invitation/new(.:format)                                                               devise/invitations#new
+#                      customer_invitation PATCH  /customers/invitation(.:format)                                                                   devise/invitations#update
+#                                          PUT    /customers/invitation(.:format)                                                                   devise/invitations#update
+#                                          POST   /customers/invitation(.:format)                                                                   devise/invitations#create
 #                         new_user_session GET    /users/sign_in(.:format)                                                                          users/sessions#new
 #                             user_session POST   /users/sign_in(.:format)                                                                          users/sessions#create
 #                     destroy_user_session DELETE /users/sign_out(.:format)                                                                         users/sessions#destroy
@@ -47,6 +64,14 @@
 #                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
 #                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
 #                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
+#                        clients_customers GET    /clients/customers(.:format)                                                                      clients/customers#index
+#                                          POST   /clients/customers(.:format)                                                                      clients/customers#create
+#                     new_clients_customer GET    /clients/customers/new(.:format)                                                                  clients/customers#new
+#                    edit_clients_customer GET    /clients/customers/:id/edit(.:format)                                                             clients/customers#edit
+#                         clients_customer GET    /clients/customers/:id(.:format)                                                                  clients/customers#show
+#                                          PATCH  /clients/customers/:id(.:format)                                                                  clients/customers#update
+#                                          PUT    /clients/customers/:id(.:format)                                                                  clients/customers#update
+#                                          DELETE /clients/customers/:id(.:format)                                                                  clients/customers#destroy
 #                     analytics_home_index GET    /home/analytics(.:format)                                                                         home#analytics
 #                           crm_home_index GET    /home/crm(.:format)                                                                               home#crm
 #                     ecommerce_home_index GET    /home/ecommerce(.:format)                                                                         home#ecommerce
@@ -89,6 +114,7 @@
 #                     rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
+  devise_for :customers
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
@@ -112,6 +138,10 @@ Rails.application.routes.draw do
     end
     resources :products
     resources :users
+  end
+
+  namespace :clients do
+    resources :customers
   end
 
   resources :home do

@@ -5,6 +5,16 @@
         <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Customers</h5>
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
+        <div class="col">
+          <%= form_with url: clients_customers_path, method: :get, class: "position-relative" do %>
+            <%= text_field_tag :query, params[:query], class: "form-control form-control-sm search-input lh-1 rounded-2 ps-4", placeholder: "Search..."%>
+            <div class="position-absolute top-50 start-0 translate-middle-y ms-2">
+              <span class="fas fa-search text-400 fs-10"><%= submit_tag %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-8 col-sm-auto text-end ps-2">
         <div class="d-none" id="table-customers-actions">
           <div class="d-flex">
             <select class="form-select form-select-sm" aria-label="Bulk actions">

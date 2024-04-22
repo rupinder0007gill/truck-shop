@@ -49,7 +49,12 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :lockable,
          :recoverable, :rememberable, :trackable
-
+  include PgSearch::Model
+  pg_search_scope :search_for,
+                  against: [:first_name, :last_name, :phone, :email],
+                  using: {
+                    tsearch: { prefix: true }
+                  }
   ### Validations ##############################################################
   validates :first_name, :last_name, presence: true
 

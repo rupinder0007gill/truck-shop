@@ -4,7 +4,11 @@ class Users::UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @users = User.all
+    if params[:query].present?
+      @users = User.search_for(params[:query])
+    else
+      @users = User.all
+    end
   end
 
   def new

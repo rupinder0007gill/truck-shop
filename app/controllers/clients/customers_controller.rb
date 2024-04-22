@@ -2,7 +2,11 @@ class Clients::CustomersController < ApplicationController
   before_action :set_customer, only: %i[edit update destroy show]
 
   def index
-    @customers = Customer.all
+    if params[:query].present?
+      @customers = Customer.search_for(params[:query])
+    else
+      @customers = Customer.all
+    end
   end
 
   def new

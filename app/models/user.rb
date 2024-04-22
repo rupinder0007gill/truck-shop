@@ -57,6 +57,12 @@ class User < ApplicationRecord
   # We removed ":registerable" in this case...as they need to receive an invite
   devise :invitable, :database_authenticatable, :lockable,
          :recoverable, :rememberable, :validatable, :trackable
+  include PgSearch::Model
+  pg_search_scope :search_for,
+                  against: [:first_name, :last_name, :phone, :email],
+                  using: {
+                    tsearch: { prefix: true }
+                  }
 
   ##############################################################################
   ### Attributes ###############################################################

@@ -15,3 +15,6 @@ application.register("nested-form", NestedFormController)
 
 import ProductController from "./product_controller"
 application.register("product", ProductController)
+
+import SearchFormController from "./search_form_controller"
+application.register("search-form", SearchFormController)

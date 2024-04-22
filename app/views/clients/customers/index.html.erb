@@ -6,8 +6,8 @@
       </div>
       <div class="col-8 col-sm-auto text-end ps-2">
         <div class="col">
-          <%= form_with url: clients_customers_path, method: :get, class: "position-relative" do %>
-            <%= text_field_tag :query, params[:query], class: "form-control form-control-sm search-input lh-1 rounded-2 ps-4", placeholder: "Search..."%>
+          <%= form_with url: clients_customers_path, method: :get, data: {controller: "search-form", search_form_target: "form", turbo_frame: "clients_customers", turbo_action: "advance"}, class: "position-relative" do %>
+            <%= text_field_tag :query, params[:query], class: "form-control form-control-sm search-input lh-1 rounded-2 ps-4", placeholder: "Search...", data: { action: "input->search-form#search" } %>
             <div class="position-absolute top-50 start-0 translate-middle-y ms-2">
               <span class="fas fa-search text-400 fs-10"><%= submit_tag %></span>
             </div>

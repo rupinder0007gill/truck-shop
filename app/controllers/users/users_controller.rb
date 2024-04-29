@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update destroy]
+  before_action :set_user, only: %i[edit update destroy enable_user]
 
   def index
     sort_column = params[:sort] || "created_at"
@@ -45,8 +45,14 @@ class Users::UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_user_path, notice: 'User was successfully deleted.'
+    # @user.destroy
+    @user.update(archived_at: DateTime.now)
+    redirect_to users_users_url, alert: 'User was successfully disabled.'
+  end
+
+  def enable_user
+    @user.update(archived_at: nil)
+    redirect_to users_users_url, alert: 'User was successfully enabled.'
   end
 
   private

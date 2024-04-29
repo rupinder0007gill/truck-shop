@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def sortable_table_header(title, column, path_method, **)
-    content_tag(:th, class: "text-900 sort pe-1 align-middle white-space-nowrap") do
+    content_tag(:th, class: "text-900 sort pe-1 align-middle text-center white-space-nowrap") do
       sortable_column(title, column, path_method)
     end
   end

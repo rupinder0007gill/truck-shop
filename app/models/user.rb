@@ -101,6 +101,14 @@ class User < ApplicationRecord
     [first_name, last_name].compact.join(' ')
   end
 
+  def active_for_authentication?
+    super && self.archived_at.nil? # i.e. super && self.is_active
+  end
+
+  def inactive_message
+    "Sorry, this account has been disabled."
+  end
+
   ##############################################################################
   ### Instance Methods #########################################################
 

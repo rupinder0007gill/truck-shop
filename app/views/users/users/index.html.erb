@@ -23,10 +23,11 @@
         <table class="table table-sm table-striped fs-10 mb-0 overflow-hidden" >
           <thead class="bg-200">
             <tr>
-              <%= sortable_table_header 'Name', :first_name, :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
-              <%= sortable_table_header 'Email', :email, :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
-              <%= sortable_table_header 'Phone', :phone, :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
-              <%= sortable_table_header 'Role', :'roles.name', :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
+              <%= sortable_table_header 'Name', :first_name, :users_users_path %>
+              <%= sortable_table_header 'Email', :email, :users_users_path %>
+              <%= sortable_table_header 'Phone', :phone, :users_users_path %>
+              <%= sortable_table_header 'Role', :'roles.name', :users_users_path %>
+              <%= sortable_table_header 'Active', :archived_at, :users_users_path %>
               <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center">Action</th>
             </tr>
           </thead>

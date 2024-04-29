@@ -6,7 +6,7 @@
       </div>
       <div class="col-4 col-sm-auto d-flex align-items-center ps-2">
         <div class="col me-2">
-          <%= form_with url: users_users_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "users_listing", turbo_action: "advance" }, class: "position-relative" do %>
+          <%= form_with url: users_users_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "search_results", turbo_action: "advance" }, class: "position-relative" do %>
             <%= text_field_tag :query, params[:query], class: "form-control form-control-sm search-input lh-1 rounded-2 ps-4", placeholder: "Search...", data: { action: "input->search-form#search" } %>
           <% end %>
         </div>
@@ -19,35 +19,25 @@
   </div>
   <div class="card-body p-0">
     <div class="table-responsive scrollbar">
-      <%= turbo_frame_tag 'users_listing' do %>
-        <table class="table table-sm table-striped fs-10 mb-0 overflow-hidden">
+      <%= turbo_frame_tag 'search_results' do %>
+        <table class="table table-sm table-striped fs-10 mb-0 overflow-hidden" >
           <thead class="bg-200">
             <tr>
-              <th class="text-900 sort pe-1 align-middle white-space-nowrap" data-sort="order">Name</th>
-              <th class="text-900 sort pe-1 align-middle white-space-nowrap pe-7" data-sort="date">Email</th>
-              <th class="text-900 sort pe-1 align-middle white-space-nowrap" data-sort="address" style="min-width: 12.5rem;">Phone</th>
-              <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center" data-sort="status">Role</th>
-              <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center" data-sort="amount">Action</th>
+              <%= sortable_table_header 'Name', :first_name, :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
+              <%= sortable_table_header 'Email', :email, :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
+              <%= sortable_table_header 'Phone', :phone, :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
+              <%= sortable_table_header 'Role', :'roles.name', :users_users_path, class: 'text-900 sort pe-1 align-middle white-space-nowrap' %>
+              <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center">Action</th>
             </tr>
           </thead>
-          <tbody class="list" id="table-orders-body">
-            <% @users.each do |user| %>
-              <tr class="btn-reveal-trigger">
-                <td class="order py-2 align-middle white-space-nowrap"><a href="<%= edit_users_user_path(user) %>"> <strong><%= user.name %></strong></a></td>
-                <td class="date py-2 align-middle"><%= user.email %></td>
-                <td class="address py-2 align-middle white-space-nowrap"><%= user.phone %>
-                </td>
-                <td class="status py-2 align-middle text-center fs-9 white-space-nowrap"><span class="badge badge rounded-pill d-block badge-subtle-success"><%= user.role.name %><span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span>
-                </td>
-                <td class="py-2 align-middle white-space-nowrap text-end">
-                  <%= link_to 'Edit', edit_users_user_path(user), class: "btn btn-outline-primary"%>
-                  <%= link_to 'Disable', users_user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %></a>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        <% end %>
-      </table>
+          <%= turbo_frame_tag "users_list", src: users_users_url(format: :turbo_stream, page: params[:page], query: params[:query], sort: params[:sort], direction: params[:direction]), loading: "lazy", autoscroll: "true" do %>
+            <tbody class="list" id="users_listingg">
+              <!-- Adjust this to your Pagy default item count -->
+            </tbody>
+          <% end %>
+        </table>
+        <%= turbo_frame_tag "users_pagination" %>
+      <% end %>
     </div>
   </div>
 </div>

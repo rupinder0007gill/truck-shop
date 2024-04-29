@@ -52,17 +52,17 @@
 #  fk_rails_...  (role_id => roles.id)
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  # We removed ":registerable" in this case...as they need to receive an invite
-  devise :invitable, :database_authenticatable, :lockable,
-         :recoverable, :rememberable, :validatable, :trackable
   include PgSearch::Model
   pg_search_scope :search_for,
                   against: [:first_name, :last_name, :phone, :email],
                   using: {
                     tsearch: { prefix: true }
                   }
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # We removed ":registerable" in this case...as they need to receive an invite
+  devise :invitable, :database_authenticatable, :lockable,
+         :recoverable, :rememberable, :validatable, :trackable
 
   ##############################################################################
   ### Attributes ###############################################################
@@ -76,6 +76,7 @@ class User < ApplicationRecord
   ##############################################################################
   ### Callbacks ################################################################
   after_initialize :set_default_role, if: :new_record?
+  after_initialize :set_password_if_nil, if: :new_record?
 
   ##############################################################################
   ### Associations #############################################################
@@ -117,5 +118,13 @@ class User < ApplicationRecord
 
   def set_default_role
     self.role ||= Role.find_by(name: 'Technician')
+  end
+
+  def set_password_if_nil
+    return if self.password.present?
+
+    generated_password = Devise.friendly_token(64)
+    self.password = generated_password
+    self.password_confirmation = generated_password
   end
 end

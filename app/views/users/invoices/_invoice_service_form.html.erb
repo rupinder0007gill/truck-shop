@@ -1,0 +1,7 @@
+<tr class="border-200 nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
+  <td class="align-middle text-center"><%= f.number_field :price, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "servicePrice" } %></td>
+  <td class="align-middle text-end">
+    <button type="button" data-action="nested-form#remove" class="btn btn-danger">Remove Service</button>
+    <%= f.hidden_field :_destroy, data: { "nested-form-target": "serviceDestroy" } %>
+  </td>
+</tr>

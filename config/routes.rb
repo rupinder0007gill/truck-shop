@@ -65,6 +65,7 @@
 #                                          PATCH  /users/products/:id(.:format)                                                                     users/products#update
 #                                          PUT    /users/products/:id(.:format)                                                                     users/products#update
 #                                          DELETE /users/products/:id(.:format)                                                                     users/products#destroy
+#                   enable_user_users_user POST   /users/users/:id/enable_user(.:format)                                                            users/users#enable_user
 #                              users_users GET    /users/users(.:format)                                                                            users/users#index
 #                                          POST   /users/users(.:format)                                                                            users/users#create
 #                           new_users_user GET    /users/users/new(.:format)                                                                        users/users#new
@@ -151,7 +152,11 @@ Rails.application.routes.draw do
       end
     end
     resources :products
-    resources :users
+    resources :users do
+    	member do
+    		post :enable_user
+    	end
+    end
   end
 
   namespace :clients do

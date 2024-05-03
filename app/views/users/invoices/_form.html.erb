@@ -1,4 +1,4 @@
-<%= form_with(model: invoice, url: url, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |form| %>
+<%= form_with(model: invoice, url: url) do |form| %>
   <% if invoice.errors.any? %>
     <div class="alert alert-danger" role="alert">
       <ul>
@@ -15,7 +15,6 @@
 
     <div class="card-body position-relative">
       <h5><%= invoice.new_record? ? "New invoice Details:" : "Edit invoice Details: ##{invoice.id}" %></h5>
-      <%# <p class="fs-10">April 21, 2019, 5:33 PM</p> %>
       <div><strong class="me-2">Status: </strong>
         <%- if current_user.role.name == 'admin' %>
           <%= form.select :status, Invoice.statuses.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
@@ -43,68 +42,72 @@
     </div>
   </div>
 
-  <template data-nested-form-target="template">
-    <%= form.fields_for :invoice_products, invoice.invoice_products.build(price_cents: 0, final_price_cents: 0, quantity: 1), child_index: 'NEW_RECORD' do |invoice_product_fields| %>
-      <%= render "invoice_product_form", f: invoice_product_fields %>
-    <% end %>
-  </template>
-  <template data-nested-form-target="template">
-    <%= form.fields_for :invoice_services, invoice.invoice_services.build(price_cents: 0), child_index: 'NEW_RECORD' do |invoice_service_fields| %>
-      <%= render "invoice_service_form", f: invoice_service_fields %>
-    <% end %>
-  </template>
-
   <div class="card mb-3">
     <div class="card-body">
-      <div class="table-responsive fs-10">
-        <table class="table table-striped border-bottom">
-          <thead class="bg-200">
-            <tr>
-              <th class="text-900 border-0">Products</th>
-              <th class="text-900 border-0 text-center">Quantity</th>
-              <th class="text-900 border-0 text-center">Rate</th>
-              <th class="text-900 border-0 text-center">Amount</th>
-              <th class="text-900 border-0 text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= form.fields_for :invoice_products do |invoice_product_fields| %>
-              <%= render "invoice_product_form", f: invoice_product_fields %>
-            <% end %>
+      <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+        <template data-nested-form-target="template">
+          <%= form.fields_for :invoice_products, invoice.invoice_products.build(price_cents: 0, final_price_cents: 0, quantity: 1), child_index: 'NEW_RECORD' do |invoice_product_fields| %>
+            <%= render "invoice_product_form", f: invoice_product_fields %>
+          <% end %>
+        </template>
 
-            <!-- Inserted elements will be injected before that target. -->
-            <tr data-nested-form-target="target"></tr>
-            <tr>
-              <td colspan="5">
-                <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Product</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive fs-10">
+          <table class="table table-striped border-bottom">
+            <thead class="bg-200">
+              <tr>
+                <th class="text-900 border-0">Products</th>
+                <th class="text-900 border-0 text-center">Quantity</th>
+                <th class="text-900 border-0 text-center">Rate</th>
+                <th class="text-900 border-0 text-center">Amount</th>
+                <th class="text-900 border-0 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= form.fields_for :invoice_products do |invoice_product_fields| %>
+                <%= render "invoice_product_form", f: invoice_product_fields %>
+              <% end %>
+
+              <!-- Inserted elements will be injected before that target. -->
+              <tr data-nested-form-target="target"></tr>
+              <tr>
+                <td colspan="5">
+                  <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Product</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="table-responsive fs-10">
-        <table class="table table-striped border-bottom">
-          <thead class="bg-200">
-            <tr>
-              <th class="text-900 border-0">Services</th>
-              <th class="text-900 border-0 text-center">Amount</th>
-              <th class="text-900 border-0 text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= form.fields_for :invoice_services do |invoice_service_fields| %>
-              <%= render "invoice_service_form", f: invoice_service_fields %>
-            <% end %>
+      <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+        <template data-nested-form-target="template">
+          <%= form.fields_for :invoice_services, invoice.invoice_services.build(price_cents: 0), child_index: 'NEW_RECORD' do |invoice_service_fields| %>
+            <%= render "invoice_service_form", f: invoice_service_fields %>
+          <% end %>
+        </template>
+        <div class="table-responsive fs-10">
+          <table class="table table-striped border-bottom">
+            <thead class="bg-200">
+              <tr>
+                <th class="text-900 border-0">Services</th>
+                <th class="text-900 border-0 text-center">Amount</th>
+                <th class="text-900 border-0 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= form.fields_for :invoice_services do |invoice_service_fields| %>
+                <%= render "invoice_service_form", f: invoice_service_fields %>
+              <% end %>
 
-            <!-- Inserted elements will be injected before that target. -->
-            <tr data-nested-form-target="target"></tr>
-            <tr>
-              <td colspan="5">
-                <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Service</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <!-- Inserted elements will be injected before that target. -->
+              <tr data-nested-form-target="target"></tr>
+              <tr>
+                <td colspan="5">
+                  <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Service</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="row g-0 justify-content-end">

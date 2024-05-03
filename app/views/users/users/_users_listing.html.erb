@@ -1,0 +1,33 @@
+<tr class="btn-reveal-trigger" id="users_<%=user.id%>">
+  <td class="py-2 align-middle white-space-nowrap">
+    <a href="<%= edit_users_user_path(user) %>"> <strong><%= user.name %></strong></a>
+  </td>
+  <td class="py-2 align-middle">
+    <%= user.email %>
+  </td>
+  <td class="py-2 align-middle white-space-nowrap">
+    <%= user.phone %>
+  </td>
+  <td class="py-2 align-middle text-center fs-9 white-space-nowrap">
+    <%= user.role.name %>
+  </td>
+  <td class="py-2 align-middle text-center fs-9 white-space-nowrap">
+    <%- if user.archived_at.present? %>
+      <span class="badge badge rounded-pill d-block badge-subtle-danger">
+        <span class="ms-1 fa-solid fa-x" data-fa-transform="shrink-2"></span>
+      </span>
+    <%- else %>
+      <span class="badge badge rounded-pill d-block badge-subtle-success">
+        <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+      </span>
+    <%- end %>
+  </td>
+  <td class="py-2 align-middle white-space-nowrap text-end">
+    <%= link_to 'Edit', edit_users_user_path(user), data: { turbo_frame: "_top" }, class: "btn btn-outline-primary"%>
+    <%- if user.archived_at.present? %>
+      <%= link_to 'Enable', enable_user_users_user_path(user), data: { turbo_method: :post, turbo_confirm: "Are you sure?", turbo_frame: "_top"  }, class: 'btn btn-success' %></a>
+    <%- else %>
+      <%= link_to 'Disable', users_user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top"  }, class: 'btn btn-danger' %></a>
+    <%- end %>
+  </td>
+</tr>

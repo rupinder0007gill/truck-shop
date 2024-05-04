@@ -1,0 +1,163 @@
+<%= form_with(model: invoice, url: url) do |form| %>
+  <% if invoice.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% invoice.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="card mb-3">
+    <div class="bg-holder d-none d-lg-block bg-card" style="background-image:url(<%= image_path('theme/corner-4.png') %>);opacity: 0.7;">
+    </div>
+    <!--/.bg-holder-->
+
+    <div class="card-body position-relative">
+      <h5><%= invoice.new_record? ? "New invoice Details:" : "Edit invoice Details: ##{invoice.id}" %></h5>
+      <div><strong class="me-2">Status: </strong>
+        <%- if current_user.role.name == 'admin' %>
+          <%= form.select :status, Invoice.statuses.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
+        <%- else %>
+          <div class="badge rounded-pill badge-subtle-success fs-11"><%= invoice.status %><span class="fas fa-check ms-1" data-fa-transform="shrink-2"></span></div>
+        <%-end%>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <h5 class="mb-3 fs-9">Transaction Information</h5>
+        </div>
+        <div class="col-sm-12 col-md-6 mb-3">
+          <%= form.label :transaction_id, 'Transaction Id:', class: 'form-label' %>
+          <%= form.text_field :transaction_id, class: 'form-control' %>
+        </div>
+        <div class="col-sm-12 col-md-6 mb-3">
+          <%= form.label :payment_method, 'Payment Method:', class: 'form-label' %>
+          <%= form.select :payment_method, Invoice.payment_methods.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+        <template data-nested-form-target="template">
+          <%= form.fields_for :invoice_products, invoice.invoice_products.build(price_cents: 0, final_price_cents: 0, quantity: 1), child_index: 'NEW_RECORD' do |invoice_product_fields| %>
+            <%= render "invoice_product_form", f: invoice_product_fields %>
+          <% end %>
+        </template>
+
+        <div class="table-responsive fs-10">
+          <table class="table table-striped border-bottom">
+            <thead class="bg-200">
+              <tr>
+                <th class="text-900 border-0">Products</th>
+                <th class="text-900 border-0 text-center">Quantity</th>
+                <th class="text-900 border-0 text-center">Rate</th>
+                <th class="text-900 border-0 text-center">Amount</th>
+                <th class="text-900 border-0 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= form.fields_for :invoice_products do |invoice_product_fields| %>
+                <%= render "invoice_product_form", f: invoice_product_fields %>
+              <% end %>
+
+              <!-- Inserted elements will be injected before that target. -->
+              <tr data-nested-form-target="target"></tr>
+              <tr>
+                <td colspan="5">
+                  <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Product</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
+        <template data-nested-form-target="template">
+          <%= form.fields_for :invoice_services, invoice.invoice_services.build(price_cents: 0), child_index: 'NEW_RECORD' do |invoice_service_fields| %>
+            <%= render "invoice_service_form", f: invoice_service_fields %>
+          <% end %>
+        </template>
+        <div class="table-responsive fs-10">
+          <table class="table table-striped border-bottom">
+            <thead class="bg-200">
+              <tr>
+                <th class="text-900 border-0">Other Services</th>
+                <th class="text-900 border-0 text-center">Amount</th>
+                <th class="text-900 border-0 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= form.fields_for :invoice_services do |invoice_service_fields| %>
+                <%= render "invoice_service_form", f: invoice_service_fields %>
+              <% end %>
+
+              <!-- Inserted elements will be injected before that target. -->
+              <tr data-nested-form-target="target"></tr>
+              <tr>
+                <td colspan="5">
+                  <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Service</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row g-0 justify-content-end">
+        <div class="col-auto">
+          <table class="table table-sm table-borderless fs-10 text-end">
+            <tr>
+              <th class="text-900 align-content-center">Subtotal:</th>
+              <td class="fw-semi-bold">
+                <div class="input-group ">
+                  <span class="input-group-text" id="basic-addon1">$</span>
+                  <%= form.number_field :price, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "orderPrice" } %>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="text-900 align-content-center">Tax 0%:</th>
+              <td class="fw-semi-bold">
+                <div class="input-group ">
+                  <span class="input-group-text" id="basic-addon1">$</span>
+                  <%= form.number_field :tax, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "orderTax" } %>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th class="text-900 align-content-center">Discount:</th>
+              <td class="fw-semi-bold">
+                <div class="input-group ">
+                  <span class="input-group-text" id="basic-addon1">$</span>
+                  <%= form.number_field :discount, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "orderDiscount" } %>
+                </div>
+              </td>
+            </tr>
+            <tr class="border-top">
+              <th class="text-900 align-content-center">Total:</th>
+              <td class="fw-semi-bold">
+                <div class="input-group ">
+                  <span class="input-group-text" id="basic-addon1">$</span>
+                  <%= form.number_field :total_price, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "orderTotalPrice" } %>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row g-0 mb-3 justify-content-start">
+        <div class="col-12">
+          <%= form.submit class: 'btn btn-primary' %>
+          <%= link_to "Cancel", users_invoices_path, class: 'btn btn-danger' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

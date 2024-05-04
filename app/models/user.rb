@@ -83,6 +83,7 @@ class User < ApplicationRecord
   belongs_to :role
   has_many :products, dependent: :restrict_with_error
   has_many :orders, dependent: :restrict_with_error
+  has_many :invoices, dependent: :restrict_with_error
 
   ##############################################################################
   ### Validations ##############################################################

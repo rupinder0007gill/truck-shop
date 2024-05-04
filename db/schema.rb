@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_16_104232) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_071843) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,49 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_104232) do
     t.index ["invited_by_type", "invited_by_id"], name: "index_customers_on_invited_by"
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_customers_on_unlock_token", unique: true
+  end
+
+  create_table "invoice_products", force: :cascade do |t|
+    t.bigint "quantity"
+    t.bigint "price_cents"
+    t.bigint "final_price_cents"
+    t.bigint "invoice_id"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_invoice_products_on_deleted_at"
+    t.index ["invoice_id"], name: "index_invoice_products_on_invoice_id"
+    t.index ["product_id"], name: "index_invoice_products_on_product_id"
+  end
+
+  create_table "invoice_services", force: :cascade do |t|
+    t.bigint "price_cents"
+    t.bigint "invoice_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_invoice_services_on_deleted_at"
+    t.index ["invoice_id"], name: "index_invoice_services_on_invoice_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer "status", default: 0, null: false
+    t.integer "payment_method", default: 0, null: false
+    t.string "transaction_id"
+    t.bigint "price_cents"
+    t.bigint "tax_cents"
+    t.bigint "total_price_cents"
+    t.bigint "discount_cents"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_invoices_on_deleted_at"
+    t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
   create_table "order_products", force: :cascade do |t|
@@ -200,6 +243,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_104232) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "invoice_products", "invoices"
+  add_foreign_key "invoice_products", "products"
+  add_foreign_key "invoice_services", "invoices"
+  add_foreign_key "invoices", "users"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "users"

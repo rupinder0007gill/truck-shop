@@ -48,6 +48,15 @@
 #                                          PATCH  /users/orders/:id(.:format)                                                                       users/orders#update
 #                                          PUT    /users/orders/:id(.:format)                                                                       users/orders#update
 #                                          DELETE /users/orders/:id(.:format)                                                                       users/orders#destroy
+#                       paid_users_invoice GET    /users/invoices/:id/paid(.:format)                                                                users/invoices#paid
+#                           users_invoices GET    /users/invoices(.:format)                                                                         users/invoices#index
+#                                          POST   /users/invoices(.:format)                                                                         users/invoices#create
+#                        new_users_invoice GET    /users/invoices/new(.:format)                                                                     users/invoices#new
+#                       edit_users_invoice GET    /users/invoices/:id/edit(.:format)                                                                users/invoices#edit
+#                            users_invoice GET    /users/invoices/:id(.:format)                                                                     users/invoices#show
+#                                          PATCH  /users/invoices/:id(.:format)                                                                     users/invoices#update
+#                                          PUT    /users/invoices/:id(.:format)                                                                     users/invoices#update
+#                                          DELETE /users/invoices/:id(.:format)                                                                     users/invoices#destroy
 #                           users_products GET    /users/products(.:format)                                                                         users/products#index
 #                                          POST   /users/products(.:format)                                                                         users/products#create
 #                        new_users_product GET    /users/products/new(.:format)                                                                     users/products#new
@@ -135,6 +144,11 @@ Rails.application.routes.draw do
     resources :orders do
       member do
         get :deliver
+      end
+    end
+    resources :invoices do
+      member do
+        get :paid
       end
     end
     resources :products

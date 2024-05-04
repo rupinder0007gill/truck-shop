@@ -1,0 +1,2 @@
+module Users::InvoicesHelper
+end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invoices
@@ -52,11 +54,11 @@ class Invoice < ApplicationRecord
   has_many :invoice_services, dependent: :destroy
   has_many :services, through: :invoice_services
   accepts_nested_attributes_for :invoice_products, allow_destroy: true, reject_if: proc { |attributes|
-                                                                                   attributes['product_id'].blank?
-                                                                                 }
+                                                                                     attributes['product_id'].blank?
+                                                                                   }
   accepts_nested_attributes_for :invoice_services, allow_destroy: true, reject_if: proc { |attributes|
-                                                                                   attributes['service_id'].blank?
-                                                                                 }
+                                                                                     attributes['service_id'].blank?
+                                                                                   }
   belongs_to :user
 
   ##############################################################################

@@ -17,15 +17,15 @@
       <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
         <li class="nav-item">
           <!-- parent pages-->
-          <a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="dashboard">
+          <a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "home" ? true : false %>" aria-controls="dashboard">
             <div class="d-flex align-items-center">
               <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span>
               <span class="nav-link-text ps-1">Dashboard</span>
             </div>
           </a>
-          <ul class="nav collapse show" id="dashboard">
+          <ul class="nav collapse <%= 'show' if controller_name == "home" %>" id="dashboard">
             <li class="nav-item">
-              <a class="nav-link active" href="<%= root_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "index" %>" href="<%= root_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">Default</span>
                 </div>
@@ -33,7 +33,7 @@
               <!-- more inner pages-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= analytics_home_index_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "analytics" %>" href="<%= analytics_home_index_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">Analytics</span>
                 </div>
@@ -41,7 +41,7 @@
               <!-- more inner pages-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= crm_home_index_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "crm" %>" href="<%= crm_home_index_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">CRM</span>
                 </div>
@@ -49,7 +49,7 @@
               <!-- more inner pages-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= ecommerce_home_index_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "ecommerce" %>" href="<%= ecommerce_home_index_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">E commerce</span>
                 </div>
@@ -57,7 +57,7 @@
               <!-- more inner pages-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= lms_home_index_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "lms" %>" href="<%= lms_home_index_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">LMS</span><span class="badge rounded-pill ms-2 badge-subtle-success">New</span>
                 </div>
@@ -65,7 +65,7 @@
               <!-- more inner pages-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= management_home_index_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "management" %>" href="<%= management_home_index_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">Management</span>
                 </div>
@@ -73,7 +73,7 @@
               <!-- more inner pages-->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<%= saas_home_index_path %>">
+              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "saas" %>" href="<%= saas_home_index_path %>">
                 <div class="d-flex align-items-center">
                   <span class="nav-link-text ps-1">SaaS</span>
                 </div>
@@ -92,209 +92,99 @@
             </div>
           </div>
           <!-- parent pages-->
-          <a class="nav-link" href="<%= users_users_path %>" role="button">
+          <a class="nav-link <%= 'active' if controller_name == "users" %>" href="<%= users_users_path %>" role="button">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Users</span>
             </div>
           </a>
 
           <!-- parent pages-->
-          <a class="nav-link dropdown-indicator" href="#e-commerce" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-commerce">
+          <a class="nav-link dropdown-indicator" href="#products" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "products" ? true : false %>" aria-controls="products">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-store"></span></span><span class="nav-link-text ps-1">Products</span>
+            </div>
+          </a>
+          <ul class="nav collapse <%= 'show' if controller_name == "products" %>" id="products">
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "products" && action_name == "index" %>" href="<%= users_products_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product List</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+            <%# <li class="nav-item">
+              <a class="nav-link" href="#">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product details</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li> %>
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "products" && action_name == "new" %>" href="<%= new_users_product_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add product</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+          </ul>
+
+          <!-- parent pages-->
+          <a class="nav-link dropdown-indicator" href="#orders" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "orders" ? true : false %>" aria-controls="orders">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-store"></span></span><span class="nav-link-text ps-1">Orders</span>
+            </div>
+          </a>
+          <ul class="nav collapse <%= 'show' if controller_name == "orders" %>" id="orders">
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "index" %>" href="<%= users_orders_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Order List</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+            <%# <li class="nav-item">
+              <a class="nav-link" href="#">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product details</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li> %>
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "new" %>" href="<%= new_users_order_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add order</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+          </ul>
+          <!-- parent pages-->
+          <a class="nav-link <%= 'active' if controller_name == "customers" %>" href="<%= clients_customers_path %>" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Customers</span>
+            </div>
+          </a>
+          <!-- parent pages-->
+          <a class="nav-link dropdown-indicator" href="#e-commerce" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "invoices" ? true : false %>" aria-controls="e-commerce">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-shopping-cart"></span></span><span class="nav-link-text ps-1">E commerce</span>
             </div>
           </a>
-          <ul class="nav collapse" id="e-commerce">
-            <li class="nav-item"><a class="nav-link dropdown-indicator" href="#product" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-commerce">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-              <ul class="nav collapse" id="product">
-                <li class="nav-item"><a class="nav-link" href="<%= users_products_path %>">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Products</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-                <li class="nav-item"><a class="nav-link" href="app/e-commerce/product/product-details.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product details</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-                <li class="nav-item"><a class="nav-link" href="<%= new_users_product_path %>">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add product</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item"><a class="nav-link dropdown-indicator" href="#orders" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-commerce">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Orders</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-              <ul class="nav collapse" id="orders">
-                <li class="nav-item"><a class="nav-link" href="<%= users_orders_path %>">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Order list</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-                <li class="nav-item"><a class="nav-link" href="app/e-commerce/orders/order-details.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Order details</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="<%= clients_customers_path %>">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Customers</span>
+          <ul class="nav collapse <%= 'show' if controller_name == "invoices" %>" id="e-commerce">
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "invoices" && action_name == "index" %>" href="<%= users_invoices_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Invoices</span>
                 </div>
               </a>
               <!-- more inner pages-->
             </li>
-            <li class="nav-item"><a class="nav-link" href="app/e-commerce/customer-details.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Customer details</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/e-commerce/shopping-cart.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Shopping cart</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/e-commerce/checkout.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Checkout</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/e-commerce/billing.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Billing</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="<%= users_invoices_path %>">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Invoice</span>
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "new" %>" href="<%= new_users_invoice_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">New Invoice</span>
                 </div>
               </a>
               <!-- more inner pages-->
             </li>
           </ul>
           <!-- parent pages-->
-          <a class="nav-link" href="app/calendar.html" role="button">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar-alt"></span></span><span class="nav-link-text ps-1">Calendar</span>
-            </div>
-          </a>
-          <!-- parent pages-->
-          <a class="nav-link" href="app/chat.html" role="button">
+          <a class="nav-link" href="javascript:void(0)" role="button">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-comments"></span></span><span class="nav-link-text ps-1">Chat</span>
             </div>
           </a>
-          <!-- parent pages-->
-          <a class="nav-link dropdown-indicator" href="#email" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="email">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-envelope-open"></span></span><span class="nav-link-text ps-1">Email</span>
-            </div>
-          </a>
-          <ul class="nav collapse" id="email">
-            <li class="nav-item"><a class="nav-link" href="app/email/inbox.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Inbox</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/email/email-detail.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Email detail</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/email/compose.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Compose</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-          </ul>
-          <!-- parent pages--><a class="nav-link dropdown-indicator" href="#events" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="events">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-calendar-day"></span></span><span class="nav-link-text ps-1">Events</span>
-            </div>
-          </a>
-          <ul class="nav collapse" id="events">
-            <li class="nav-item"><a class="nav-link" href="app/events/create-an-event.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Create an event</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/events/event-detail.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Event detail</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/events/event-list.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Event list</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-          </ul>
-          <!-- parent pages--><a class="nav-link dropdown-indicator" href="#e-learning" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-learning">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-graduation-cap"></span></span><span class="nav-link-text ps-1">E learning</span><span class="badge rounded-pill ms-2 badge-subtle-success">New</span>
-            </div>
-          </a>
-          <ul class="nav collapse" id="e-learning">
-            <li class="nav-item"><a class="nav-link dropdown-indicator" href="#course" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-learning">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Course</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-              <ul class="nav collapse" id="course">
-                <li class="nav-item"><a class="nav-link" href="app/e-learning/course/course-list.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Course list</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-                <li class="nav-item"><a class="nav-link" href="app/e-learning/course/course-grid.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Course grid</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-                <li class="nav-item"><a class="nav-link" href="app/e-learning/course/course-details.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Course details</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-                <li class="nav-item"><a class="nav-link" href="app/e-learning/course/create-a-course.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Create a course</span>
-                    </div>
-                  </a>
-                  <!-- more inner pages-->
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/e-learning/student-overview.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Student overview</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="app/e-learning/trainer-profile.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Trainer profile</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-          </ul>
         </li>
         <li class="nav-item">
           <!-- label-->
@@ -311,32 +201,16 @@
             </div>
           </a>
           <ul class="nav collapse" id="user">
-            <li class="nav-item"><a class="nav-link" href="pages/user/profile.html">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)">
                 <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Profile</span>
                 </div>
               </a>
               <!-- more inner pages-->
             </li>
-            <li class="nav-item"><a class="nav-link" href="pages/user/settings.html">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:void(0)">
                 <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Settings</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-          </ul>
-          <!-- parent pages--><a class="nav-link dropdown-indicator" href="#errors" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="errors">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-exclamation-triangle"></span></span><span class="nav-link-text ps-1">Errors</span>
-            </div>
-          </a>
-          <ul class="nav collapse" id="errors">
-            <li class="nav-item"><a class="nav-link" href="pages/errors/404.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">404</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item"><a class="nav-link" href="pages/errors/500.html">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">500</span>
                 </div>
               </a>
               <!-- more inner pages-->

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class Users::InvoicesController < ApplicationController
-	before_action :set_invoice, only: %i[show edit update destroy paid]
+  before_action :set_invoice, only: %i[show edit update destroy paid]
 
-	def index
-		@invoices = Invoice.all
-	end
+  def index
+    @invoices = Invoice.all
+  end
 
-	def show; end
+  def show; end
 
   def new
     @invoice = current_user.invoices.new(price: 0, tax: 0, discount: 0, total_price: 0)
@@ -23,7 +25,7 @@ class Users::InvoicesController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
       end
     end
-	end
+  end
 
   def update
     respond_to do |format|
@@ -53,7 +55,7 @@ class Users::InvoicesController < ApplicationController
     end
   end
 
-	private
+  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_invoice

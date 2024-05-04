@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invoice_services
@@ -29,5 +31,4 @@ class InvoiceService < ApplicationRecord
   ### Associations #############################################################
   belongs_to :invoice
   belongs_to :service
-
 end

@@ -153,9 +153,9 @@ Rails.application.routes.draw do
     end
     resources :products
     resources :users do
-    	member do
-    		post :enable_user
-    	end
+      member do
+        post :enable_user
+      end
     end
   end
 

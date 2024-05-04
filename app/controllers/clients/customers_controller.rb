@@ -1,22 +1,32 @@
+# frozen_string_literal: true
+
 class Clients::CustomersController < ApplicationController
   before_action :set_customer, only: %i[edit update destroy show]
 
   def index
-    if params[:query].present?
-      @customers = Customer.search_for(params[:query])
-    else
-      @customers = Customer.all
+    @search_url = clients_customers_path
+    sort_column = params[:sort] || 'created_at'
+    sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
+
+    @customers = if params[:query].present?
+                   Customer.search_for(params[:query])
+                 else
+                   Customer.all
+                 end
+    @pagy, @customers = pagy(@customers.order("#{sort_column} #{sort_direction}"), items: 10)
+    respond_to do |format|
+      format.html
+      format.turbo_stream # Respond to Turbo Stream requests
     end
   end
+
+  def show; end
 
   def new
     @customer = Customer.new
   end
 
   def edit; end
-
-  def show
-  end
 
   def create
     @customer = Customer.new(customer_params)
@@ -48,5 +58,4 @@ class Clients::CustomersController < ApplicationController
   def customer_params
     params.require(:customer).permit(:first_name, :last_name, :email, :phone, :address)
   end
-
 end

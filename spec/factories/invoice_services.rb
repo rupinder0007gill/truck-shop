@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invoice_services
@@ -21,6 +23,5 @@
 #
 FactoryBot.define do
   factory :invoice_service do
-    
   end
 end

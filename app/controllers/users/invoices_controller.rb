@@ -38,7 +38,9 @@ class Users::InvoicesController < ApplicationController
   end
 
   def destroy
-    @invoice.destroy!
+    redirect_to users_invoices_url, alert: "You are not authorized to perform this action, invoice is paid you can't delete it" and return if @invoice.paid?
+
+    @invoice.destroy
 
     respond_to do |format|
       format.html { redirect_to users_invoices_url, notice: 'invoice was successfully destroyed.' }
@@ -64,6 +66,6 @@ class Users::InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:status, :price, :tax, :discount, :total_price, :transaction_id, :payment_method, invoice_products_attributes: %i[id product_id quantity price final_price _destroy])
+    params.require(:invoice).permit(:status, :price, :tax, :discount, :total_price, :transaction_id, :payment_method, invoice_products_attributes: %i[id product_id quantity price final_price _destroy], invoice_services_attributes: %i[id name price _destroy])
   end
 end

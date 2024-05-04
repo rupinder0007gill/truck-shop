@@ -10,6 +10,9 @@ application.register("flatpicker", FlatpickerController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import InvoiceNestedFormController from "./invoice_nested_form_controller"
+application.register("invoice-nested-form", InvoiceNestedFormController)
+
 import NestedFormController from "./nested_form_controller"
 application.register("nested-form", NestedFormController)
 

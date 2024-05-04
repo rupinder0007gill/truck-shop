@@ -15,7 +15,6 @@
 
     <div class="card-body position-relative">
       <h5><%= order.new_record? ? "New Order Details:" : "Edit Order Details: ##{order.id}" %></h5>
-      <%# <p class="fs-10">April 21, 2019, 5:33 PM</p> %>
       <div><strong class="me-2">Status: </strong>
         <%- if current_user.role.name == 'admin' %>
           <%= form.select :status, Order.statuses.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>

@@ -7,6 +7,7 @@
 #  id          :bigint           not null, primary key
 #  archived_at :datetime
 #  deleted_at  :datetime
+#  name        :string
 #  price_cents :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

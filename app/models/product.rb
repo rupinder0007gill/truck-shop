@@ -71,6 +71,7 @@ class Product < ApplicationRecord
   ### Scopes ###################################################################
   scope :published_products, -> { where(status: 1) }
   scope :draft_products, -> { where(status: 0) }
+  scope :available_stocks, -> { where('available_stocks > 1') }
 
   ##############################################################################
   ### Other ####################################################################

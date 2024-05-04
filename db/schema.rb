@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_071843) do
   end
 
   create_table "invoice_services", force: :cascade do |t|
+    t.string "name"
     t.bigint "price_cents"
     t.bigint "invoice_id"
     t.datetime "created_at", null: false

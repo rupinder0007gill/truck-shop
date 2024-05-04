@@ -43,12 +43,12 @@
               <td class="date py-2 align-middle"><%= invoice.created_at.strftime('%d/%m/%Y') %></td>
               <td class="status py-2 align-middle text-center fs-9 white-space-nowrap">
                 <%- if invoice.paid? %>
-                  <span class="badge badge rounded-pill d-block badge-subtle-primary">
-                    Paid<span class="ms-1 fas fa-redo" data-fa-transform="shrink-2"></span>
+                  <span class="badge badge rounded-pill d-block badge-subtle-success">
+                    Paid<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
                   </span>
                 <%- else %>
-                  <span class="badge badge rounded-pill d-block badge-subtle-success">
-                    Pending<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+                  <span class="badge badge rounded-pill d-block badge-subtle-primary">
+                    Pending<span class="ms-1 fas fa-redo" data-fa-transform="shrink-2"></span>
                   </span>
                 <%- end %>
               </td>

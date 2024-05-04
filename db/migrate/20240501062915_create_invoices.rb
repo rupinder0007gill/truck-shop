@@ -11,6 +11,8 @@ class CreateInvoices < ActiveRecord::Migration[7.1]
       t.integer :tax_cents, limit: 8
       t.integer :total_price_cents, limit: 8
       t.integer :discount_cents, limit: 8
+      t.datetime :service_start_time
+      t.datetime :service_end_time
 
       ## References
       t.references :user, foreign_key: true

@@ -127,6 +127,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_071843) do
     t.bigint "tax_cents"
     t.bigint "total_price_cents"
     t.bigint "discount_cents"
+    t.datetime "service_start_time"
+    t.datetime "service_end_time"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

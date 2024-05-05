@@ -13,7 +13,8 @@
             <p class="font-sans-serif lh-1 mb-1 fs-5">$47K</p><span class="badge badge-subtle-success rounded-pill fs-11">+3.5%</span>
           </div>
           <div class="col-auto ps-0">
-            <div class="echart-bar-weekly-sales h-100"></div>
+            <%- invoices = Invoice.group_by_day(:created_at, range: Date.today.beginning_of_week.beginning_of_day..Date.today.end_of_week.end_of_day).sum(:total_price_cents) %>
+            <div class="echart-bar-weekly-sales h-100" data-chart-keys="<%= invoices.keys.map {|k| k.strftime('%a') } %>" data-chart-values="<%= invoices.values.map {|v| (v/100).to_f } %>"></div>
           </div>
         </div>
       </div>

@@ -4,14 +4,15 @@ class Users::UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy enable_user]
 
   def index
-    sort_column = params[:sort] || "created_at"
-    sort_direction = params[:direction].presence_in(%w[asc desc]) || "desc"
+    @search_url = users_users_path
+    sort_column = params[:sort] || 'created_at'
+    sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
 
-    if params[:query].present?
-      @users = User.includes(:role).search_for(params[:query])
-    else
-      @users = User.includes(:role).all
-    end
+    @users = if params[:query].present?
+               User.includes(:role).search_for(params[:query])
+             else
+               User.includes(:role).all
+             end
     @pagy, @users = pagy(@users.order("#{sort_column} #{sort_direction}"), items: 10)
     respond_to do |format|
       format.html

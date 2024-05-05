@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invoice_products
@@ -26,6 +28,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe InvoiceProduct, type: :model do
+RSpec.describe InvoiceProduct do
   pending "add some examples to (or delete) #{__FILE__}"
 end

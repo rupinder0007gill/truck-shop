@@ -4,16 +4,11 @@
       <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
         <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Members</h5>
       </div>
-      <div class="col-4 col-sm-auto d-flex align-items-center ps-2">
-        <div class="col me-2">
-          <%= form_with url: users_users_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "search_results", turbo_action: "advance" }, class: "position-relative" do %>
-            <%= text_field_tag :query, params[:query], class: "form-control form-control-sm search-input lh-1 rounded-2 ps-4", placeholder: "Search...", data: { action: "input->search-form#search" } %>
-          <% end %>
-        </div>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1"><%= link_to "New Member",
-              new_users_user_path %></span></button>
-          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
+      <div class="col-8 col-sm-auto d-flex align-items-center ps-2">
+        <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1"><%= link_to "New Member",
+            new_users_user_path %></span></button>
+        <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
+        <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
       </div>
     </div>
   </div>

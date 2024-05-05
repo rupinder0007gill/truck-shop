@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeviseInvitableAddToCustomers < ActiveRecord::Migration[7.1]
   def up
     change_table :customers do |t|

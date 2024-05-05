@@ -31,12 +31,16 @@ gem 'cssbundling-rails'
 gem 'devise', '~> 4.9', '>= 4.9.3'
 
 # Translations for the devise gem
-# https://github.com/tigrish/devise-i18n
+# Read more: https://github.com/tigrish/devise-i18n
 gem 'devise-i18n', '~> 1.12'
 
 # It adds support for send invitations by email (it requires to be authenticated) and accept the invitation by setting a password.
-# https://github.com/scambra/devise_invitable
+# Read more: https://github.com/scambra/devise_invitable
 gem 'devise_invitable', '~> 2.0', '>= 2.0.9'
+
+# The simplest way to group temporal data
+# Read more: https://github.com/ankane/groupdate
+gem 'groupdate', '~> 6.4'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # Read more: https://github.com/janko/image_processing

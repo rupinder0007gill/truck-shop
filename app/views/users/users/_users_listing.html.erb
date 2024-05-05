@@ -1,6 +1,12 @@
 <tr class="btn-reveal-trigger" id="users_<%=user.id%>">
   <td class="py-2 align-middle white-space-nowrap">
-    <a href="<%= edit_users_user_path(user) %>"> <strong><%= user.name %></strong></a>
+    <%= link_to edit_users_user_path(user), data: { turbo_frame: "_top" } do %>
+      <div class="d-flex d-flex align-items-center">
+        <div class="flex-1">
+          <h5 class="mb-0 fs-10"><%= user.name %></h5>
+        </div>
+      </div>
+    <%-end%>
   </td>
   <td class="py-2 align-middle">
     <%= user.email %>

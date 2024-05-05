@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: customers
@@ -51,7 +53,7 @@ class Customer < ApplicationRecord
          :recoverable, :rememberable, :trackable
   include PgSearch::Model
   pg_search_scope :search_for,
-                  against: [:first_name, :last_name, :phone, :email],
+                  against: %i[first_name last_name phone email],
                   using: {
                     tsearch: { prefix: true }
                   }

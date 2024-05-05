@@ -54,7 +54,7 @@
 class User < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search_for,
-                  against: [:first_name, :last_name, :phone, :email],
+                  against: %i[first_name last_name phone email],
                   using: {
                     tsearch: { prefix: true }
                   }
@@ -103,11 +103,11 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && self.archived_at.nil? # i.e. super && self.is_active
+    super && archived_at.nil? # i.e. super && self.is_active
   end
 
   def inactive_message
-    "Sorry, this account has been disabled."
+    'Sorry, this account has been disabled.'
   end
 
   ##############################################################################
@@ -130,7 +130,7 @@ class User < ApplicationRecord
   end
 
   def set_password_if_nil
-    return if self.password.present?
+    return if password.present?
 
     generated_password = Devise.friendly_token(64)
     self.password = generated_password

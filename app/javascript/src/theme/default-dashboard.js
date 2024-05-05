@@ -10,10 +10,14 @@ document.addEventListener('turbo:load', function () {
   };
 
   var chartDom = document.querySelector('.echart-bar-weekly-sales');
+  var keys = chartDom.dataset.chartKeys;
+  var values = chartDom.dataset.chartValues;
+  console.log(keys);
+  console.log(values);
   if(chartDom) {
     var myChart = echarts.init(chartDom);
     var option;
-    var data = [120, 200, 150, 80, 70, 110, 120];
+    var data = JSON.parse(values);
 
     option = {
       tooltip: {
@@ -33,7 +37,7 @@ document.addEventListener('turbo:load', function () {
       },
       xAxis: {
         type: 'category',
-        data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        data: JSON.parse(keys),
         boundaryGap: false,
         axisLine: {
           show: false

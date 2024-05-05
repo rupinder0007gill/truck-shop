@@ -89,4 +89,15 @@ module ApplicationHelper
     # Optionally, you can format the dates as strings if needed
     current_month_days.map(&:to_s)
   end
+
+  def calculate_percentage_from_two_numbers(whole, part)
+    # Ensure that the denominator is not zero to avoid division by zero error
+    return 1 if whole.zero?
+
+    # Calculate the percentage
+    percentage = (part.to_f / whole) * 100
+
+    # Round the percentage to two decimal places
+    percentage.round(2)
+  end
 end

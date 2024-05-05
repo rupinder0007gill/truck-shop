@@ -7,13 +7,26 @@
       <div class="card-header pb-0">
         <h6 class="mb-0 mt-2 d-flex align-items-center">Weekly Sales<span class="ms-1 text-400" data-bs-toggle="tooltip" data-bs-placement="top" title="Calculated according to last week's sales"><span class="far fa-question-circle" data-fa-transform="shrink-1"></span></span></h6>
       </div>
+      <%- 
+        start_date = Date.today.beginning_of_week
+        end_date = Date.today.end_of_week
+        last_week_start_date = (Date.today - 7.days).beginning_of_week
+        last_week_end_date = (Date.today - 7.days).end_of_week
+        last_week_invoices_total_prices = Invoice.where(created_at: last_week_start_date..last_week_end_date).sum(:total_price_cents)
+        invoices = Invoice.group_by_day(:created_at, range: start_date.beginning_of_day..end_date.end_of_day).sum(:total_price_cents)
+      %>
       <div class="card-body d-flex flex-column justify-content-end">
         <div class="row">
           <div class="col">
-            <p class="font-sans-serif lh-1 mb-1 fs-5">$47K</p><span class="badge badge-subtle-success rounded-pill fs-11">+3.5%</span>
+            <p class="font-sans-serif lh-1 mb-1 fs-5"><%= format_price(invoices.values.sum/100) %></p>
+            <%- percentage_change = calculate_percentage_difference(last_week_invoices_total_prices/100, invoices.values.sum/100) %>
+            <%- if percentage_change.positive? %>
+              <span class="badge badge-subtle-success rounded-pill fs-11">+<%= percentage_change.round(2) %>%</span>
+            <%- else %>
+              <span class="badge badge-subtle-danger rounded-pill fs-11"><%= percentage_change.round(2) %>%</span>
+            <%- end %>
           </div>
           <div class="col-auto ps-0">
-            <%- invoices = Invoice.group_by_day(:created_at, range: Date.today.beginning_of_week.beginning_of_day..Date.today.end_of_week.end_of_day).sum(:total_price_cents) %>
             <div class="echart-bar-weekly-sales h-100" data-chart-keys="<%= invoices.keys.map {|k| k.strftime('%a') } %>" data-chart-values="<%= invoices.values.map {|v| (v/100).to_f } %>"></div>
           </div>
         </div>

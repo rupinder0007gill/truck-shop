@@ -48,4 +48,19 @@ module ApplicationHelper
       "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='#{path_d}'></path>".html_safe
     end
   end
+
+  def format_price(number)
+    if number >= 1_000_000
+      "#{number.to_f / 1_000_000}M"
+    elsif number >= 1_000
+      "#{number.to_f / 1_000}K"
+    else
+      number.to_f
+    end
+  end
+
+  def calculate_percentage_difference(last_price, current_price)
+    last_price = 1 if last_price.to_i == 0
+    ((current_price.to_f - last_price.to_f)/last_price.to_f)*100
+  end
 end

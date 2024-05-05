@@ -10,4 +10,11 @@ export default class extends Controller {
       this.formTarget.requestSubmit()
     }, 200)
   }
+
+  submit(_event) {
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => {
+      this.element.requestSubmit()
+    }, 300)
+  }
 }

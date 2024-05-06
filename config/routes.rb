@@ -57,6 +57,7 @@
 #                                          PATCH  /users/invoices/:id(.:format)                                                                     users/invoices#update
 #                                          PUT    /users/invoices/:id(.:format)                                                                     users/invoices#update
 #                                          DELETE /users/invoices/:id(.:format)                                                                     users/invoices#destroy
+#    delete_image_attachment_users_product DELETE /users/products/:id/delete_image_attachment(.:format)                                             users/products#delete_image_attachment
 #                           users_products GET    /users/products(.:format)                                                                         users/products#index
 #                                          POST   /users/products(.:format)                                                                         users/products#create
 #                        new_users_product GET    /users/products/new(.:format)                                                                     users/products#new
@@ -151,7 +152,11 @@ Rails.application.routes.draw do
         get :paid
       end
     end
-    resources :products
+    resources :products do
+      member do
+        delete :delete_image_attachment
+      end
+    end
     resources :users do
       member do
         post :enable_user

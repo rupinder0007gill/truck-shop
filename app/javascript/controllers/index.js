@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import CustomersAutocompleteController from "./customers_autocomplete_controller"
+application.register("customers-autocomplete", CustomersAutocompleteController)
+
 import FlatpickerController from "./flatpicker_controller"
 application.register("flatpicker", FlatpickerController)
 

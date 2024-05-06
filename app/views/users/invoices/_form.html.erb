@@ -24,23 +24,27 @@
       </div>
     </div>
   </div>
-  <div class="card mb-3">
+  <div class="card mb-3" data-controller='customers-autocomplete'>
     <div class="card-body">
       <div class="row">
         <div class="col-12">
           <h5 class="mb-3 fs-9">Customer Information</h5>
         </div>
+        <div class="col-sm-12 mb-3">
+          <%= form.label :customer_email, 'Email:', class: 'form-label' %>
+          <div class="autocomplete-container" id="autocomplete-container">
+            <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control', id: "autocomplete-field", data: { 'customers-autocomplete-target': 'customerEmail' } %>
+          </div>
+        </div>
+        <%= form.hidden_field :customer_id, class: 'input', data: { 'customers-autocomplete-target': 'customerId' } %>
+        <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customers-autocomplete-target': 'searchURL' } %>
         <div class="col-sm-6 mb-3">
           <%= form.label :customer_name, 'Name:', class: 'form-label' %>
-          <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control' %>
+          <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerName' } %>
         </div>
         <div class="col-sm-6 mb-3">
           <%= form.label :customer_phone, 'Phone Number:', class: 'form-label' %>
-          <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control' %>
-        </div>
-        <div class="col-sm-12 mb-3">
-          <%= form.label :customer_email, 'Email:', class: 'form-label' %>
-          <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control' %>
+          <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerPhone' } %>
         </div>
       </div>
     </div>
@@ -51,13 +55,17 @@
         <div class="col-12">
           <h5 class="mb-3 fs-9">Transaction Information</h5>
         </div>
-        <div class="col-sm-12 col-md-6 mb-3">
+        <div class="col-sm-12 col-md-4 mb-3">
           <%= form.label :transaction_id, 'Transaction Id:', class: 'form-label' %>
           <%= form.text_field :transaction_id, class: 'form-control' %>
         </div>
-        <div class="col-sm-12 col-md-6 mb-3">
+        <div class="col-sm-12 col-md-4 mb-3">
           <%= form.label :payment_method, 'Payment Method:', class: 'form-label' %>
           <%= form.select :payment_method, Invoice.payment_methods.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
+        </div>
+        <div class="col-sm-12 col-md-4 mb-3">
+          <%= form.label :service_estimted_time, 'Service Estimted Time:', class: 'form-label' %>
+          <%= form.select :service_estimted_time, services_duration_options, {}, class: 'form-select' %>
         </div>
       </div>
     </div>

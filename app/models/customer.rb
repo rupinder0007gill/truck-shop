@@ -47,16 +47,17 @@
 #  index_customers_on_unlock_token          (unlock_token) UNIQUE
 #
 class Customer < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :invitable, :database_authenticatable, :lockable,
-         :recoverable, :rememberable, :trackable
   include PgSearch::Model
   pg_search_scope :search_for,
                   against: %i[first_name last_name phone email],
                   using: {
                     tsearch: { prefix: true }
                   }
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :invitable, :database_authenticatable, :lockable,
+         :recoverable, :rememberable, :trackable
 
   has_many :invoices
   ### Validations ##############################################################

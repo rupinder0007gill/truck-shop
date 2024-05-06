@@ -49,6 +49,7 @@
 #                                          PUT    /users/orders/:id(.:format)                                                                       users/orders#update
 #                                          DELETE /users/orders/:id(.:format)                                                                       users/orders#destroy
 #                       paid_users_invoice GET    /users/invoices/:id/paid(.:format)                                                                users/invoices#paid
+#           search_customer_users_invoices GET    /users/invoices/search_customer(.:format)                                                         users/invoices#search_customer
 #                           users_invoices GET    /users/invoices(.:format)                                                                         users/invoices#index
 #                                          POST   /users/invoices(.:format)                                                                         users/invoices#create
 #                        new_users_invoice GET    /users/invoices/new(.:format)                                                                     users/invoices#new
@@ -150,6 +151,9 @@ Rails.application.routes.draw do
     resources :invoices do
       member do
         get :paid
+      end
+      collection do
+        get :search_customer
       end
     end
     resources :products do

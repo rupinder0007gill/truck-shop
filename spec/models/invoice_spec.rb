@@ -4,22 +4,23 @@
 #
 # Table name: invoices
 #
-#  id                 :bigint           not null, primary key
-#  archived_at        :datetime
-#  deleted_at         :datetime
-#  discount_cents     :bigint
-#  payment_method     :integer          default("cash"), not null
-#  price_cents        :bigint
-#  service_end_time   :datetime
-#  service_start_time :datetime
-#  status             :integer          default("pending"), not null
-#  tax_cents          :bigint
-#  total_price_cents  :bigint
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  customer_id        :bigint
-#  transaction_id     :string
-#  user_id            :bigint
+#  id                    :bigint           not null, primary key
+#  archived_at           :datetime
+#  deleted_at            :datetime
+#  discount_cents        :bigint
+#  payment_method        :integer          default("cash"), not null
+#  price_cents           :bigint
+#  service_end_time      :datetime
+#  service_estimted_time :integer
+#  service_start_time    :datetime
+#  status                :integer          default("pending"), not null
+#  tax_cents             :bigint
+#  total_price_cents     :bigint
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  customer_id           :bigint
+#  transaction_id        :string
+#  user_id               :bigint
 #
 # Indexes
 #

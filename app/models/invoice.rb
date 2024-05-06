@@ -4,22 +4,23 @@
 #
 # Table name: invoices
 #
-#  id                 :bigint           not null, primary key
-#  archived_at        :datetime
-#  deleted_at         :datetime
-#  discount_cents     :bigint
-#  payment_method     :integer          default("cash"), not null
-#  price_cents        :bigint
-#  service_end_time   :datetime
-#  service_start_time :datetime
-#  status             :integer          default("pending"), not null
-#  tax_cents          :bigint
-#  total_price_cents  :bigint
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  customer_id        :bigint
-#  transaction_id     :string
-#  user_id            :bigint
+#  id                    :bigint           not null, primary key
+#  archived_at           :datetime
+#  deleted_at            :datetime
+#  discount_cents        :bigint
+#  payment_method        :integer          default("cash"), not null
+#  price_cents           :bigint
+#  service_end_time      :datetime
+#  service_estimted_time :integer
+#  service_start_time    :datetime
+#  status                :integer          default("pending"), not null
+#  tax_cents             :bigint
+#  total_price_cents     :bigint
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  customer_id           :bigint
+#  transaction_id        :string
+#  user_id               :bigint
 #
 # Indexes
 #
@@ -34,6 +35,7 @@
 #
 class Invoice < ApplicationRecord
   attr_accessor :customer_name, :customer_phone, :customer_email
+
   ##############################################################################
   ### Attributes ###############################################################
   monetize :price_cents
@@ -51,6 +53,7 @@ class Invoice < ApplicationRecord
   ### Callbacks ################################################################
   before_create :set_service_start_time
   after_create :reduce_products_stocks, :set_invoice_id
+  after_update :set_invoice_id
   before_destroy :add_products_stocks
 
   ##############################################################################
@@ -72,7 +75,7 @@ class Invoice < ApplicationRecord
 
   ##############################################################################
   ### Validations ##############################################################
-  validate :check_available_stock
+  validate :check_available_stock, on: :create
 
   ##############################################################################
   ### Scopes ###################################################################
@@ -117,7 +120,7 @@ class Invoice < ApplicationRecord
   end
 
   def set_service_start_time
-    self.service_start_time = Time.now
+    self.service_start_time = Time.zone.now
   end
 
   def reduce_products_stocks
@@ -137,14 +140,14 @@ class Invoice < ApplicationRecord
   end
 
   def set_invoice_id
-    customer = Customer.find_by_email(self.customer_email)
-    if customer.present?
-      self.update(customer_id: customer.id)
-    else
+    return if customer_id.present?
+
+    customer = Customer.find_by(email: customer_email)
+    if customer.blank?
       generated_password = Devise.friendly_token(64)
-      name = self.customer_name.split(' ')
-      customer = Customer.create(first_name: name[0], last_name: name[1], phone: self.customer_phone, email: self.customer_email, password: generated_password, password_confirmation: generated_password )
-      self.update(customer_id: customer.id)
+      name = customer_name.split
+      customer = Customer.create(first_name: name[0], last_name: name[1], phone: customer_phone, email: customer_email, password: generated_password, password_confirmation: generated_password)
     end
+    update(customer_id: customer.id)
   end
 end

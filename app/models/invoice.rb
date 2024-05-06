@@ -17,19 +17,23 @@
 #  total_price_cents  :bigint
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  customer_id        :bigint
 #  transaction_id     :string
 #  user_id            :bigint
 #
 # Indexes
 #
-#  index_invoices_on_deleted_at  (deleted_at)
-#  index_invoices_on_user_id     (user_id)
+#  index_invoices_on_customer_id  (customer_id)
+#  index_invoices_on_deleted_at   (deleted_at)
+#  index_invoices_on_user_id      (user_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (customer_id => customers.id)
 #  fk_rails_...  (user_id => users.id)
 #
 class Invoice < ApplicationRecord
+  attr_accessor :customer_name, :customer_phone, :customer_email
   ##############################################################################
   ### Attributes ###############################################################
   monetize :price_cents
@@ -46,6 +50,7 @@ class Invoice < ApplicationRecord
   ##############################################################################
   ### Callbacks ################################################################
   before_create :set_service_start_time
+  before_create :set_invoice_id
   after_create :reduce_products_stocks
   before_destroy :add_products_stocks
 
@@ -64,6 +69,7 @@ class Invoice < ApplicationRecord
                                                                                      attributes['name'].blank?
                                                                                    }
   belongs_to :user
+  belongs_to :customer
 
   ##############################################################################
   ### Validations ##############################################################
@@ -128,6 +134,16 @@ class Invoice < ApplicationRecord
     invoice_products.each do |invoice_product|
       product = invoice_product.product
       product.update(available_stocks: (product.available_stocks + invoice_product.quantity))
+    end
+  end
+
+  def set_invoice_id
+  customer = Customer.find_by_email(self.customer_email)
+    if customer.present?
+      self.customer_id = customer.id
+    else
+      customer = Customer.create(customer_name: self.customer_name, customer_phone: self.customer_phone, customer_email: self.customer_email )
+      self.customer_id = customer.id
     end
   end
 end

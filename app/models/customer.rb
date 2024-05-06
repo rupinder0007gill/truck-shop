@@ -57,6 +57,8 @@ class Customer < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
+
+  has_many :invoices
   ### Validations ##############################################################
   validates :first_name, :last_name, presence: true
 

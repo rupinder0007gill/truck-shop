@@ -80,6 +80,7 @@ class User < ApplicationRecord
 
   ##############################################################################
   ### Associations #############################################################
+  has_one_attached :avatar
   belongs_to :role
   has_many :products, dependent: :restrict_with_error
   has_many :orders, dependent: :restrict_with_error

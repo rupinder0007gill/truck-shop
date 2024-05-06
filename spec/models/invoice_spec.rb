@@ -17,16 +17,19 @@
 #  total_price_cents  :bigint
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  customer_id        :bigint
 #  transaction_id     :string
 #  user_id            :bigint
 #
 # Indexes
 #
-#  index_invoices_on_deleted_at  (deleted_at)
-#  index_invoices_on_user_id     (user_id)
+#  index_invoices_on_customer_id  (customer_id)
+#  index_invoices_on_deleted_at   (deleted_at)
+#  index_invoices_on_user_id      (user_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (customer_id => customers.id)
 #  fk_rails_...  (user_id => users.id)
 #
 require 'rails_helper'

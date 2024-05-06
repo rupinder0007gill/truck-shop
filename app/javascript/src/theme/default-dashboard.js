@@ -10,11 +10,9 @@ document.addEventListener('turbo:load', function () {
   };
 
   var chartDom = document.querySelector('.echart-bar-weekly-sales');
-  var keys = chartDom.dataset.chartKeys;
-  var values = chartDom.dataset.chartValues;
-  console.log(keys);
-  console.log(values);
   if(chartDom) {
+    var keys = chartDom.dataset.chartKeys;
+    var values = chartDom.dataset.chartValues;
     var myChart = echarts.init(chartDom);
     var option;
     var data = JSON.parse(values);

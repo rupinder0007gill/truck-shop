@@ -52,6 +52,13 @@ class Users::ProductsController < ApplicationController
     end
   end
 
+  # DELETE /users/products/1/delete_image_attachment
+  def delete_image_attachment
+    @image = ActiveStorage::Attachment.find(params[:id])
+    @image.purge
+    redirect_back(fallback_location: request.referer)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

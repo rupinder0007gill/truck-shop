@@ -28,7 +28,7 @@ class Users::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save!
+    if @user.save
       redirect_to users_users_url, notice: 'User was successfully created.'
     else
       render :new, status: :unprocessable_entity
@@ -37,8 +37,8 @@ class Users::UsersController < ApplicationController
 
   def update
     @user.password = params[:user][:password] unless params[:user][:password].to_s.empty?
-    @user.update(user_params)
-    if @user.save!
+    if @user.update(user_params)
+      @user.avatar.purge if params[:user][:remove_avatar]
       redirect_to users_users_url, notice: 'User was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
@@ -63,6 +63,6 @@ class Users::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :phone, :role_id)
+    params.require(:user).permit(:first_name, :last_name, :email, :phone, :role_id, :avatar)
   end
 end

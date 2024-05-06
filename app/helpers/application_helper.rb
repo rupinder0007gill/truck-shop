@@ -48,4 +48,56 @@ module ApplicationHelper
       "<path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='#{path_d}'></path>".html_safe
     end
   end
+
+  def format_price(number)
+    if number >= 1_000_000
+      "#{number.to_f / 1_000_000}M"
+    elsif number >= 1_000
+      "#{number.to_f / 1_000}K"
+    else
+      number.to_f
+    end
+  end
+
+  def calculate_percentage_difference(last_price, current_price)
+    last_price = 1 if last_price.to_i.zero?
+    ((current_price.to_f - last_price.to_f) / last_price.to_f) * 100
+  end
+
+  def get_last_12_months
+    # Get the current date
+    current_date = Date.current
+
+    # Initialize an empty array to store the list of months
+    last_12_months = []
+
+    # Loop through the last 12 months
+    12.times do |i|
+      # Subtract 'i' months from the current date to get the date of the i-th previous month
+      month = current_date.months_ago(i)
+
+      # Add the month to the list
+      last_12_months << month.strftime('%B %Y')
+    end
+    last_12_months
+  end
+
+  def get_all_days_of_selected_month(first_day_of_month, last_day_of_month)
+    # Create an array to store all the days of the month
+    current_month_days = (first_day_of_month..last_day_of_month).to_a
+
+    # Optionally, you can format the dates as strings if needed
+    current_month_days.map(&:to_s)
+  end
+
+  def calculate_percentage_from_two_numbers(whole, part)
+    # Ensure that the denominator is not zero to avoid division by zero error
+    return 1 if whole.zero?
+
+    # Calculate the percentage
+    percentage = (part.to_f / whole) * 100
+
+    # Round the percentage to two decimal places
+    percentage.round(2)
+  end
 end

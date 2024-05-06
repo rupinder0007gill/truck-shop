@@ -33,6 +33,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Invoice < ApplicationRecord
+  attr_accessor :customer_name, :customer_phone, :customer_email
   ##############################################################################
   ### Attributes ###############################################################
   monetize :price_cents
@@ -49,7 +50,7 @@ class Invoice < ApplicationRecord
   ##############################################################################
   ### Callbacks ################################################################
   before_create :set_service_start_time
-  after_create :reduce_products_stocks
+  after_create :reduce_products_stocks, :set_invoice_id
   before_destroy :add_products_stocks
 
   ##############################################################################
@@ -67,6 +68,7 @@ class Invoice < ApplicationRecord
                                                                                      attributes['name'].blank?
                                                                                    }
   belongs_to :user
+  belongs_to :customer, optional: true
 
   ##############################################################################
   ### Validations ##############################################################
@@ -131,6 +133,18 @@ class Invoice < ApplicationRecord
     invoice_products.each do |invoice_product|
       product = invoice_product.product
       product.update(available_stocks: (product.available_stocks + invoice_product.quantity))
+    end
+  end
+
+  def set_invoice_id
+    customer = Customer.find_by_email(self.customer_email)
+    if customer.present?
+      self.update(customer_id: customer.id)
+    else
+      generated_password = Devise.friendly_token(64)
+      name = self.customer_name.split(' ')
+      customer = Customer.create(first_name: name[0], last_name: name[1], phone: self.customer_phone, email: self.customer_email, password: generated_password, password_confirmation: generated_password )
+      self.update(customer_id: customer.id)
     end
   end
 end

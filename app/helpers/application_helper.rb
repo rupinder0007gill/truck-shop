@@ -51,9 +51,9 @@ module ApplicationHelper
 
   def format_price(number)
     if number >= 1_000_000
-      "#{number.to_f / 1_000_000}M"
+      "#{(number.to_f / 1_000_000).round(1)}M"
     elsif number >= 1_000
-      "#{number.to_f / 1_000}K"
+      "#{(number.to_f / 1_000).round(1)}K"
     else
       number.to_f
     end

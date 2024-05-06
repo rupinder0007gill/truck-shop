@@ -37,8 +37,8 @@ class Users::UsersController < ApplicationController
 
   def update
     @user.password = params[:user][:password] unless params[:user][:password].to_s.empty?
+    @user.avatar.purge if params[:user][:remove_avatar] == '1'
     if @user.update(user_params)
-      @user.avatar.purge if params[:user][:remove_avatar]
       redirect_to users_users_url, notice: 'User was successfully updated.'
     else
       render :edit, status: :unprocessable_entity

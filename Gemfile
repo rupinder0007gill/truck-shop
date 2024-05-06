@@ -8,6 +8,10 @@ ruby '3.3.0'
 # Read more: https://github.com/bkeepers/dotenv
 gem 'dotenv', '~> 2.8', '>= 2.8.1', require: './config/dotenv'
 
+# Official AWS Ruby gem for Amazon Simple Storage Service (Amazon S3). This gem is part of the AWS SDK for Ruby.
+# Read more: https://github.com/aws/aws-sdk-ruby
+gem 'aws-sdk-s3', '~> 1.149'
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

@@ -12,10 +12,10 @@ class HomeController < ApplicationController
     # Get the last day of the current month
     @last_day_of_month = parsed_date.end_of_month
 
-    start_date = Date.today.beginning_of_week
-    end_date = Date.today.end_of_week
-    last_week_start_date = (Date.today - 7.days).beginning_of_week
-    last_week_end_date = (Date.today - 7.days).end_of_week
+    start_date = Time.zone.today.beginning_of_week
+    end_date = Time.zone.today.end_of_week
+    last_week_start_date = (Time.zone.today - 7.days).beginning_of_week
+    last_week_end_date = (Time.zone.today - 7.days).end_of_week
 
     @last_week_invoices_total_prices = Invoice.where(created_at: last_week_start_date..last_week_end_date).sum(:total_price_cents)
     @current_week_invoices = Invoice.group_by_day(:created_at, range: start_date.beginning_of_day..end_date.end_of_day).sum(:total_price_cents)

@@ -34,6 +34,7 @@
 #
 class Invoice < ApplicationRecord
   attr_accessor :customer_name, :customer_phone, :customer_email
+
   ##############################################################################
   ### Attributes ###############################################################
   monetize :price_cents
@@ -117,7 +118,7 @@ class Invoice < ApplicationRecord
   end
 
   def set_service_start_time
-    self.service_start_time = Time.now
+    self.service_start_time = Time.zone.now
   end
 
   def reduce_products_stocks
@@ -137,14 +138,12 @@ class Invoice < ApplicationRecord
   end
 
   def set_invoice_id
-    customer = Customer.find_by_email(self.customer_email)
-    if customer.present?
-      self.update(customer_id: customer.id)
-    else
+    customer = Customer.find_by(email: customer_email)
+    if customer.blank?
       generated_password = Devise.friendly_token(64)
-      name = self.customer_name.split(' ')
-      customer = Customer.create(first_name: name[0], last_name: name[1], phone: self.customer_phone, email: self.customer_email, password: generated_password, password_confirmation: generated_password )
-      self.update(customer_id: customer.id)
+      name = customer_name.split
+      customer = Customer.create(first_name: name[0], last_name: name[1], phone: customer_phone, email: customer_email, password: generated_password, password_confirmation: generated_password)
     end
+    update(customer_id: customer.id)
   end
 end

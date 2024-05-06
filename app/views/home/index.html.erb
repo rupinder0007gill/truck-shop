@@ -126,7 +126,7 @@
       <div class="card-header bg-body-tertiary">
         <div class="row align-items-center">
           <div class="col">
-            <h6 class="mb-0">Running Projects</h6>
+            <h6 class="mb-0">Running Services</h6>
           </div>
           <div class="col-auto text-center pe-x1">
             <select class="form-select form-select-sm">
@@ -138,30 +138,33 @@
         </div>
       </div>
       <div class="card-body p-0">
-        <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
-          <div class="col ps-x1 py-1 position-static">
-            <div class="d-flex align-items-center">
-              <div class="avatar avatar-xl me-3">
-                <div class="avatar-name rounded-circle bg-primary-subtle text-dark"><span class="fs-9 text-primary">F</span></div>
-              </div>
-              <div class="flex-1">
-                <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link" href="#!">Falcon</a><span class="badge rounded-pill ms-2 bg-200 text-primary">38%</span></h6>
+        <%- @running_services.each do |invoice| %>
+          <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
+            <div class="col ps-x1 py-1 position-static">
+              <div class="d-flex align-items-center">
+                <div class="avatar avatar-xl me-3">
+                  <div class="avatar-name rounded-circle bg-primary-subtle text-dark"><span class="fs-9 text-primary">F</span></div>
+                </div>
+                <div class="flex-1">
+                  <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link" href="#!"><%= invoice.customer.name %></a><span class="badge rounded-pill ms-2 bg-200 text-primary">38%</span></h6>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col py-1">
-            <div class="row flex-end-center g-0">
-              <div class="col-auto pe-2">
-                <div class="fs-10 fw-semi-bold">12:50:00</div>
-              </div>
-              <div class="col-5 pe-x1 ps-2">
-                <div class="progress bg-200 me-2" style="height: 5px;" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">
-                  <div class="progress-bar rounded-pill" style="width: 38%"></div>
+            <div class="col py-1">
+              <div class="row flex-end-center g-0">
+                <div class="col-auto pe-2">
+                  <div class="fs-10 fw-semi-bold">12:50:00</div>
+                </div>
+                <div class="col-5 pe-x1 ps-2">
+                  <div class="progress bg-200 me-2" style="height: 5px;" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar rounded-pill" style="width: 38%"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        <%- end %>
+        
         <div class="row g-0 align-items-center py-2 position-relative border-bottom border-200">
           <div class="col ps-x1 py-1 position-static">
             <div class="d-flex align-items-center">

@@ -25,6 +25,8 @@ class HomeController < ApplicationController
 
     @best_technician_invoices = Invoice.where(created_at: start_date.beginning_of_day..end_date.end_of_day).group(:user_id).sum(:total_price_cents)
     @available_techinician = User.where(role_id: 3).where.not(id: @best_technician_invoices.keys)
+
+    @running_services = Invoice.includes(:customer).where(status: 0).limit(2)
   end
 
   def analytics; end

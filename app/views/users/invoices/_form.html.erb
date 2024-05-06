@@ -28,6 +28,27 @@
     <div class="card-body">
       <div class="row">
         <div class="col-12">
+          <h5 class="mb-3 fs-9">Customer Information</h5>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= form.label :customer_name, 'Name:', class: 'form-label' %>
+          <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control' %>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <%= form.label :customer_phone, 'Phone Number:', class: 'form-label' %>
+          <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control' %>
+        </div>
+        <div class="col-sm-12 mb-3">
+          <%= form.label :customer_email, 'Email:', class: 'form-label' %>
+          <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
           <h5 class="mb-3 fs-9">Transaction Information</h5>
         </div>
         <div class="col-sm-12 col-md-6 mb-3">

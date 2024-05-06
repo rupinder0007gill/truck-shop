@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_01_071843) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_05_104635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -134,6 +134,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_071843) do
     t.datetime "updated_at", null: false
     t.datetime "archived_at"
     t.datetime "deleted_at"
+    t.bigint "customer_id"
+    t.index ["customer_id"], name: "index_invoices_on_customer_id"
     t.index ["deleted_at"], name: "index_invoices_on_deleted_at"
     t.index ["user_id"], name: "index_invoices_on_user_id"
   end
@@ -249,6 +251,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_01_071843) do
   add_foreign_key "invoice_products", "invoices"
   add_foreign_key "invoice_products", "products"
   add_foreign_key "invoice_services", "invoices"
+  add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "users"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"

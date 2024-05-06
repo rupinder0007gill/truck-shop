@@ -50,8 +50,7 @@ class Invoice < ApplicationRecord
   ##############################################################################
   ### Callbacks ################################################################
   before_create :set_service_start_time
-  before_create :set_invoice_id
-  after_create :reduce_products_stocks
+  after_create :reduce_products_stocks, :set_invoice_id
   before_destroy :add_products_stocks
 
   ##############################################################################
@@ -69,7 +68,7 @@ class Invoice < ApplicationRecord
                                                                                      attributes['name'].blank?
                                                                                    }
   belongs_to :user
-  belongs_to :customer
+  belongs_to :customer, optional: true
 
   ##############################################################################
   ### Validations ##############################################################
@@ -138,12 +137,14 @@ class Invoice < ApplicationRecord
   end
 
   def set_invoice_id
-  customer = Customer.find_by_email(self.customer_email)
+    customer = Customer.find_by_email(self.customer_email)
     if customer.present?
-      self.customer_id = customer.id
+      self.update(customer_id: customer.id)
     else
-      customer = Customer.create(customer_name: self.customer_name, customer_phone: self.customer_phone, customer_email: self.customer_email )
-      self.customer_id = customer.id
+      generated_password = Devise.friendly_token(64)
+      name = self.customer_name.split(' ')
+      customer = Customer.create(first_name: name[0], last_name: name[1], phone: self.customer_phone, email: self.customer_email, password: generated_password, password_confirmation: generated_password )
+      self.update(customer_id: customer.id)
     end
   end
 end

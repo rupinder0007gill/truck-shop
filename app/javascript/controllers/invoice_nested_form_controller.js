@@ -6,17 +6,10 @@ export default class extends Controller {
 
   connect() {
     console.log("connect");
-
-  }
-
-  remove(event) {
-    event.preventDefault();
-    super.remove(event);
-    this.change();
   }
 
   change() {
-    console.log("hello");
+    console.log("invoice hello");
     var orderTotal = 0;
     this.selectProductTargets.forEach((element, index) => {
       if(element.options[element.selectedIndex].dataset.price) {

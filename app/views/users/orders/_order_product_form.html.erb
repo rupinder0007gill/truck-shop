@@ -6,7 +6,7 @@
   <td class="align-middle text-center"><%= f.number_field :price, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "productPrice" } %></td>
   <td class="align-middle text-center"><%= f.number_field :final_price, class: 'form-control', data: { action: "change->nested-form#change", "nested-form-target": "productFinalPrice" } %></td>
   <td class="align-middle text-end">
-    <button type="button" data-action="nested-form#remove" class="btn btn-danger">Remove Product</button>
+    <button type="button" data-action="nested-form#remove" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
     <%= f.hidden_field :_destroy, data: { "nested-form-target": "productDestroy" } %>
   </td>
 </tr>

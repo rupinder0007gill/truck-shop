@@ -4,7 +4,20 @@ class Users::InvoicesController < ApplicationController
   before_action :set_invoice, only: %i[show edit update destroy paid]
 
   def index
-    @invoices = Invoice.all
+    @search_url = users_invoices_path
+    sort_column = params[:sort] || 'created_at'
+    sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
+
+    @invoices = if params[:query].present?
+                  Invoice.joins(:user, :customer).where('lower(customers.first_name) LIKE ? OR lower(customers.last_name) LIKE ? OR lower(users.first_name) LIKE ? OR lower(users.last_name) LIKE ?', "%#{params[:query].downcase}%", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%")
+                else
+                  Invoice.includes(%i[user customer]).all
+                end
+    @pagy, @invoices = pagy(@invoices.order("#{sort_column} #{sort_direction}"), items: 10)
+    respond_to do |format|
+      format.html
+      format.turbo_stream # Respond to Turbo Stream requests
+    end
   end
 
   def show; end

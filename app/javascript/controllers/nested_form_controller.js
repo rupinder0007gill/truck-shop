@@ -13,6 +13,17 @@ export default class extends NestedForm {
     this.change();
   }
 
+  invoiceRemove(event) {
+    event.preventDefault();
+    super.remove(event);
+    this.element.dispatchEvent(new CustomEvent("messageFromChild", {
+      detail: {
+        message: "Hello from child"
+      },
+      bubbles: true   // This needs to be explicitly set to enable event bubbling
+    }));
+  }
+
   change() {
     console.log("hello");
     var orderTotal = 0;

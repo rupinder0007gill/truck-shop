@@ -64,6 +64,26 @@
           </tbody>
         </table>
       </div>
+      <div class="table-responsive fs-10">
+        <table class="table table-striped border-bottom">
+          <thead class="bg-200">
+            <tr>
+              <th class="text-900 border-0">Services</th>
+              <th class="text-900 border-0 text-end">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%- invoice.invoice_services.each do |invoice_service| %>
+              <tr class="border-200">
+                <td class="align-middle">
+                  <h6 class="mb-0 text-nowrap"><%= invoice_service.name %></h6>
+                </td>
+                <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_service.price %></td>
+              </tr>
+            <%- end %>
+          </tbody>
+        </table>
+      </div>
       <div class="row g-0 justify-content-end">
         <div class="col-auto">
           <table class="table table-sm table-borderless fs-10 text-end">

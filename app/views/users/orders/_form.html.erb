@@ -1,4 +1,4 @@
-<%= form_with(model: order, url: url, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |form| %>
+<%= form_with(model: order, url: url, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper', turbo: false }) do |form| %>
   <% if order.errors.any? %>
     <div class="alert alert-danger" role="alert">
       <ul>

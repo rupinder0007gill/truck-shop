@@ -5,7 +5,20 @@ class Users::OrdersController < ApplicationController
 
   # GET /users/orders or /users/orders.json
   def index
-    @orders = Order.all
+    @search_url = users_orders_path
+    sort_column = params[:sort] || 'created_at'
+    sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
+
+    @orders = if params[:query].present?
+                Order.joins(:user).where('lower(users.first_name) LIKE ? OR lower(users.last_name) LIKE ?', "%#{params[:query].downcase}%", "%#{params[:query].downcase}%")
+              else
+                Order.includes(:user).all
+              end
+    @pagy, @orders = pagy(@orders.order("#{sort_column} #{sort_direction}"), items: 10)
+    respond_to do |format|
+      format.html
+      format.turbo_stream # Respond to Turbo Stream requests
+    end
   end
 
   # GET /users/orders/1 or /users/orders/1.json

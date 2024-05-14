@@ -1,0 +1,13 @@
+<!-- append @tools to the #article_list turbo_frame -->
+<%= turbo_stream.append("orders_listingg") do %>
+  <%- @orders.each do |order| %>
+    <%= render partial: 'orders_listing', locals: { order: order } %>
+  <% end %>
+<% end %>
+
+<!-- replace #users_pagination frame by our content loader when it gets visible (our turbo_frame_tag with loading="lazy" attribute -->
+<% if @pagy.next.present? %>
+  <%= turbo_stream.replace "orders_pagination" do %>
+    <%= turbo_frame_tag "orders_pagination", src: users_orders_url(query: params[:query], sort: params[:sort], direction: params[:direction], page: @pagy.next, format: "turbo_stream"), loading: "lazy" %>
+  <% end %>
+<% end %>

@@ -85,6 +85,8 @@ class User < ApplicationRecord
   has_many :products, dependent: :restrict_with_error
   has_many :orders, dependent: :restrict_with_error
   has_many :invoices, dependent: :restrict_with_error
+  has_many :notifications, dependent: :restrict_with_error
+  has_many :admin_notifications, class_name: 'Notification', foreign_key: 'to_user_id', dependent: :restrict_with_error
 
   ##############################################################################
   ### Validations ##############################################################

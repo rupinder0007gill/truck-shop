@@ -68,7 +68,7 @@ class Users::OrdersController < ApplicationController
   def deliver
     redirect_to users_orders_url, alert: 'You are not authorized to perform this action, please ask to admin to update status' and return if current_user.role.name != 'Admin'
 
-    @order.update(status: :delivered)
+    @order.update(status: :delivered, current_admin: current_user)
 
     respond_to do |format|
       format.html { redirect_to users_orders_url, notice: 'Order was successfully delivered.' }

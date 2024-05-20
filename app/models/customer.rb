@@ -60,6 +60,7 @@ class Customer < ApplicationRecord
          :recoverable, :rememberable, :trackable
 
   has_many :invoices
+  has_many :notifications
   ### Validations ##############################################################
   validates :first_name, :last_name, presence: true
 

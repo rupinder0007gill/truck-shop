@@ -76,6 +76,9 @@
 #                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
 #                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
 #                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
+#                      users_notifications GET    /users/notifications(.:format)                                                                    users/notifications#index
+#                       users_notification GET    /users/notifications/:id(.:format)                                                                users/notifications#show
+#                                          DELETE /users/notifications/:id(.:format)                                                                users/notifications#destroy
 #                        clients_customers GET    /clients/customers(.:format)                                                                      clients/customers#index
 #                                          POST   /clients/customers(.:format)                                                                      clients/customers#create
 #                     new_clients_customer GET    /clients/customers/new(.:format)                                                                  clients/customers#new
@@ -166,6 +169,7 @@ Rails.application.routes.draw do
         post :enable_user
       end
     end
+    resources :notifications, only: %i[index show destroy]
   end
 
   namespace :clients do

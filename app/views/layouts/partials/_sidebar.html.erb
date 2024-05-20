@@ -133,8 +133,8 @@
             </li>
           </ul>
           <!-- parent pages-->
-          <a class="nav-link" href="javascript:void(0)" role="button">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-comments"></span></span><span class="nav-link-text ps-1">Chat</span>
+          <a class="nav-link <%= 'active' if controller_name == "notifications" %>" href="<%= users_notifications_path %>" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-comments"></span></span><span class="nav-link-text ps-1">Notifications</span>
             </div>
           </a>
         </li>

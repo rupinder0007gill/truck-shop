@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_06_105703) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_124359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -141,6 +141,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_06_105703) do
     t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "to_user_id"
+    t.boolean "is_read_by_sender", default: false
+    t.boolean "is_read_by_receiver", default: false
+    t.bigint "customer_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["customer_id"], name: "index_notifications_on_customer_id"
+    t.index ["deleted_at"], name: "index_notifications_on_deleted_at"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "order_products", force: :cascade do |t|
     t.bigint "quantity"
     t.bigint "price_cents"
@@ -254,6 +268,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_06_105703) do
   add_foreign_key "invoice_services", "invoices"
   add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "users"
+  add_foreign_key "notifications", "customers"
+  add_foreign_key "notifications", "users"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "users"

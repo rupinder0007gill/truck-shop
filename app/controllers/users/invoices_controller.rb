@@ -2,6 +2,7 @@
 
 class Users::InvoicesController < ApplicationController
   before_action :set_invoice, only: %i[show edit update destroy paid]
+  load_and_authorize_resource
 
   def index
     @search_url = users_invoices_path

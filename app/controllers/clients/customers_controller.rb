@@ -2,6 +2,7 @@
 
 class Clients::CustomersController < ApplicationController
   before_action :set_customer, only: %i[edit update destroy show]
+  load_and_authorize_resource
 
   def index
     @search_url = clients_customers_path

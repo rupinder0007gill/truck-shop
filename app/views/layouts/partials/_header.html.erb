@@ -118,7 +118,7 @@
     </li>
     <li class="nav-item dropdown"><a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="avatar avatar-xl">
-          <%= image_tag 'team/3-thumb.png', class: 'rounded-circle' %>
+          <%= user_and_customers_image(current_user, size = 32) %>
         </div>
       </a>
       <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">

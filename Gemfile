@@ -61,6 +61,10 @@ gem 'jsbundling-rails', '~> 1.2', '>= 1.2.1'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
+# initialjs-rails is an assets gem for initial.js
+# Read more: https://github.com/jkostolansky/lavatar
+gem 'lavatar', '~> 0.1.5' # for avatar_image using initials
+
 # This library provides integration of RubyMoney - Money gem with Rails
 # Read more: https://github.com/RubyMoney/money-rails
 gem 'money-rails', '~> 1.15'

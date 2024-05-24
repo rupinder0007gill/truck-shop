@@ -64,11 +64,13 @@
           <%- if product.images.attached? %>
             <div class="row">
               <% product.images.each do |image| %>
-                <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
                 <div class="col-4 mb-2">
-                  <%= image_tag image.variant(resize_to_fill: [1098, 717], saver: { gravity: 'Center' }), class: 'w-100 mb-3' %>
-                  <%= link_to 'Remove', delete_image_attachment_users_product_url(image.id),
+                  <%- if image.persisted? %>
+                    <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
+                    <%= image_tag image.variant(resize_to_fill: [1098, 717], saver: { gravity: 'Center' }), class: 'w-100 mb-3' %>
+                    <%= link_to 'Remove', delete_image_attachment_users_product_url(image.id),
                     data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' } %>
+                  <%-end%>
                 </div>
               <% end %>
             </div>

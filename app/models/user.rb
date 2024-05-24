@@ -111,6 +111,10 @@ class User < ApplicationRecord
     'Sorry, this account has been disabled.'
   end
 
+  def has_any_role?
+    role.name == 'Admin' || role.name == 'Manager' || role.name == 'Technician'
+  end
+
   ##############################################################################
   ### Instance Methods #########################################################
 

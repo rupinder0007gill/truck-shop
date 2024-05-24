@@ -27,7 +27,7 @@ module ApplicationHelper
     query_params = request.query_parameters.merge(sort: column, direction:)
 
     path = send(path_method, query_params)
-    link_to(path, class: 'flex items-center', data: { turbo_action: 'replace' }, **) do
+    link_to(path, class: 'flex items-center currentColor', data: { turbo_action: 'replace' }, **) do
       concat title
       concat sort_icon(column)
     end

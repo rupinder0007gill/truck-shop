@@ -59,6 +59,7 @@ class Customer < ApplicationRecord
   devise :invitable, :database_authenticatable, :lockable,
          :recoverable, :rememberable, :trackable
 
+  has_one_attached :avatar
   has_many :invoices
   ### Validations ##############################################################
   validates :first_name, :last_name, presence: true

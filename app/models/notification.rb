@@ -5,6 +5,7 @@
 # Table name: notifications
 #
 #  id                  :bigint           not null, primary key
+#  css_class           :string           default("alert-light")
 #  deleted_at          :datetime
 #  is_read_by_receiver :boolean          default(FALSE)
 #  is_read_by_sender   :boolean          default(FALSE)

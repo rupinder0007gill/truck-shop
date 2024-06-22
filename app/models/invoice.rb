@@ -8,6 +8,9 @@
 #  archived_at           :datetime
 #  deleted_at            :datetime
 #  discount_cents        :bigint
+#  licence_number        :string
+#  make_model            :string
+#  odometer              :string
 #  payment_method        :integer          default("cash"), not null
 #  price_cents           :bigint
 #  service_end_time      :datetime
@@ -16,6 +19,9 @@
 #  status                :integer          default("pending"), not null
 #  tax_cents             :bigint
 #  total_price_cents     :bigint
+#  unit_number           :string
+#  vin_number            :string
+#  year                  :string
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  customer_id           :bigint

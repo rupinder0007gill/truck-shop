@@ -1,110 +1,170 @@
-<div id="<%= dom_id invoice %>">
-
-  <div class="card mb-3">
-    <div class="bg-holder d-none d-lg-block bg-card" style="background-image:url(<%= image_path('theme/corner-4.png') %>);opacity: 0.7;">
-    </div>
-    <!--/.bg-holder-->
-
-    <div class="card-body position-relative">
-      <h5>invoice Details: #<%= invoice.id %></h5>
-      <p class="fs-10"><%= invoice.created_at.strftime('%B %d, %Y, %l:%M %p') %></p>
-      <div><strong class="me-2">Status: </strong>
-        <%- if invoice.pending? %>
-          <div class="badge rounded-pill badge-subtle-primary fs-11">
-            Pending<span class="fas fa-redo ms-1" data-fa-transform="shrink-2"></span>
-          </div>
-        <%- else %>
-          <div class="badge rounded-pill badge-subtle-success fs-11">
-            Paid<span class="fas fa-check ms-1" data-fa-transform="shrink-2"></span>
-          </div>
-        <%- end %>
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-md">
+        <h5 class="mb-2 mb-md-0">Order #<%= invoice.id %></h5>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button"><span class="fas fa-arrow-down me-1"> </span>Download (.pdf)</button>
+        <button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button"><span class="fas fa-print me-1"> </span>Print</button>
+        <button class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fas fa-dollar-sign me-1"></span>Receive Payment</button>
       </div>
     </div>
   </div>
-  <div class="card mb-3">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-12">
-          <h5 class="mb-3 fs-9">Transaction Information</h5>
-        </div>
-        <div class="col-sm-12 col-md-6 mb-3">
-          <h5 class="mb-3 fs-9">Transaction Id</h5>
-          <h6 class="mb-2"><%= invoice.transaction_id %></h6>
-        </div>
-        <div class="col-sm-12 col-md-6 mb-3">
-          <h5 class="mb-3 fs-9">Payment Method</h5>
-          <h6 class="mb-2"><%= invoice.payment_method.humanize %></h6>
-        </div>
+</div>
+<div id="<%= dom_id invoice %>" class="card">
+  <div class="card-body">
+    <div class="row align-items-center text-center mb-3">
+      <div class="col-sm-6 text-sm-start">
+        <%= image_tag 'logo/logo.jpeg', class: 'me-2', width: 150, alt: 'BRTC' %>
+      </div>
+      <div class="col text-sm-end mt-3 mt-sm-0">
+        <h2 class="mb-3">Invoice</h2>
+        <h5>BIG RIGS TRUCK CENTRE</h5>
+        <p class="fs-10 mb-0">960 PONDMILLS RD<br />LONDON, ON, N6N 1A1</p>
+        <p class="fs-10 mb-0">HST NO: 727910473RT0001</p>
+        <p class="fs-10 mb-0">PH NO: 6479854783</p>
+        <p class="fs-10 mb-0">mvarchus@yahoo.com</p>
+      </div>
+      <div class="col-12">
+        <hr />
       </div>
     </div>
-  </div>
-  <div class="card mb-3">
-    <div class="card-body">
-      <div class="table-responsive fs-10">
-        <table class="table table-striped border-bottom">
-          <thead class="bg-200">
-            <tr>
-              <th class="text-900 border-0">Products</th>
-              <th class="text-900 border-0 text-center">Quantity</th>
-              <th class="text-900 border-0 text-end">Rate</th>
-              <th class="text-900 border-0 text-end">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%- invoice.invoice_products.each do |invoice_product| %>
-              <tr class="border-200">
-                <td class="align-middle">
-                  <h6 class="mb-0 text-nowrap"><%= invoice_product.product.name %></h6>
-                </td>
-                <td class="align-middle text-center"><%= invoice_product.quantity %></td>
-                <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_product.price %></td>
-                <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_product.final_price %></td>
-              </tr>
-            <%- end %>
-          </tbody>
-        </table>
+    <div class="row align-items-center">
+      <div class="col">
+        <h6 class="text-500">Bill to</h6>
+        <h5><%= customer.name %></h5>
+        <p class="fs-10"><%= customer.address %></p>
+        <p class="fs-10">
+          <%= link_to customer.email, "mailto:#{customer.email}" %><br />
+          <%= link_to customer.phone, "mailto:#{customer.phone}" if customer.phone.present? %>
+        </p>
       </div>
-      <div class="table-responsive fs-10">
-        <table class="table table-striped border-bottom">
-          <thead class="bg-200">
-            <tr>
-              <th class="text-900 border-0">Services</th>
-              <th class="text-900 border-0 text-end">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%- invoice.invoice_services.each do |invoice_service| %>
-              <tr class="border-200">
-                <td class="align-middle">
-                  <h6 class="mb-0 text-nowrap"><%= invoice_service.name %></h6>
-                </td>
-                <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_service.price %></td>
+      <div class="col-sm-auto ms-auto">
+        <div class="table-responsive">
+          <table class="table table-sm table-borderless fs-10">
+            <tbody>
+              <tr>
+                <th class="text-sm-end">Invoice No:</th>
+                <td><%= invoice.id %></td>
               </tr>
-            <%- end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="row g-0 justify-content-end">
-        <div class="col-auto">
-          <table class="table table-sm table-borderless fs-10 text-end">
-            <tr>
-              <th class="text-900">Subtotal:</th>
-              <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.price %></td>
-            </tr>
-            <tr>
-              <th class="text-900">Tax %:</th>
-              <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.tax %></td>
-            </tr>
-            <tr>
-              <th class="text-900">Discount:</th>
-              <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.discount %></td>
-            </tr>
-            <tr class="border-top">
-              <th class="text-900">Total:</th>
-              <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.total_price %></td>
-            </tr>
+              <tr>
+                <th class="text-sm-end">Invoice Date:</th>
+                <td><%= invoice.created_at.strftime('%Y-%m-%d') %></td>
+              </tr>
+              <tr>
+                <th class="text-sm-end">Payment Method:</th>
+                <td><%= invoice.payment_method.humanize %></td>
+              </tr>
+              <tr>
+                <th class="text-sm-end">Transaction Id:</th>
+                <td><%= invoice.transaction_id %></td>
+              </tr>
+              <%- if invoice.pending? %>
+                <tr class="alert alert-warning fw-bold">
+                  <th class="text-warning-emphasis text-sm-end">Status:</th>
+                  <td class="text-warning-emphasis">Pending</td>
+                </tr>
+              <%- else %>
+                <tr class="alert alert-success fw-bold">
+                  <th class="text-success-emphasis text-sm-end">Status:</th>
+                  <td class="text-success-emphasis">Paid</td>
+                </tr>
+              <%- end %>
+            </tbody>
           </table>
         </div>
+      </div>
+    </div>
+
+    <div class="table-responsive scrollbar my-4 fs-10">
+      <table class="table table-striped border-bottom">
+        <thead data-bs-theme="light">
+          <tr class="bg-primary dark__bg-1000">
+            <th class="text-white border-0 text-center">VIN</th>
+            <th class="text-white border-0 text-center">MAKE-MODEL</th>
+            <th class="text-white border-0 text-center">UNIT NO</th>
+            <th class="text-white border-0 text-center">YEAR</th>
+            <th class="text-white border-0 text-center">ODOMETER</th>
+            <th class="text-white border-0 text-center">LICENCE NO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-middle text-center"><%= invoice.vin_number %></td>
+            <td class="align-middle text-center"><%= invoice.make_model %></td>
+            <td class="align-middle text-center"><%= invoice.unit_number %></td>
+            <td class="align-middle text-center"><%= invoice.year %></td>
+            <td class="align-middle text-center"><%= invoice.odometer %></td>
+            <td class="align-middle text-center"><%= invoice.licence_number %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-responsive scrollbar mt-4 fs-10">
+      <table class="table table-striped border-bottom">
+        <thead data-bs-theme="light">
+          <tr class="bg-primary dark__bg-1000">
+            <th class="text-white border-0">Products</th>
+            <th class="text-white border-0 text-center" style="width: 350px;">Description</th>
+            <th class="text-white border-0 text-center">Quantity</th>
+            <th class="text-white border-0 text-end">Rate</th>
+            <th class="text-white border-0 text-end">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- invoice.invoice_products.each do |invoice_product| %>
+            <tr>
+              <td class="align-middle">
+                <h6 class="mb-0 text-nowrap"><%= invoice_product.product.name %></h6>
+              </td>
+              <td class="align-middle text-center"><%= invoice_product.product.description %></td>
+              <td class="align-middle text-center"><%= invoice_product.quantity %></td>
+              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_product.price %></td>
+              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_product.final_price %></td>
+            </tr>
+          <%- end %>
+          <%- invoice.invoice_services.each do |invoice_service| %>
+            <tr>
+              <td class="align-middle">
+                <h6 class="mb-0 text-nowrap"><%= invoice_service.name %></h6>
+              </td>
+              <td class="align-middle text-center"><%= %></td>
+              <td class="align-middle text-center"><%= %></td>
+              <td class="align-middle text-center"><%= %></td>
+              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_service.price %></td>
+            </tr>
+          <%- end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <table class="table table-sm table-borderless fs-10 text-end">
+          <tr>
+            <th class="text-900">Subtotal:</th>
+            <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.price %></td>
+          </tr>
+          <tr>
+            <th class="text-900">Tax %:</th>
+            <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.tax %></td>
+          </tr>
+          <tr>
+            <th class="text-900">Tax %:</th>
+            <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.discount %></td>
+          </tr>
+          <tr class="border-top">
+            <th class="text-900">Total:</th>
+            <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.total_price %></td>
+          </tr>
+          <%- if invoice.status == 'pending' %>
+            <tr class="border-top border-top-2 fw-bolder">
+              <th class="text-900">Amount Due:</th>
+              <td class="text-900"><%= humanized_money_with_symbol invoice.total_price %></td>
+            </tr>
+          <%- end %>
+        </table>
       </div>
     </div>
   </div>

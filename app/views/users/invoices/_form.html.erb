@@ -53,6 +53,39 @@
     <div class="card-body">
       <div class="row">
         <div class="col-12">
+          <h5 class="mb-3 fs-9">Vehicle Information</h5>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-3">
+          <%= form.label :vin_number, 'VIN:', class: 'form-label' %>
+          <%= form.text_field :vin_number, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-3">
+          <%= form.label :make_model, 'MAKE-MODEL:', class: 'form-label' %>
+          <%= form.text_field :make_model, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-3">
+          <%= form.label :unit_number, 'UNIT NO:', class: 'form-label' %>
+          <%= form.text_field :unit_number, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-3">
+          <%= form.label :year, 'YEAR:', class: 'form-label' %>
+          <%= form.text_field :year, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-3">
+          <%= form.label :odometer, 'ODOMETER:', class: 'form-label' %>
+          <%= form.text_field :odometer, class: 'form-control' %>
+        </div>
+        <div class="col-sm-6 col-md-4 mb-3">
+          <%= form.label :licence_number, 'LICENCE NO:', class: 'form-label' %>
+          <%= form.text_field :licence_number, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
           <h5 class="mb-3 fs-9">Transaction Information</h5>
         </div>
         <div class="col-sm-12 col-md-4 mb-3">

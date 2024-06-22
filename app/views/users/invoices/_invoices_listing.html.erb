@@ -1,8 +1,6 @@
 <tr class="btn-reveal-trigger" id="invoices_<%=invoice.id%>">
   <td class="order py-2 align-middle white-space-nowrap">
-    <a href="<%= users_invoice_path(invoice) %>">
-      <strong>#<%= invoice.id %></strong>
-    </a> for <strong><%= invoice.customer.name %></strong><br />
+    <strong><%= link_to invoice.id, users_invoice_path(invoice), data: { turbo_frame: "_top" } %></strong> for <strong><%= invoice.customer.name %></strong><br />
     <a href="mailto:<%= invoice.customer.email %>"><%= invoice.customer.email %></a>
   </td>
   <td><%= invoice.user.name %></td>

@@ -64,7 +64,7 @@ class Users::InvoicesController < ApplicationController
   def paid
     redirect_to users_invoices_url, alert: 'You are not authorized to perform this action, please ask to admin or manager to update status' and return if current_user.role.name == 'Technician'
 
-    @invoice.update(status: :paid, service_end_time: Time.zone.now)
+    @invoice.update(status: :paid, service_end_time: Time.zone.now, current_admin: current_user)
 
     respond_to do |format|
       format.html { redirect_to users_invoices_url, notice: 'invoice was successfully paid.' }

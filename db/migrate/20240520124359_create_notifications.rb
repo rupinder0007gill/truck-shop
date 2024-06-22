@@ -7,6 +7,7 @@ class CreateNotifications < ActiveRecord::Migration[7.1]
       t.integer :to_user_id, limit: 8
       t.boolean :is_read_by_sender, default: false
       t.boolean :is_read_by_receiver, default: false
+      t.string :css_class, default: 'alert-light'
 
       ## References
       t.references :customer, foreign_key: true

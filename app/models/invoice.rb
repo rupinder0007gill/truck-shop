@@ -34,7 +34,7 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Invoice < ApplicationRecord
-  attr_accessor :customer_name, :customer_phone, :customer_email
+  attr_accessor :customer_name, :customer_phone, :customer_email, :current_admin
 
   ##############################################################################
   ### Attributes ###############################################################
@@ -51,8 +51,9 @@ class Invoice < ApplicationRecord
 
   ##############################################################################
   ### Callbacks ################################################################
+  before_save :invoice_paid_notification
   before_create :set_service_start_time
-  after_create :reduce_products_stocks, :set_invoice_id
+  after_create :reduce_products_stocks, :set_invoice_id, :create_notifications
   after_update :set_invoice_id
   before_destroy :add_products_stocks
 
@@ -149,5 +150,22 @@ class Invoice < ApplicationRecord
       customer = Customer.create(first_name: name[0], last_name: name[1], phone: customer_phone, email: customer_email, password: generated_password, password_confirmation: generated_password)
     end
     update(customer_id: customer.id)
+  end
+
+  def invoice_paid_notification
+    return unless status_changed? && status == 'paid'
+
+    # send notification
+    return unless current_admin != user
+
+    invoice_url = Rails.application.routes.url_helpers.users_invoice_url(id)
+    current_admin.notifications.create(to_user_id: user.id, css_class: 'alert-success', notification_body: "#{current_admin.name} marked invoice to paid. please check the <a href='#{invoice_url}'>invoice</a>")
+  end
+
+  def create_notifications
+    User.joins(:role).where('lower(roles.name) = ?', 'admin').find_each do |admin_user|
+      invoice_url = Rails.application.routes.url_helpers.users_invoice_url(id)
+      user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} open a service for #{customer.name}. please check the <a href='#{invoice_url}'>invoice</a>")
+    end
   end
 end

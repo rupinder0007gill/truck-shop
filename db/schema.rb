@@ -145,6 +145,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_124359) do
     t.bigint "to_user_id"
     t.boolean "is_read_by_sender", default: false
     t.boolean "is_read_by_receiver", default: false
+    t.string "css_class", default: "alert-light"
     t.bigint "customer_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

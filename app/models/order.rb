@@ -110,13 +110,13 @@ class Order < ApplicationRecord
     return unless current_admin != user
 
     order_url = Rails.application.routes.url_helpers.users_order_url(id)
-    current_admin.notifications.create(to_user_id: user.id, notification_body: "#{current_admin.name} marked order to delivered. please check the <a href='#{order_url}'>order</a>")
+    current_admin.notifications.create(to_user_id: user.id, css_class: 'alert-success', notification_body: "#{current_admin.name} marked order to delivered. please check the <a href='#{order_url}'>order</a>")
   end
 
   def create_notifications
     User.joins(:role).where('lower(roles.name) = ?', 'admin').find_each do |admin_user|
       order_url = Rails.application.routes.url_helpers.users_order_url(id)
-      user.notifications.create(to_user_id: admin_user.id, notification_body: "#{user.name} placed a order. please check the <a href='#{order_url}'>order</a>")
+      user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} placed a order. please check the <a href='#{order_url}'>order</a>")
     end
   end
 end

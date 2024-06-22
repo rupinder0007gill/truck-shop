@@ -1,8 +1,6 @@
 <tr class="btn-reveal-trigger" id="order_<%=order.id%>">
   <td class="order py-2 align-middle white-space-nowrap">
-    <a href="<%= users_order_path(order) %>">
-      <strong>#<%= order.id %></strong>
-    </a> by <strong><%= order.user.name %></strong><br />
+    <strong><%= link_to order.id, users_order_path(order), data: { turbo_frame: "_top" } %></strong> by <strong><%= order.user.name %></strong><br />
     <a href="mailto:<%= order.user.email %>"><%= order.user.email %></a>
   </td>
   <td class="date py-2 align-middle"><%= order.created_at.strftime('%d/%m/%Y') %></td>

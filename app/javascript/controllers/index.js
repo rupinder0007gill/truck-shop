@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import BsModalController from "./bs_modal_controller"
+application.register("bs-modal", BsModalController)
+
 import CustomersAutocompleteController from "./customers_autocomplete_controller"
 application.register("customers-autocomplete", CustomersAutocompleteController)
 

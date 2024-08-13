@@ -26,6 +26,7 @@
       <div class="row mt-2">
         <div class="col-12">
           <h5 class="mb-1 fs-9">Customer Information</h5>
+          <%= link_to 'Add customer', 'javascript:void(0)', class: 'btn btn-primary' %>
         </div>
         <%= form.hidden_field :customer_id, class: 'input', data: { 'customers-autocomplete-target': 'customerId' } %>
         <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customers-autocomplete-target': 'searchURL' } %>

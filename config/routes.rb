@@ -159,11 +159,7 @@ Rails.application.routes.draw do
         get :search_customer
       end
     end
-    resources :products do
-      member do
-        delete :delete_image_attachment
-      end
-    end
+    resources :products
     resources :users do
       member do
         post :enable_user

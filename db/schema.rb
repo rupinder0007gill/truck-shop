@@ -195,28 +195,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_090520) do
   end
 
   create_table "products", force: :cascade do |t|
+    t.string "product_number"
     t.string "name"
     t.string "slug"
-    t.string "manufacturar_name"
-    t.string "product_identification_number"
-    t.string "product_summary"
-    t.datetime "release_date"
-    t.string "warranty_length"
-    t.string "warranty_policy"
-    t.integer "discount_percentage"
-    t.bigint "price_cents"
+    t.bigint "base_price_cents"
     t.bigint "selling_price_cents"
+    t.bigint "core_price_cents"
     t.bigint "total_stocks", default: 0
     t.bigint "available_stocks", default: 0
     t.bigint "used_stocks", default: 0
-    t.integer "status", default: 0, null: false
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "archived_at"
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
-    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -280,6 +272,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_090520) do
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "users"
-  add_foreign_key "products", "users"
   add_foreign_key "users", "roles"
 end

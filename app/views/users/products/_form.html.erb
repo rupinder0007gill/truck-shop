@@ -1,4 +1,4 @@
-<%= form_with(model: product, url: url, data: { controller: 'product' }) do |form| %>
+<%= form_with(model: product, url: url, data: { turbo: false }) do |form| %>
   <div class="card mb-3">
     <div class="card-body">
       <div class="row flex-between-center">
@@ -22,241 +22,61 @@
     </div>
   <% end %>
   <div class="row g-0">
-    <div class="col-lg-8 pe-lg-2">
+    <div class="col-12">
       <div class="card mb-3">
         <div class="card-header bg-body-tertiary">
-          <h6 class="mb-0">Basic information</h6>
+          <h6 class="mb-0">Product information</h6>
         </div>
         <div class="card-body">
           <div class="row gx-2">
-            <div class="col-12 mb-3">
+            <div class="col-6 mb-3">
+              <%= form.label :product_number, 'Product number:', class: 'form-label' %>
+              <%= form.text_field :product_number, class: 'form-control' %>
+            </div>
+            <div class="col-6 mb-3">
               <%= form.label :name, 'Product name:', class: 'form-label' %>
               <%= form.text_field :name, class: 'form-control' %>
             </div>
-            <div class="col-12 mb-3">
-              <%= form.label :status, 'Status:', class: 'form-label' %>
-              <%= form.select :status, Product.statuses.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
-            </div>
-            <div class="col-12 mb-3">
-              <%= form.label :manufacturar_name, 'Manufacturar name:', class: 'form-label' %>
-              <%= form.text_field :manufacturar_name, class: 'form-control' %>
-            </div>
-            <div class="col-12 mb-3">
-              <%= form.label :product_identification_number, 'Product Identification No.:', class: 'form-label' %>
-              <%= form.text_field :product_identification_number, class: 'form-control' %>
-            </div>
-            <div class="col-12 mb-3">
-              <%= form.label :product_summary, 'Product Summary:', class: 'form-label' %>
-              <%= form.text_field :product_summary, class: 'form-control' %>
-            </div>
           </div>
-        </div>
-      </div>
-      <div class="card mb-3">
-        <div class="card-header bg-body-tertiary">
-          <h6 class="mb-0">Add images</h6>
-        </div>
-        <div class="card-body">
-          <div class="mb-3">
-            <%= form.label :images, 'Multiple files input', class: 'form-label' %>
-            <%= form.file_field :images, class: 'form-control', multiple: true %>
-          </div>
-          <%- if product.images.attached? %>
-            <div class="row">
-              <% product.images.each do |image| %>
-                <div class="col-4 mb-2">
-                  <%- if image.persisted? %>
-                    <%= form.hidden_field :images, multiple: true, value: image.signed_id %>
-                    <%= image_tag image.variant(resize_to_fill: [1098, 717], saver: { gravity: 'Center' }), class: 'w-100 mb-3' %>
-                    <%= link_to 'Remove', delete_image_attachment_users_product_url(image.id),
-                    data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' } %>
-                  <%-end%>
-                </div>
-              <% end %>
-            </div>
-          <%- end %>
-        </div>
-      </div>
-      <div class="card mb-3">
-        <div class="card-header bg-body-tertiary">
-          <h6 class="mb-0">Details</h6>
-        </div>
-        <div class="card-body">
           <div class="row gx-2">
-            <div class="col-12 mb-3">
-              <%= form.label :description, 'Product description:', class: 'form-label' %>
-              <%= form.rich_text_area :description, class: 'form-control' %>
+            <div class="col-6 mb-3">
+              <%= form.label :available_stocks, 'Available Stocks:', class: 'form-label' %>
+              <%= form.text_field :available_stocks, class: 'form-control', disabled: true %>
             </div>
-            <div class="col-12 mb-3">
-              <%= form.label :release_date, 'Release Date:', class: 'form-label' %>
-              <%= form.date_field :release_date, class: 'form-control release_date' %>
-            </div>
-            <div class="col-12 mb-3">
-              <%= form.label :warranty_length, 'Warranty Length:', class: 'form-label' %>
-              <%= form.text_field :warranty_length, class: 'form-control' %>
-            </div>
-            <div class="col-12 mb-3">
-              <%= form.label :warranty_policy, 'Warranty Policy:', class: 'form-label' %>
-              <%= form.text_field :warranty_policy, class: 'form-control' %>
+            <div class="col-6 mb-3">
+              <%= form.label :add_stock, 'Add Stock:', class: 'form-label' %>
+              <%= form.number_field :add_stock, class: 'form-control' %>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="card mb-3 mb-lg-0 d-none">
-        <div class="card-header bg-body-tertiary">
-          <h6 class="mb-0">Specifications</h6>
-        </div>
-        <div class="card-body">
-          <div class="row gx-2 flex-between-center mb-3">
-            <div class="col-sm-3">
-              <h6 class="mb-0 text-600">Processor</h6>
+          <div class="row gx-2">
+            <div class="col-4 mb-3">
+              <%= form.label :base_price, 'Base Price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product purchase price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
+              <div class="input-group mb-3">
+                <%= form.text_field :base_price, class: 'form-control', data: { product_target: 'price '} %><span class="input-group-text" id="basic-addon2">CAD</span>
+              </div>
             </div>
-            <div class="col-sm-9">
-              <div class="d-flex flex-between-center">
-                <h6 class="mb-0 text-700">2.3GHz quad-core Intel Core i5</h6><a class="btn btn-sm btn-link text-danger" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><span class="fs-10 fas fa-trash-alt"></span></a>
+            <div class="col-4 mb-3">
+              <%= form.label :selling_price, 'Selling Price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product selling price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
+              <div class="input-group mb-3">
+                <%= form.text_field :selling_price, class: 'form-control', data: { product_target: 'selling_price '} %><span class="input-group-text" id="basic-addon2">CAD</span>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <%= form.label :core_price, 'Core Price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product core price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
+              <div class="input-group mb-3">
+                <%= form.text_field :core_price, class: 'form-control', data: { product_target: 'core_price '} %><span class="input-group-text" id="basic-addon2">CAD</span>
               </div>
             </div>
           </div>
-          <div class="row gx-2 flex-between-center mb-3">
-            <div class="col-sm-3">
-              <h6 class="mb-0 text-600">Memory</h6>
+          <div class="row justify-content-between align-items-center">
+            <div class="col-md">
+              <h5 class="mb-2 mb-md-0 d-none">You're almost done!</h5>
             </div>
-            <div class="col-sm-9">
-              <div class="d-flex flex-between-center">
-                <h6 class="mb-0 text-700">8GB of 2133MHz LPDDR3 onboard memory</h6><a class="btn btn-sm btn-link text-danger" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><span class="fs-10 fas fa-trash-alt"></span></a>
-              </div>
-            </div>
-          </div>
-          <div class="row gx-2 flex-between-center mb-3">
-            <div class="col-sm-3">
-              <h6 class="mb-0 text-600">Brand name</h6>
-            </div>
-            <div class="col-sm-9">
-              <div class="d-flex flex-between-center">
-                <h6 class="mb-0 text-700">Apple</h6><a class="btn btn-sm btn-link text-danger" href="#!" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"><span class="fs-10 fas fa-trash-alt"></span></a>
-              </div>
+            <div class="col-auto">
+              <%= link_to 'Discard', users_products_path, class: 'btn btn-link text-secondary p-0 me-3 fw-medium' %>
+              <%= form.submit 'Add product', class: 'btn btn-primary' %>
             </div>
           </div>
-          <div class="row gy-3 gx-2">
-            <div class="col-sm-3">
-              <input class="form-control form-control-sm" id="specification-label" type="text" placeholder="Label" />
-            </div>
-            <div class="col-sm-9">
-              <div class="d-flex gap-2 flex-between-center">
-                <input class="form-control form-control-sm" id="specification-property" type="text" placeholder="Property" />
-                <button class="btn btn-sm btn-falcon-default">Add</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4 ps-lg-2">
-      <div class="sticky-sidebar">
-        <div class="card mb-3">
-          <div class="card-header bg-body-tertiary">
-            <h6 class="mb-0">Type</h6>
-          </div>
-          <div class="card-body">
-            <div class="row gx-2">
-              <div class="col-12 mb-3">
-                <label class="form-label" for="product-category">Select category:</label>
-                <select class="form-select" id="product-category" name="product-category">
-                  <option value="computerAccessories">Computer & Accessories</option>
-                  <option>Class, Training, or Workshop</option>
-                  <option>Concert or Performance</option>
-                  <option>Conference</option>
-                  <option>Convention</option>
-                  <option>Dinner or Gala</option>
-                  <option>Festival or Fair</option>
-                </select>
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="product-subcategory">Select sub-category:</label>
-                <select class="form-select" id="product-subcategory" name="product-subcategory">
-                  <option value="laptop">Laptop</option>
-                  <option>Class, Training, or Workshop</option>
-                  <option>Concert or Performance</option>
-                  <option>Conference</option>
-                  <option>Convention</option>
-                  <option>Dinner or Gala</option>
-                  <option>Festival or Fair</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <div class="card-header bg-body-tertiary">
-            <h6 class="mb-0">Tags</h6>
-          </div>
-          <div class="card-body">
-            <label class="form-label" for="product-tags">Add a keyword:</label>
-            <input class="form-control js-choice" id="product-tags" type="text" name="tags" size="1" data-options='{"removeItemButton":true,"placeholder":false}' />
-            <%# <input class="form-control js-choice" id="product-tags" type="text" name="tags" required="required" size="1" data-options='{"removeItemButton":true,"placeholder":false}' /> %>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <div class="card-header bg-body-tertiary">
-            <h6 class="mb-0">Pricing</h6>
-          </div>
-          <div class="card-body">
-            <div class="row gx-2">
-              <div class="col-8 mb-3">
-                <%= form.label :price, 'Base Price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product regular price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
-                <%= form.text_field :price, class: 'form-control', data: { product_target: 'price '} %>
-              </div>
-              <div class="col-4">
-                <%= form.label :currency, 'Currency:', class: 'form-label' %>
-                <%= form.text_field :currency, value: 'CAD', class: 'form-control', disabled: 'disabled' %>
-                <%# <select class="form-select" id="price-currency" name="price-currency">
-                  <option value="cad">CAD</option>
-                  <option value="usd">USD</option>
-                  <option value="eur">EUR</option>
-                  <option value="gbp">GBP</option>
-                </select> %>
-              </div>
-              <div class="col-12 mb-4">
-                <%= form.label :discount_percentage, 'Discount in percentage:', class: 'form-label' %>
-                <%= form.text_field :discount_percentage, class: 'form-control', data: { product_target: 'discount_percentage '} %>
-              </div>
-              <div class="col-12">
-                <%= form.label :selling_price, 'Final price:', class: 'form-label' %><span data-bs-toggle="tooltip" data-bs-placement="top" title="Product final price"><span class="fas fa-question-circle text-primary fs-10 ms-1"></span></span>
-                <%= form.hidden_field :selling_price, class: 'form-control', data: { product_target: 'selling_price '} %>
-                <%= form.text_field :final_price, value: product.selling_price, class: 'form-control', data: { product_target: 'final_price '}, disabled: true %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card mb-3">
-          <div class="card-header bg-body-tertiary">
-            <h6 class="mb-0">Stock status</h6>
-          </div>
-          <div class="card-body">
-            <div class="row gx-2">
-              <div class="col-12 mb-3">
-                <%= form.label :available_stocks, 'Available Stocks:', class: 'form-label' %>
-                <%= form.text_field :available_stocks, class: 'form-control', disabled: true %>
-              </div>
-              <div class="col-12 mb-3">
-                <%= form.label :add_stock, 'Add Stock:', class: 'form-label' %>
-                <%= form.number_field :add_stock, class: 'form-control' %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card mt-3">
-    <div class="card-body">
-      <div class="row justify-content-between align-items-center">
-        <div class="col-md">
-          <h5 class="mb-2 mb-md-0">You're almost done!</h5>
-        </div>
-        <div class="col-auto">
-          <%= link_to 'Discard', users_products_path, class: 'btn btn-link text-secondary p-0 me-3 fw-medium' %>
-          <%= form.submit 'Add product', class: 'btn btn-primary' %>
         </div>
       </div>
     </div>

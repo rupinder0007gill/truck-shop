@@ -27,7 +27,7 @@
             </tr>
           </thead>
           <%= turbo_frame_tag "customers_list", src: clients_customers_url(format: :turbo_stream, page: params[:page], query: params[:query], sort: params[:sort], direction: params[:direction]), loading: "lazy", autoscroll: "true" do %>
-            <tbody class="list" id="customers_listingg">
+            <tbody class="list" id="customers_listing">
               <!-- Adjust this to your Pagy default item count -->
             </tbody>
           <% end %>

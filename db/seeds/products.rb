@@ -6,17 +6,17 @@ module AppSeeds
       def seed
         user = User.find 1
         Product.create([
-                         { name: 'Brake Pad', status: 1, discount_percentage: 10, price_cents: 35_000, add_stock: 5, user_id: user.id },
-                         { name: 'Drag Links', status: 1, discount_percentage: 15, price_cents: 80_000, add_stock: 15, user_id: user.id },
-                         { name: 'Wishbones', status: 1, discount_percentage: 12, price_cents: 320_000, add_stock: 0, user_id: user.id },
-                         { name: 'Wheel Hub Seal Kits', status: 1, discount_percentage: 8, price_cents: 45_000, add_stock: 0, user_id: user.id },
-                         { name: 'Power Steering Pumps', status: 1, discount_percentage: 5, price_cents: 280_000, add_stock: 5, user_id: user.id },
-                         { name: 'Leaf Spring Bushings', status: 1, discount_percentage: 2, price_cents: 12_000, add_stock: 5, user_id: user.id },
-                         { name: 'Tie Rods And Tie Rod Ends', status: 1, discount_percentage: 10, price_cents: 40_000, add_stock: 5, user_id: user.id },
-                         { name: 'Axle Rods', status: 1, discount_percentage: 5, price_cents: 23_000, add_stock: 5, user_id: user.id },
-                         { name: 'Brake Discs', status: 1, discount_percentage: 10, price_cents: 350_000, add_stock: 5, user_id: user.id },
-                         { name: 'Compressed Air Brake System Components', status: 1, discount_percentage: 15, price_cents: 260_000, add_stock: 5, user_id: user.id },
-                         { name: 'Water Pumps', status: 1, discount_percentage: 10, price_cents: 120_000, add_stock: 5, user_id: user.id }
+                         { product_number: 'B0001', name: 'Brake Pad', base_price_cents: 35_000, selling_price_cents: 45_000, core_price_cents: 5_000, add_stock: 5 },
+                         { product_number: 'DL0001', name: 'Drag Links', base_price_cents: 55_000, selling_price_cents: 65_000, core_price_cents: 10_000, add_stock: 15 },
+                         { product_number: 'W0005', name: 'Wishbones', base_price_cents: 300_000, selling_price_cents: 320_000, core_price_cents: 20_000, add_stock: 2 },
+                         { product_number: 'W0002', name: 'Wheel Hub Seal Kits', base_price_cents: 45_000, selling_price_cents: 65_000, core_price_cents: 5_000, add_stock: 0 },
+                         { product_number: 'PS0001', name: 'Power Steering Pumps', base_price_cents: 255_000, selling_price_cents: 280_000, core_price_cents: 10_000, add_stock: 5 },
+                         { product_number: 'LS0002', name: 'Leaf Spring Bushings', base_price_cents: 12_000, selling_price_cents: 15_000, core_price_cents: 1_000, add_stock: 5 },
+                         { product_number: 'RAT0001', name: 'Tie Rods And Tie Rod Ends', base_price_cents: 55_000, selling_price_cents: 65_000, core_price_cents: 2_000, add_stock: 5 },
+                         { product_number: 'AR0001', name: 'Axle Rods', base_price_cents: 21_000, selling_price_cents: 25_000, core_price_cents: 1_500, add_stock: 5 },
+                         { product_number: 'B0002', name: 'Brake Discs', base_price_cents: 350_000, selling_price_cents: 280_000, core_price_cents: 30_000, add_stock: 15 },
+                         { product_number: 'CB0001', name: 'Compressed Air Brake System Components', base_price_cents: 260_000, selling_price_cents: 300_000, core_price_cents: 50_000, add_stock: 15 },
+                         { product_number: 'W0001', name: 'Water Pumps', base_price_cents: 120_000, selling_price_cents: 165_000, core_price_cents: 20_000, add_stock: 5 }
                        ])
       end
     end

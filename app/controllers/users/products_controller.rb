@@ -6,7 +6,19 @@ class Users::ProductsController < ApplicationController
 
   # GET /users/products or /users/products.json
   def index
-    @products = Product.all
+    sort_column = params[:sort] || 'created_at'
+    sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
+
+    @products = if params[:query].present?
+                   Product.search_for(params[:query])
+                 else
+                   Product.all
+                 end
+    @pagy, @products = pagy(@products.order("#{sort_column} #{sort_direction}"), items: 10)
+    respond_to do |format|
+      format.html
+      format.turbo_stream # Respond to Turbo Stream requests
+    end
   end
 
   # GET /users/products/1
@@ -14,7 +26,7 @@ class Users::ProductsController < ApplicationController
 
   # GET /users/products/new
   def new
-    @product = current_user.products.new(discount_percentage: 0)
+    @product = Product.new
   end
 
   # GET /users/products/1/edit
@@ -22,42 +34,38 @@ class Users::ProductsController < ApplicationController
 
   # POST /users/products
   def create
-    @product = current_user.products.new(product_params)
+    @product = Product.new(product_params)
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to users_products_url, notice: 'Product was successfully created.' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @product.save
+      redirect_to users_products_url, notice: 'Product was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /users/products/1
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to users_products_url, notice: 'Product was successfully updated.' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @product.update(product_params)
+      redirect_to users_products_url, notice: 'Product was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/products/1 or /users/products/1.json
   def destroy
     @product.destroy!
+    flash.now[:alert] = 'Product was successfully destroyed.'
 
     respond_to do |format|
       format.html { redirect_to users_products_url, alert: 'Product was successfully destroyed.' }
+      format.turbo_stream do
+        render turbo_stream: [ 
+          turbo_stream.remove(@product),
+          turbo_stream.update('flash', partial: 'layouts/partials/flash')
+        ]
+      end
     end
-  end
-
-  # DELETE /users/products/1/delete_image_attachment
-  def delete_image_attachment
-    @image = ActiveStorage::Attachment.find(params[:id])
-    @image.purge
-    redirect_back(fallback_location: request.referer)
   end
 
   private
@@ -69,6 +77,6 @@ class Users::ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:name, :manufacturar_name, :product_identification_number, :product_summary, :description, :release_date, :warranty_length, :warranty_policy, :discount_percentage, :price, :selling_price, :selling_price_cents, :status, :add_stock, images: [])
+    params.require(:product).permit(:product_number, :name, :add_stock, :base_price, :selling_price, :core_price)
   end
 end

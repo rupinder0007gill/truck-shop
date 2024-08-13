@@ -1,2 +1,30 @@
-<div id="<%= dom_id product %>">
-</div>
+<tr class="btn-reveal-trigger" id="<%= dom_id product %>">
+  <td class="name align-middle text-center white-space-nowrap py-2">
+    <%= link_to edit_users_product_path(product), data: { turbo_frame: "_top" } do %>
+      <div class="d-flex d-flex align-items-center">
+        <div class="flex-1">
+          <h5 class="mb-0 fs-10"><%= product.product_number %></h5>
+        </div>
+      </div>
+    <%- end %>
+  </td>
+  <td class="name align-middle text-center white-space-nowrap py-2">
+    <%= link_to edit_users_product_path(product), data: { turbo_frame: "_top" } do %>
+      <div class="d-flex d-flex align-items-center">
+        <div class="flex-1">
+          <h5 class="mb-0 fs-10"><%= product.name %></h5>
+        </div>
+      </div>
+    <%- end %>
+  </td>
+  <td class="align-middle text-center py-2">
+    <%= humanized_money_with_symbol product.selling_price %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap py-2">
+    <%= product.available_stocks %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap py-2 text-end">
+    <%= link_to 'Edit', edit_users_product_path(product), data: { turbo_frame: "_top" }, class: "btn btn-outline-primary"%>
+    <%= link_to "Delete", users_product_path(product), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" }, class: 'btn btn-danger' %>
+  </td>
+</tr>

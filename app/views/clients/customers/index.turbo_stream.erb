@@ -1,7 +1,7 @@
 <!-- append @tools to the #article_list turbo_frame -->
-<%= turbo_stream.append("customers_listingg") do %>
+<%= turbo_stream.append("customers_listing") do %>
   <%- @customers.each do |customer| %>
-    <%= render partial: 'customers_listing', locals: { customer: customer } %>
+    <%= render partial: 'customer', locals: { customer: customer } %>
   <% end %>
 <% end %>
 

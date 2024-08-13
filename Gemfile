@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.0'
+ruby '3.3.4'
 
 # Loads environment variables from `.env`.
 # Read more: https://github.com/bkeepers/dotenv

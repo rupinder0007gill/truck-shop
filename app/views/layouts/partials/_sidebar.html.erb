@@ -17,37 +17,34 @@
       <ul class="navbar-nav flex-column mb-3" id="navbarVerticalNav">
         <li class="nav-item">
           <!-- parent pages-->
-          <a class="nav-link dropdown-indicator" href="#dashboard" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "home" ? true : false %>" aria-controls="dashboard">
+          <a class="nav-link <%= 'active' if controller_name == "home" %>" href="<%= root_path %>" role="button">
             <div class="d-flex align-items-center">
               <span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span>
               <span class="nav-link-text ps-1">Dashboard</span>
             </div>
           </a>
-          <ul class="nav collapse <%= 'show' if controller_name == "home" %>" id="dashboard">
+
+          <!-- parent pages-->
+          <a class="nav-link dropdown-indicator" href="#e-commerce" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "invoices" ? true : false %>" aria-controls="e-commerce">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-shopping-cart"></span></span><span class="nav-link-text ps-1">Services</span>
+            </div>
+          </a>
+          <ul class="nav collapse <%= 'show' if controller_name == "invoices" %>" id="e-commerce">
             <li class="nav-item">
-              <a class="nav-link <%= 'active' if controller_name == "home" && action_name == "index" %>" href="<%= root_path %>">
-                <div class="d-flex align-items-center">
-                  <span class="nav-link-text ps-1">Default</span>
+              <a class="nav-link <%= 'active' if controller_name == "invoices" && action_name == "index" %>" href="<%= users_invoices_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Invoices</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "new" %>" href="<%= new_users_invoice_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">New Invoice</span>
                 </div>
               </a>
               <!-- more inner pages-->
             </li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <!-- label-->
-          <div class="row navbar-vertical-label-wrapper mt-3 mb-2">
-            <div class="col-auto navbar-vertical-label">App
-            </div>
-            <div class="col ps-0">
-              <hr class="mb-0 navbar-vertical-divider" />
-            </div>
-          </div>
-          <!-- parent pages-->
-          <a class="nav-link <%= 'active' if controller_name == "users" %>" href="<%= users_users_path %>" role="button">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Users</span>
-            </div>
-          </a>
 
           <!-- parent pages-->
           <a class="nav-link dropdown-indicator" href="#products" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "products" ? true : false %>" aria-controls="products">
@@ -77,64 +74,14 @@
               <!-- more inner pages-->
             </li>
           </ul>
-
-          <!-- parent pages-->
-          <a class="nav-link dropdown-indicator" href="#orders" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "orders" ? true : false %>" aria-controls="orders">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-store"></span></span><span class="nav-link-text ps-1">Orders</span>
-            </div>
-          </a>
-          <ul class="nav collapse <%= 'show' if controller_name == "orders" %>" id="orders">
-            <li class="nav-item">
-              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "index" %>" href="<%= users_orders_path %>">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Order List</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <%# <li class="nav-item">
-              <a class="nav-link" href="#">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product details</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li> %>
-            <li class="nav-item">
-              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "new" %>" href="<%= new_users_order_path %>">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add order</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-          </ul>
-          <!-- parent pages-->
-          <a class="nav-link <%= 'active' if controller_name == "customers" %>" href="<%= clients_customers_path %>" role="button">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Customers</span>
-            </div>
-          </a>
-          <!-- parent pages-->
-          <a class="nav-link dropdown-indicator" href="#e-commerce" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "invoices" ? true : false %>" aria-controls="e-commerce">
-            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-shopping-cart"></span></span><span class="nav-link-text ps-1">Services</span>
-            </div>
-          </a>
-          <ul class="nav collapse <%= 'show' if controller_name == "invoices" %>" id="e-commerce">
-            <li class="nav-item">
-              <a class="nav-link <%= 'active' if controller_name == "invoices" && action_name == "index" %>" href="<%= users_invoices_path %>">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Invoices</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-            <li class="nav-item">
-              <a class="nav-link <%= 'active' if controller_name == "orders" && action_name == "new" %>" href="<%= new_users_invoice_path %>">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">New Invoice</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li>
-          </ul>
           <!-- parent pages-->
           <a class="nav-link <%= 'active' if controller_name == "notifications" %>" href="<%= users_notifications_path %>" role="button">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-comments"></span></span><span class="nav-link-text ps-1">Notifications</span>
+            </div>
+          </a>
+          <!-- parent pages-->
+          <a class="nav-link <%= 'active' if controller_name == "customers" %>" href="<%= clients_customers_path %>" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Customers</span>
             </div>
           </a>
         </li>
@@ -147,6 +94,11 @@
               <hr class="mb-0 navbar-vertical-divider" />
             </div>
           </div>
+          <!-- parent pages-->
+          <a class="nav-link <%= 'active' if controller_name == "users" %>" href="<%= users_users_path %>" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Users</span>
+            </div>
+          </a>
           <!-- parent pages-->
           <a class="nav-link dropdown-indicator" href="#user" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="user">
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-user"></span></span><span class="nav-link-text ps-1">User</span>

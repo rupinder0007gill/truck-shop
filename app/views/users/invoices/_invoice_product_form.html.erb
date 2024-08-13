@@ -1,6 +1,6 @@
 <tr class="border-200 nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
   <td class="align-middle">
-    <%= f.select :product_id, Product.published_products.available_stocks.map {|product| [product.name, product.id, 'data-price': product.price]}, { include_blank: true }, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectProduct" } } %>
+    <%= f.select :product_id, Product.available_stocks.map {|product| [product.name, product.id, 'data-price': product.selling_price]}, { include_blank: true }, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectProduct" } } %>
   </td>
   <td class="align-middle text-center"><%= f.number_field :quantity, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "productQuantity" } %></td>
   <td class="align-middle text-center"><%= f.number_field :price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "productPrice" } %></td>

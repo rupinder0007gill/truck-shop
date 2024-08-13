@@ -146,11 +146,6 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :users do
-    resources :orders do
-      member do
-        get :deliver
-      end
-    end
     resources :invoices do
       member do
         get :paid

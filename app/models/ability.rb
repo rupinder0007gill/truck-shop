@@ -12,9 +12,7 @@ class Ability
     return unless user.has_any_role?
 
     can %i[read create search_customer], Invoice
-    can %i[read create], Order
     can [:update], Invoice, user:, status: 'pending'
-    can [:update], Order, user:, status: 'placed'
     can :manage, Product
     can :manage, Customer
 

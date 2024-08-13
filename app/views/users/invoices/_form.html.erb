@@ -22,67 +22,62 @@
           <div class="badge rounded-pill badge-subtle-success fs-11"><%= invoice.status %><span class="fas fa-check ms-1" data-fa-transform="shrink-2"></span></div>
         <%-end%>
       </div>
-    </div>
-  </div>
-  <div class="card mb-3" data-controller='customers-autocomplete'>
-    <div class="card-body">
-      <div class="row">
+    
+      <div class="row mt-2">
         <div class="col-12">
-          <h5 class="mb-3 fs-9">Customer Information</h5>
+          <h5 class="mb-1 fs-9">Customer Information</h5>
         </div>
-        <div class="col-sm-12 mb-3">
+        <%= form.hidden_field :customer_id, class: 'input', data: { 'customers-autocomplete-target': 'customerId' } %>
+        <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customers-autocomplete-target': 'searchURL' } %>
+        <div class="col-sm-4">
           <%= form.label :customer_email, 'Email:', class: 'form-label' %>
           <div class="autocomplete-container" id="autocomplete-container">
             <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control', id: "autocomplete-field", data: { 'customers-autocomplete-target': 'customerEmail' } %>
           </div>
         </div>
-        <%= form.hidden_field :customer_id, class: 'input', data: { 'customers-autocomplete-target': 'customerId' } %>
-        <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customers-autocomplete-target': 'searchURL' } %>
-        <div class="col-sm-6 mb-3">
+
+        <div class="col-sm-4">
           <%= form.label :customer_name, 'Name:', class: 'form-label' %>
           <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerName' } %>
         </div>
-        <div class="col-sm-6 mb-3">
+        <div class="col-sm-4">
           <%= form.label :customer_phone, 'Phone Number:', class: 'form-label' %>
           <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerPhone' } %>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="card mb-3">
-    <div class="card-body">
-      <div class="row">
+
+      <div class="row mt-3">
         <div class="col-12">
-          <h5 class="mb-3 fs-9">Vehicle Information</h5>
+          <h5 class="mb-1 fs-9">Vehicle Information</h5>
         </div>
-        <div class="col-sm-6 col-md-4 mb-3">
+        <div class="col-sm-4 col-md-2">
           <%= form.label :vin_number, 'VIN:', class: 'form-label' %>
           <%= form.text_field :vin_number, class: 'form-control' %>
         </div>
-        <div class="col-sm-6 col-md-4 mb-3">
+        <div class="col-sm-4 col-md-2">
           <%= form.label :make_model, 'MAKE-MODEL:', class: 'form-label' %>
           <%= form.text_field :make_model, class: 'form-control' %>
         </div>
-        <div class="col-sm-6 col-md-4 mb-3">
+        <div class="col-sm-4 col-md-2">
           <%= form.label :unit_number, 'UNIT NO:', class: 'form-label' %>
           <%= form.text_field :unit_number, class: 'form-control' %>
         </div>
-        <div class="col-sm-6 col-md-4 mb-3">
+        <div class="col-sm-4 col-md-2">
           <%= form.label :year, 'YEAR:', class: 'form-label' %>
           <%= form.text_field :year, class: 'form-control' %>
         </div>
-        <div class="col-sm-6 col-md-4 mb-3">
+        <div class="col-sm-4 col-md-2">
           <%= form.label :odometer, 'ODOMETER:', class: 'form-label' %>
           <%= form.text_field :odometer, class: 'form-control' %>
         </div>
-        <div class="col-sm-6 col-md-4 mb-3">
+        <div class="col-sm-4 col-md-2">
           <%= form.label :licence_number, 'LICENCE NO:', class: 'form-label' %>
           <%= form.text_field :licence_number, class: 'form-control' %>
         </div>
       </div>
     </div>
   </div>
-  <div class="card mb-3">
+  <div class="card mb-3 d-none">
     <div class="card-body">
       <div class="row">
         <div class="col-12">

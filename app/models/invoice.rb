@@ -27,17 +27,20 @@
 #  customer_id           :bigint
 #  transaction_id        :string
 #  user_id               :bigint
+#  vehicle_id            :bigint
 #
 # Indexes
 #
 #  index_invoices_on_customer_id  (customer_id)
 #  index_invoices_on_deleted_at   (deleted_at)
 #  index_invoices_on_user_id      (user_id)
+#  index_invoices_on_vehicle_id   (vehicle_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (customer_id => customers.id)
 #  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (vehicle_id => vehicles.id)
 #
 class Invoice < ApplicationRecord
   attr_accessor :customer_name, :customer_phone, :customer_email, :current_admin
@@ -79,6 +82,7 @@ class Invoice < ApplicationRecord
                                                                                    }
   belongs_to :user
   belongs_to :customer, optional: true
+  belongs_to :vehicle, optional: true
 
   ##############################################################################
   ### Validations ##############################################################

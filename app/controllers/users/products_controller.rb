@@ -10,10 +10,10 @@ class Users::ProductsController < ApplicationController
     sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
 
     @products = if params[:query].present?
-                   Product.search_for(params[:query])
-                 else
-                   Product.all
-                 end
+                  Product.search_for(params[:query])
+                else
+                  Product.all
+                end
     @pagy, @products = pagy(@products.order("#{sort_column} #{sort_direction}"), items: 10)
     respond_to do |format|
       format.html
@@ -60,7 +60,7 @@ class Users::ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_products_url, alert: 'Product was successfully destroyed.' }
       format.turbo_stream do
-        render turbo_stream: [ 
+        render turbo_stream: [
           turbo_stream.remove(@product),
           turbo_stream.update('flash', partial: 'layouts/partials/flash')
         ]

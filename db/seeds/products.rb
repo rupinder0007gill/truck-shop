@@ -4,7 +4,7 @@ module AppSeeds
   class Products
     class << self
       def seed
-        user = User.find 1
+        User.find 1
         Product.create([
                          { product_number: 'B0001', name: 'Brake Pad', base_price_cents: 35_000, selling_price_cents: 45_000, core_price_cents: 5_000, add_stock: 5 },
                          { product_number: 'DL0001', name: 'Drag Links', base_price_cents: 55_000, selling_price_cents: 65_000, core_price_cents: 10_000, add_stock: 15 },

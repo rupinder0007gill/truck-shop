@@ -60,7 +60,8 @@ class Customer < ApplicationRecord
          :recoverable, :rememberable, :trackable
 
   has_one_attached :avatar
-  has_many :invoices
+  has_many :invoices, dependent: :destroy
+  has_many :vehicles, dependent: :destroy
   has_many :notifications
   ### Validations ##############################################################
 

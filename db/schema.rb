@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_22_090520) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_14_081441) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -142,9 +142,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_090520) do
     t.string "year"
     t.string "odometer"
     t.string "licence_number"
+    t.bigint "vehicle_id"
     t.index ["customer_id"], name: "index_invoices_on_customer_id"
     t.index ["deleted_at"], name: "index_invoices_on_deleted_at"
     t.index ["user_id"], name: "index_invoices_on_user_id"
+    t.index ["vehicle_id"], name: "index_invoices_on_vehicle_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -260,6 +262,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_090520) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "vehicles", force: :cascade do |t|
+    t.string "vin"
+    t.string "make_model"
+    t.string "unit_number"
+    t.integer "year"
+    t.string "licence_number"
+    t.string "po_number"
+    t.bigint "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["customer_id"], name: "index_vehicles_on_customer_id"
+    t.index ["deleted_at"], name: "index_vehicles_on_deleted_at"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "invoice_products", "invoices"
@@ -267,10 +285,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_22_090520) do
   add_foreign_key "invoice_services", "invoices"
   add_foreign_key "invoices", "customers"
   add_foreign_key "invoices", "users"
+  add_foreign_key "invoices", "vehicles"
   add_foreign_key "notifications", "customers"
   add_foreign_key "notifications", "users"
   add_foreign_key "order_products", "orders"
   add_foreign_key "order_products", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "users", "roles"
+  add_foreign_key "vehicles", "customers"
 end

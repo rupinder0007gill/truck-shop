@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import CustomerModalController from "./customer_modal_controller"
+application.register("customer-modal", CustomerModalController)
+
 import CustomersAutocompleteController from "./customers_autocomplete_controller"
 application.register("customers-autocomplete", CustomersAutocompleteController)
 
@@ -15,9 +18,6 @@ application.register("hello", HelloController)
 
 import InvoiceNestedFormController from "./invoice_nested_form_controller"
 application.register("invoice-nested-form", InvoiceNestedFormController)
-
-import ModalController from "./modal_controller"
-application.register("modal", ModalController)
 
 import NestedFormController from "./nested_form_controller"
 application.register("nested-form", NestedFormController)

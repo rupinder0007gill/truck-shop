@@ -76,6 +76,20 @@ class Users::InvoicesController < ApplicationController
     render json: customers.to_json
   end
 
+  def find_or_create_customer
+    customer = Customer.find_by(email: params[:email])
+    name = params[:name].split
+    if customer.blank?
+      generated_password = Devise.friendly_token(64)
+      customer = Customer.create(first_name: name[0], last_name: name[1], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
+    else
+      customer.update(phone: params[:phone]) if customer.phone.blank?
+      customer.update(first_name: name[0], last_name: name[1]) if customer.name.nil?
+    end
+
+    render json: customer.to_json
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

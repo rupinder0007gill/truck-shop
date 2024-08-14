@@ -23,34 +23,34 @@
         <%-end%>
       </div>
     
-      <div class="row mt-2" data-controller='customers-autocomplete'>
-        <div class="col-12" data-controller="modal">
+      <div class="row mt-2" data-controller='customer-modal'>
+        <div class="col-12">
           <div class="row">
             <div class="col-6">
               <h5 class="mb-1 fs-9">Customer Information</h5>
             </div>
             <div class="col-6 text-end">
-              <button type="button" class="btn btn-primary" data-action="click->modal#open">Add Customer</button>
+              <button type="button" class="btn btn-primary mt-2" data-action="click->customer-modal#open">Select or Create Customer</button>
             </div>
           </div>
           <%= turbo_frame_tag "customer_form" do %>
-            <%= render 'modal/customer_form_modal' %>
+            <%= render 'modal/customer_form_modal', form: form %>
           <% end %>
         </div>
-        <%= form.hidden_field :customer_id, class: 'input', data: { 'customers-autocomplete-target': 'customerId' } %>
-        <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customers-autocomplete-target': 'searchURL' } %>
+        <%= form.hidden_field :customer_id, class: 'input', data: { 'customer-modal-target': 'customerId' } %>
+        <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customer-modal-target': 'searchURL' } %>
         <div class="col-sm-4">
           <%= form.label :customer_email, 'Email:', class: 'form-label' %>
-          <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control', id: "autocomplete-field", data: { 'customers-autocomplete-target': 'customerEmail' }, disabled: true %>
+          <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control', data: { 'customer-modal-target': 'invoiceCustomerEmail' }, disabled: true %>
         </div>
 
         <div class="col-sm-4">
           <%= form.label :customer_name, 'Name:', class: 'form-label' %>
-          <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerName' }, disabled: true %>
+          <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control', data: { 'customer-modal-target': 'invoiceCustomerName' }, disabled: true %>
         </div>
         <div class="col-sm-4">
           <%= form.label :customer_phone, 'Phone Number:', class: 'form-label' %>
-          <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control', disabled: true, data: { 'customers-autocomplete-target': 'customerPhone' } %>
+          <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control', disabled: true, data: { 'customer-modal-target': 'invoiceCustomerPhone' } %>
         </div>
       </div>
 

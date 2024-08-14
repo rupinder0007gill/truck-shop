@@ -39,17 +39,9 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
-#                      deliver_users_order GET    /users/orders/:id/deliver(.:format)                                                               users/orders#deliver
-#                             users_orders GET    /users/orders(.:format)                                                                           users/orders#index
-#                                          POST   /users/orders(.:format)                                                                           users/orders#create
-#                          new_users_order GET    /users/orders/new(.:format)                                                                       users/orders#new
-#                         edit_users_order GET    /users/orders/:id/edit(.:format)                                                                  users/orders#edit
-#                              users_order GET    /users/orders/:id(.:format)                                                                       users/orders#show
-#                                          PATCH  /users/orders/:id(.:format)                                                                       users/orders#update
-#                                          PUT    /users/orders/:id(.:format)                                                                       users/orders#update
-#                                          DELETE /users/orders/:id(.:format)                                                                       users/orders#destroy
 #                       paid_users_invoice GET    /users/invoices/:id/paid(.:format)                                                                users/invoices#paid
 #           search_customer_users_invoices GET    /users/invoices/search_customer(.:format)                                                         users/invoices#search_customer
+#   find_or_create_customer_users_invoices GET    /users/invoices/find_or_create_customer(.:format)                                                 users/invoices#find_or_create_customer
 #                           users_invoices GET    /users/invoices(.:format)                                                                         users/invoices#index
 #                                          POST   /users/invoices(.:format)                                                                         users/invoices#create
 #                        new_users_invoice GET    /users/invoices/new(.:format)                                                                     users/invoices#new
@@ -58,7 +50,6 @@
 #                                          PATCH  /users/invoices/:id(.:format)                                                                     users/invoices#update
 #                                          PUT    /users/invoices/:id(.:format)                                                                     users/invoices#update
 #                                          DELETE /users/invoices/:id(.:format)                                                                     users/invoices#destroy
-#    delete_image_attachment_users_product DELETE /users/products/:id/delete_image_attachment(.:format)                                             users/products#delete_image_attachment
 #                           users_products GET    /users/products(.:format)                                                                         users/products#index
 #                                          POST   /users/products(.:format)                                                                         users/products#create
 #                        new_users_product GET    /users/products/new(.:format)                                                                     users/products#new
@@ -152,6 +143,7 @@ Rails.application.routes.draw do
       end
       collection do
         get :search_customer
+        get :find_or_create_customer
       end
     end
     resources :products

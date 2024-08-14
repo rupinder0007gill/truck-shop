@@ -63,7 +63,6 @@ class Customer < ApplicationRecord
   has_many :invoices
   has_many :notifications
   ### Validations ##############################################################
-  validates :first_name, :last_name, presence: true
 
   ##############################################################################
   ### Class Methods ############################################################

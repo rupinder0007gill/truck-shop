@@ -8,8 +8,14 @@ export default class extends Controller {
   connect() {
     this.modal = new Modal(this.modalTarget);
     this.addressAutocomplete(document.getElementById("autocomplete-container"), (data) => {
+      if (data.first_name && data.last_name) {
+        this.customerNameTarget.value = data.first_name + ' ' + data.last_name
+      } else if (data.first_name) {
+        this.customerNameTarget.value = data.first_name
+      } else if (data.last_name) {
+        this.customerNameTarget.value = data.last_name
+      }
       this.customerIdTarget.value = data.id;
-      this.customerNameTarget.value = data.first_name + ' ' + data.last_name;
       this.customerPhoneTarget.value = data.phone;
     });
   }
@@ -52,9 +58,16 @@ export default class extends Controller {
   handleResponse(data) {
     // Process the response data here
     // For example, update a target element with the data
+    if (data.first_name && data.last_name) {
+      this.invoiceCustomerNameTarget.value = data.first_name + ' ' + data.last_name
+    } else if (data.first_name) {
+      this.invoiceCustomerNameTarget.value = data.first_name
+    } else if (data.last_name) {
+      this.invoiceCustomerNameTarget.value = data.last_name
+    }
+
     this.customerIdTarget.value = data.id
     this.invoiceCustomerEmailTarget.value = data.email
-    this.invoiceCustomerNameTarget.value = data.first_name + ' ' + data.last_name
     this.invoiceCustomerPhoneTarget.value = data.phone
     this.close()
   }

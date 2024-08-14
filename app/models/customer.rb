@@ -64,6 +64,7 @@ class Customer < ApplicationRecord
   has_many :vehicles, dependent: :destroy
   has_many :notifications
   ### Validations ##############################################################
+  validates :email, presence: true, uniqueness: true
   validates :phone, uniqueness: true, if: -> { phone.present? }
 
   ##############################################################################

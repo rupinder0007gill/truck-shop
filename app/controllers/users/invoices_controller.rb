@@ -86,10 +86,14 @@ class Users::InvoicesController < ApplicationController
     name = params[:name].split
     if customer.blank?
       generated_password = Devise.friendly_token(64)
-      customer = Customer.new(first_name: name[0], last_name: name[1], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
+      customer = if params[:name].present?
+                  Customer.new(first_name: name[0], last_name: name[1], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
+                else
+                  Customer.new(phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
+                end
     else
       customer.phone = params[:phone] if customer.phone.blank?
-      if customer.name.nil?
+      if params[:name].present? && params[:name] != customer.name
         customer.first_name = name[0]
         customer.last_name = name[1]
       end

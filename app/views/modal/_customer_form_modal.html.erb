@@ -1,0 +1,33 @@
+<!-- Modal Structure -->
+<div class="modal fade" tabindex="-1" data-modal-target="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Customer Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @customer, url: clients_customers_path, data: { controller: 'modal', action: 'submit->modal#submit' }, html: { class: 'customer-form' } do |form| %>
+          <div class="mb-3">
+            <%= form.label :customer_email, 'Email:', class: 'form-label' %>
+            <div class="autocomplete-container" id="autocomplete-container">
+              <%= form.text_field :customer_email, value: (invoice.customer.email rescue ''), class: 'form-control', id: "autocomplete-field", data: { 'customers-autocomplete-target': 'customerEmail' } %>
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :customer_name, 'Name:', class: 'form-label' %>
+            <%= form.text_field :customer_name, value: (invoice.customer.name rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerName' } %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :customer_phone, 'Phone Number:', class: 'form-label' %>
+            <%= form.number_field :customer_phone, value: (invoice.customer.phone rescue ''), class: 'form-control', data: { 'customers-autocomplete-target': 'customerPhone' } %>
+          </div>
+          <div class="modal-footer">
+            <%= form.submit 'Save', class: 'btn btn-primary' %>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

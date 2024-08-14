@@ -76,18 +76,49 @@ class Users::InvoicesController < ApplicationController
     render json: customers.to_json
   end
 
+  def search_vehicle
+    vehicles = Vehicle.search_for(params[:vin_search])
+    render json: vehicles.to_json
+  end
+
   def find_or_create_customer
     customer = Customer.find_by(email: params[:email])
     name = params[:name].split
     if customer.blank?
       generated_password = Devise.friendly_token(64)
-      customer = Customer.create(first_name: name[0], last_name: name[1], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
+      customer = Customer.new(first_name: name[0], last_name: name[1], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
     else
-      customer.update(phone: params[:phone]) if customer.phone.blank?
-      customer.update(first_name: name[0], last_name: name[1]) if customer.name.nil?
+      customer.phone = params[:phone] if customer.phone.blank?
+      if customer.name.nil?
+        customer.first_name = name[0]
+        customer.last_name = name[1]
+      end
     end
 
-    render json: customer.to_json
+    if customer.save
+      render json: customer.to_json
+    else
+      render json: customer.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
+  def find_or_create_vehicle
+    vehicle = Vehicle.find_by(vin: params[:vin])
+    if vehicle.blank?
+      vehicle = Vehicle.new(vin: params[:vin], make_model: params[:make_model], unit_number: params[:unit_number], year: params[:year], licence_number: params[:licence_number], po_number: params[:po_number])
+    else
+      vehicle.make_model = params[:make_model] if vehicle.make_model.blank?
+      vehicle.unit_number = params[:unit_number] if vehicle.unit_number.blank?
+      vehicle.year = params[:year] if vehicle.year.blank?
+      vehicle.licence_number = params[:licence_number] if vehicle.licence_number.blank?
+      vehicle.po_number = params[:po_number] if vehicle.po_number.blank?
+    end
+
+    if vehicle.save
+      render json: vehicle.to_json
+    else
+      render json: vehicle.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   private

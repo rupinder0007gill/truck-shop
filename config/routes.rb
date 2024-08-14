@@ -42,6 +42,8 @@
 #                       paid_users_invoice GET    /users/invoices/:id/paid(.:format)                                                                users/invoices#paid
 #           search_customer_users_invoices GET    /users/invoices/search_customer(.:format)                                                         users/invoices#search_customer
 #   find_or_create_customer_users_invoices GET    /users/invoices/find_or_create_customer(.:format)                                                 users/invoices#find_or_create_customer
+#            search_vehicle_users_invoices GET    /users/invoices/search_vehicle(.:format)                                                          users/invoices#search_vehicle
+#    find_or_create_vehicle_users_invoices GET    /users/invoices/find_or_create_vehicle(.:format)                                                  users/invoices#find_or_create_vehicle
 #                           users_invoices GET    /users/invoices(.:format)                                                                         users/invoices#index
 #                                          POST   /users/invoices(.:format)                                                                         users/invoices#create
 #                        new_users_invoice GET    /users/invoices/new(.:format)                                                                     users/invoices#new
@@ -144,6 +146,8 @@ Rails.application.routes.draw do
       collection do
         get :search_customer
         get :find_or_create_customer
+        get :search_vehicle
+        get :find_or_create_vehicle
       end
     end
     resources :products

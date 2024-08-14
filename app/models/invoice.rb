@@ -62,7 +62,7 @@ class Invoice < ApplicationRecord
   ### Callbacks ################################################################
   before_save :invoice_paid_notification
   before_create :set_service_start_time
-  after_create :reduce_products_stocks, :set_invoice_id, :create_notifications
+  after_create :reduce_products_stocks, :set_invoice_id, :create_notifications, :set_customer_id_to_vehicles
   after_update :set_invoice_id
   before_destroy :add_products_stocks
 
@@ -177,5 +177,13 @@ class Invoice < ApplicationRecord
       invoice_url = Rails.application.routes.url_helpers.users_invoice_url(id)
       user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} open a service for #{customer.name}. please check the <a href='#{invoice_url}'>invoice</a>")
     end
+  end
+
+  def set_customer_id_to_vehicles
+    return unless customer_id.present?
+
+    if vehicle.present? && vehicle.customer_id.nil?
+      vehicle.update(customer_id: customer_id)
+    end  
   end
 end

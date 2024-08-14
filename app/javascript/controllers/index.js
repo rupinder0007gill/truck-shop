@@ -24,3 +24,6 @@ application.register("nested-form", NestedFormController)
 
 import SearchFormController from "./search_form_controller"
 application.register("search-form", SearchFormController)
+
+import VehicleModalController from "./vehicle_modal_controller"
+application.register("vehicle-modal", VehicleModalController)

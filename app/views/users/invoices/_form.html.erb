@@ -37,7 +37,7 @@
             <%= render 'modal/customer_form_modal', form: form %>
           <% end %>
         </div>
-        <%= form.hidden_field :customer_id, class: 'input', data: { 'customer-modal-target': 'customerId' } %>
+        <%= form.hidden_field :customer_id, value: (invoice.customer.id rescue ''), class: 'input', data: { 'customer-modal-target': 'customerId' } %>
         <%= form.hidden_field :search_url, class: 'input', value: search_customer_users_invoices_url, id: 'searchURL', data: { 'customer-modal-target': 'searchURL' } %>
         <div class="col-sm-4">
           <%= form.label :customer_email, 'Email:', class: 'form-label' %>
@@ -54,33 +54,49 @@
         </div>
       </div>
 
-      <div class="row mt-3">
+      <div class="row mt-3" data-controller='vehicle-modal'>
         <div class="col-12">
-          <h5 class="mb-1 fs-9">Vehicle Information</h5>
+          <div class="row">
+            <div class="col-6">
+              <h5 class="mb-1 fs-9">Vehicle Information</h5>
+            </div>
+            <div class="col-6 text-end">
+              <button type="button" class="btn btn-primary mt-2" data-action="click->vehicle-modal#open">Select or Create Vehicle</button>
+            </div>
+          </div>
+          <%= turbo_frame_tag "vehicle_form" do %>
+            <%= render 'modal/vehicle_form_modal', form: form %>
+          <% end %>
         </div>
-        <div class="col-sm-4 col-md-2">
-          <%= form.label :vin_number, 'VIN:', class: 'form-label' %>
-          <%= form.text_field :vin_number, class: 'form-control' %>
+        <%= form.hidden_field :vehicle_id, value: (invoice.vehicle.id rescue ''), class: 'input', data: { 'vehicle-modal-target': 'vehicleId' } %>
+        <%= form.hidden_field :vehicle_search_url, class: 'input', value: search_vehicle_users_invoices_url, id: 'vehicleSearchURL', data: { 'vehicle-modal-target': 'vehicleSearchURL' } %>
+        <div class="col-sm-4 col-md">
+          <%= form.label :vehicle_vin, 'VIN:', class: 'form-label' %>
+          <%= form.text_field :vehicle_vin, class: 'form-control', value: (invoice.vehicle.vin rescue ''), data: { 'vehicle-modal-target': 'invoiceVehicleVIN' }, disabled: true %>
         </div>
-        <div class="col-sm-4 col-md-2">
-          <%= form.label :make_model, 'MAKE-MODEL:', class: 'form-label' %>
-          <%= form.text_field :make_model, class: 'form-control' %>
+        <div class="col-sm-4 col-md">
+          <%= form.label :vehicle_make_model, 'MAKE-MODEL:', class: 'form-label' %>
+          <%= form.text_field :vehicle_make_model, class: 'form-control', value: (invoice.vehicle.make_model rescue ''), data: { 'vehicle-modal-target': 'invoiceVehicleMakeModel' }, disabled: true %>
         </div>
-        <div class="col-sm-4 col-md-2">
-          <%= form.label :unit_number, 'UNIT NO:', class: 'form-label' %>
-          <%= form.text_field :unit_number, class: 'form-control' %>
+        <div class="col-sm-4 col-md">
+          <%= form.label :vehicle_unit_number, 'UNIT NO:', class: 'form-label' %>
+          <%= form.text_field :vehicle_unit_number, class: 'form-control', value: (invoice.vehicle.unit_number rescue ''), data: { 'vehicle-modal-target': 'invoiceVehicleUnitNumber' }, disabled: true %>
         </div>
-        <div class="col-sm-4 col-md-2">
-          <%= form.label :year, 'YEAR:', class: 'form-label' %>
-          <%= form.text_field :year, class: 'form-control' %>
+        <div class="col-sm-4 col-md">
+          <%= form.label :vehicle_year, 'YEAR:', class: 'form-label' %>
+          <%= form.text_field :vehicle_year, class: 'form-control', value: (invoice.vehicle.year rescue ''), data: { 'vehicle-modal-target': 'invoiceVehicleYear' }, disabled: true %>
         </div>
-        <div class="col-sm-4 col-md-2">
+        <div class="col-sm-4 col-md">
           <%= form.label :odometer, 'ODOMETER:', class: 'form-label' %>
-          <%= form.text_field :odometer, class: 'form-control' %>
+          <%= form.text_field :odometer, class: 'form-control', id: 'vehicle_odometer', data: { 'vehicle-modal-target': 'invoiceVehicleOdometer' } %>
         </div>
-        <div class="col-sm-4 col-md-2">
-          <%= form.label :licence_number, 'LICENCE NO:', class: 'form-label' %>
-          <%= form.text_field :licence_number, class: 'form-control' %>
+        <div class="col-sm-4 col-md">
+          <%= form.label :vehicle_licence_number, 'LICENCE NO:', class: 'form-label' %>
+          <%= form.text_field :vehicle_licence_number, class: 'form-control', value: (invoice.vehicle.licence_number rescue ''), data: { 'vehicle-modal-target': 'invoiceVehicleLicenceNumber' }, disabled: true %>
+        </div>
+        <div class="col-sm-4 col-md">
+          <%= form.label :vehicle_po_number, 'PO No:', class: 'form-label' %>
+          <%= form.text_field :vehicle_po_number, class: 'form-control', value: (invoice.vehicle.po_number rescue ''), data: { 'vehicle-modal-target': 'invoiceVehiclePoNumber' }, disabled: true %>
         </div>
       </div>
     </div>

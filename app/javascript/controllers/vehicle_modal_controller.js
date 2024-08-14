@@ -1,16 +1,20 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 import { Modal } from "bootstrap";
 
-// Connects to data-controller="customer-modal"
+// Connects to data-controller="vehicle-modal"
 export default class extends Controller {
-  static targets = ["modal", "form", "customerEmail", "customerId", "customerName", "customerPhone", "searchURL", "invoiceCustomerEmail", "invoiceCustomerName", "invoiceCustomerPhone", "addCustomerURL" ]
-
+  static targets = ["vehicleModal", "form", "addVehicleURL", "vehicleId", "vehicleVIN", "vehicleMakeModel", "vehicleUnitNumber", "vehicleYear", "vehicleOdoMeter", "vehicleLicenceNumber", "vehiclePoNumber", "vehicleSearchURL", "invoiceVehicleVIN", "invoiceVehicleMakeModel", "invoiceVehicleUnitNumber", "invoiceVehicleYear", "invoiceVehicleOdometer", "invoiceVehicleLicenceNumber", "invoiceVehiclePoNumber" ]
+  
   connect() {
-    this.modal = new Modal(this.modalTarget);
-    this.addressAutocomplete(document.getElementById("autocomplete-container"), (data) => {
-      this.customerIdTarget.value = data.id;
-      this.customerNameTarget.value = data.first_name + ' ' + data.last_name;
-      this.customerPhoneTarget.value = data.phone;
+    this.modal = new Modal(this.vehicleModalTarget);
+    this.addressAutocomplete(document.getElementById("vehicle-autocomplete-container"), (data) => {
+      this.vehicleIdTarget.value = data.id;
+      this.vehicleVINTarget.value = data.vin;
+      this.vehicleMakeModelTarget.value = data.make_model;
+      this.vehicleUnitNumberTarget.value = data.unit_number;
+      this.vehicleYearTarget.value = data.year;
+      this.vehicleLicenceNumberTarget.value = data.licence_number;
+      this.vehiclePoNumberTarget.value = data.po_number;
     });
   }
 
@@ -25,15 +29,19 @@ export default class extends Controller {
 
   clearForm() {
     // Reset form fields
-    this.customerEmailTarget.value = ''
-    this.customerNameTarget.value = ''
-    this.customerPhoneTarget.value = ''
+    this.vehicleVINTarget.value = ''
+    this.vehicleMakeModelTarget.value = ''
+    this.vehicleUnitNumberTarget.value = ''
+    this.vehicleYearTarget.value = ''
+    this.vehicleLicenceNumberTarget.value = ''
+    this.vehiclePoNumberTarget.value = ''
+    this.vehicleOdoMeterTarget.value = ''
   }
 
   async submit(event) {
     event.preventDefault()
 
-    const url = this.addCustomerURLTarget.value + '?email=' + this.customerEmailTarget.value + '&name=' + this.customerNameTarget.value + '&phone=' + this.customerPhoneTarget.value;
+    const url = this.addVehicleURLTarget.value + '?vin=' + this.vehicleVINTarget.value + '&make_model=' + this.vehicleMakeModelTarget.value + '&unit_number=' + this.vehicleUnitNumberTarget.value + '&year=' + this.vehicleYearTarget.value + '&odometer=' + this.vehicleOdoMeterTarget.value + '&licence_number=' + this.vehicleLicenceNumberTarget.value + '&po_number=' + this.vehiclePoNumberTarget.value;
 
     const response = await fetch(url, {
       method: 'GET'
@@ -52,10 +60,14 @@ export default class extends Controller {
   handleResponse(data) {
     // Process the response data here
     // For example, update a target element with the data
-    this.customerIdTarget.value = data.id
-    this.invoiceCustomerEmailTarget.value = data.email
-    this.invoiceCustomerNameTarget.value = data.first_name + ' ' + data.last_name
-    this.invoiceCustomerPhoneTarget.value = data.phone
+    this.vehicleIdTarget.value = data.id
+    this.invoiceVehicleVINTarget.value = data.vin
+    this.invoiceVehicleMakeModelTarget.value = data.make_model
+    this.invoiceVehicleUnitNumberTarget.value = data.unit_number
+    this.invoiceVehicleYearTarget.value = data.year
+    this.invoiceVehicleOdometerTarget.value = this.vehicleOdoMeterTarget.value
+    this.invoiceVehicleLicenceNumberTarget.value = data.licence_number
+    this.invoiceVehiclePoNumberTarget.value = data.po_number
     this.close()
   }
 
@@ -64,8 +76,8 @@ export default class extends Controller {
   */
   addressAutocomplete(containerElement, callback) {
     // find input element
-    var inputElement = document.getElementById("autocomplete-field");
-    var searchURL = document.getElementById("searchURL");
+    var inputElement = document.getElementById("vehicle-autocomplete-field");
+    var searchURL = document.getElementById("vehicleSearchURL");
 
     /* Active request promise reject function. To be able to cancel the promise when a new request comes */
     var currentPromiseReject;
@@ -95,7 +107,7 @@ export default class extends Controller {
       var promise = new Promise((resolve, reject) => {
         currentPromiseReject = reject;
 
-        var url = searchURL.value + '?email_search=' + currentValue;
+        var url = searchURL.value + '?vin_search=' + currentValue;
 
         fetch(url)
           .then(response => {
@@ -118,15 +130,15 @@ export default class extends Controller {
         containerElement.appendChild(autocompleteItemsElement);
 
         /* For each item in the results */
-        data.forEach((customer, index) => {
+        data.forEach((vehicle, index) => {
           /* Create a DIV element for each element: */
           var itemElement = document.createElement("DIV");
           /* Set formatted address as item value */
-          itemElement.innerHTML = customer.email;
+          itemElement.innerHTML = vehicle.vin;
 
           /* Set the value for the autocomplete text field and notify: */
           itemElement.addEventListener("click", function(e) {
-            inputElement.value = currentItems[index].email;
+            inputElement.value = currentItems[index].vin;
             callback(currentItems[index]);
             /* Close the list of autocompleted values: */
             closeDropDownList(containerElement);

@@ -49,13 +49,13 @@ class Vehicle < ApplicationRecord
   ##############################################################################
   ### Associations #############################################################
   has_many :invoices, dependent: :destroy
-  belongs_to :customer
+  belongs_to :customer, optional: true
 
   ##############################################################################
   ### Validations ##############################################################
   validates :vin, presence: true, uniqueness: true
   validates :licence_number, presence: true, uniqueness: true
-  validates :po_number, uniqueness: true
+  validates :po_number, uniqueness: true, if: -> { po_number.present? }
 
   ##############################################################################
   ### Scopes ###################################################################

@@ -11,16 +11,16 @@
         <div class="mb-3">
           <%= form.label :email, 'Email:', class: 'form-label' %>
           <div class="autocomplete-container" id="autocomplete-container">
-            <%= form.text_field :email, value: (invoice.customer.email rescue ''), class: 'form-control', id: "autocomplete-field", data: { 'customer-modal-target': 'customerEmail' } %>
+            <%= form.text_field :email, class: 'form-control', id: "autocomplete-field", data: { 'customer-modal-target': 'customerEmail' } %>
           </div>
         </div>
         <div class="mb-3">
           <%= form.label :name, 'Name:', class: 'form-label' %>
-          <%= form.text_field :name, value: (invoice.customer.name rescue ''), class: 'form-control', data: { 'customer-modal-target': 'customerName' } %>
+          <%= form.text_field :name, class: 'form-control', data: { 'customer-modal-target': 'customerName' } %>
         </div>
         <div class="mb-3">
           <%= form.label :phone, 'Phone Number:', class: 'form-label' %>
-          <%= form.number_field :phone, value: (invoice.customer.phone rescue ''), class: 'form-control', data: { 'customer-modal-target': 'customerPhone' } %>
+          <%= form.number_field :phone, class: 'form-control', data: { 'customer-modal-target': 'customerPhone' } %>
         </div>
         <div class="modal-footer">
           <%= link_to 'Save', 'javascript:void(0)', class: 'btn btn-primary', data: { action: 'click->customer-modal#submit' } %>

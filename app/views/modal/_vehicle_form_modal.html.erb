@@ -1,0 +1,56 @@
+<!-- Modal Structure -->
+<div class="modal fade" tabindex="-1" data-vehicle-modal-target="vehicleModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Vehicle Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form.hidden_field :add_vehicle_url, class: 'input', value: find_or_create_vehicle_users_invoices_url, data: { 'vehicle-modal-target': 'addVehicleURL' } %>
+        <div class="row mb-3">
+          <div class="col-12">
+            <%= form.label :vin, 'VIN(Search vehicle by VIN):', class: 'form-label' %>
+            <div class="autocomplete-container" id="vehicle-autocomplete-container">
+              <%= form.text_field :vin, class: 'form-control', id: "vehicle-autocomplete-field", data: { 'vehicle-modal-target': 'vehicleVIN' } %>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <%= form.label :make_model, 'Make-Model:', class: 'form-label' %>
+            <%= form.text_field :make_model, class: 'form-control', data: { 'vehicle-modal-target': 'vehicleMakeModel' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :unit_number, 'Unit No:', class: 'form-label' %>
+            <%= form.text_field :unit_number, class: 'form-control', data: { 'vehicle-modal-target': 'vehicleUnitNumber' } %>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <%= form.label :year, 'Year:', class: 'form-label' %>
+            <%= form.text_field :year, class: 'form-control', data: { 'vehicle-modal-target': 'vehicleYear' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :odometer, 'Odometer:', class: 'form-label' %>
+            <%= form.text_field :odometer, class: 'form-control', data: { 'vehicle-modal-target': 'vehicleOdoMeter' } %>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <%= form.label :licence_number, 'Licence No:', class: 'form-label' %>
+            <%= form.text_field :licence_number, class: 'form-control', data: { 'vehicle-modal-target': 'vehicleLicenceNumber' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :po_number, 'PO No:', class: 'form-label' %>
+            <%= form.text_field :po_number, class: 'form-control', data: { 'vehicle-modal-target': 'vehiclePoNumber' } %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <%= link_to 'Save', 'javascript:void(0)', class: 'btn btn-primary', data: { action: 'click->vehicle-modal#submit' } %>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -180,10 +180,10 @@ class Invoice < ApplicationRecord
   end
 
   def set_customer_id_to_vehicles
-    return unless customer_id.present?
+    return if customer_id.blank?
 
-    if vehicle.present? && vehicle.customer_id.nil?
-      vehicle.update(customer_id: customer_id)
-    end  
+    return unless vehicle.present? && vehicle.customer_id.nil?
+
+    vehicle.update(customer_id:)
   end
 end

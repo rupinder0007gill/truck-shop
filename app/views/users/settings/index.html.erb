@@ -1,0 +1,55 @@
+<%= form_with model: @setting, url: users_settings_path, method: :post, data: { turbo: false } do |form| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="row flex-between-center">
+        <div class="col-md">
+          <h5 class="mb-2 mb-md-0">Settings Information</h5>
+        </div>
+        <div class="col-auto">
+          <%= link_to 'Discard', root_path, class: 'btn btn-link text-secondary p-0 me-3 fw-medium' %>
+          <%= form.submit 'Update', class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if @setting.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% @setting.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row g-0">
+    <div class="col-12">
+      <div class="card mb-3">
+        <div class="card-header bg-body-tertiary">
+          <h6 class="mb-0">Basic information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row gx-2">
+            <div class="col-12 mb-3">
+              <%= form.label :tax_name, 'Tax Name', class: 'form-label' %>
+              <%= form.text_field :tax_name, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :tax_percentage, 'Tax Percentage', class: 'form-label' %>
+              <%= form.number_field :tax_percentage, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :hourly_rate, 'Hourly Charge', class: 'form-label' %>
+              <%= form.text_field :hourly_rate, class: 'form-control' %>
+            </div>
+          </div>
+          <div class="row justify-content-between align-items-center">
+            <div class="col-auto">
+              <%= form.submit 'Update', class: 'btn btn-primary' %>
+              <%= link_to 'Discard', root_path, class: 'btn btn-link text-secondary p-0 me-3 fw-medium' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -59,13 +59,6 @@
               </a>
               <!-- more inner pages-->
             </li>
-            <%# <li class="nav-item">
-              <a class="nav-link" href="#">
-                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Product details</span>
-                </div>
-              </a>
-              <!-- more inner pages-->
-            </li> %>
             <li class="nav-item">
               <a class="nav-link <%= 'active' if controller_name == "products" && action_name == "new" %>" href="<%= new_users_product_path %>">
                 <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add product</span>
@@ -84,6 +77,33 @@
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Customers</span>
             </div>
           </a>
+          <!-- parent pages-->
+          <a class="nav-link <%= 'active' if controller_name == "settings" %>" href="<%= users_settings_path %>" role="button">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-wrench"></span></span><span class="nav-link-text ps-1">Settings</span>
+            </div>
+          </a>
+
+          <!-- parent pages-->
+          <a class="nav-link dropdown-indicator" href="#vehicles" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "vehicles" ? true : false %>" aria-controls="products">
+            <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-car"></span></span><span class="nav-link-text ps-1">Vehicles</span>
+            </div>
+          </a>
+          <ul class="nav collapse <%= 'show' if controller_name == "vehicles" %>" id="vehicles">
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "vehicles" && action_name == "index" %>" href="<%= users_vehicles_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Vehicles List</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <%= 'active' if controller_name == "vehicles" && action_name == "new" %>" href="<%= new_users_vehicle_path %>">
+                <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add Vehicle</span>
+                </div>
+              </a>
+              <!-- more inner pages-->
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
           <!-- label-->

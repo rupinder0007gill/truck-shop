@@ -1,0 +1,40 @@
+<div class="card mb-3">
+  <div class="card-header">
+    <div class="row flex-between-center">
+      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+        <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Vehicles</h5>
+      </div>
+      <div class="col-8 col-sm-auto d-flex align-items-center ps-2">
+        <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1"><%= link_to "New Vehicle",
+            new_users_vehicle_path %></span></button>
+        <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive scrollbar">
+      <%= turbo_frame_tag 'search_results' do %>
+        <table class="table table-sm table-striped fs-10 mb-0 overflow-hidden" >
+          <thead class="bg-200">
+            <tr>
+              <%= sortable_table_header 'VIN', :vin, :users_vehicles_path %>
+              <%= sortable_table_header 'Licence No', :licence_number, :users_vehicles_path %>
+              <%= sortable_table_header 'Make-Model', :make_model, :users_vehicles_path %>
+              <%= sortable_table_header 'PO No', :po_number, :users_vehicles_path %>
+              <%= sortable_table_header 'Unit No:', :unit_number, :users_vehicles_path %>
+              <%= sortable_table_header 'Year', :year, :users_vehicles_path %>
+              <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center">Action</th>
+            </tr>
+          </thead>
+          <%= turbo_frame_tag "vehicles_list", src: users_vehicles_url(format: :turbo_stream, page: params[:page], query: params[:query], sort: params[:sort], direction: params[:direction]), loading: "lazy", autoscroll: "true" do %>
+            <tbody class="list" id="vehicles_listing">
+              <!-- Adjust this to your Pagy default item count -->
+            </tbody>
+          <% end %>
+        </table>
+        <%= turbo_frame_tag "vehicles_pagination" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

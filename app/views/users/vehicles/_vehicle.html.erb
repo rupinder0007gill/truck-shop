@@ -1,0 +1,30 @@
+<tr class="btn-reveal-trigger" id="<%= dom_id vehicle %>">
+  <td class="name align-middle text-center white-space-nowrap py-2">
+    <%= link_to edit_users_vehicle_path(vehicle), data: { turbo_frame: "_top" } do %>
+      <div class="d-flex d-flex align-items-center">
+        <div class="flex-1">
+          <h5 class="mb-0 fs-10"><%= vehicle.vin %></h5>
+        </div>
+      </div>
+    <%- end %>
+  </td>
+  <td class="align-middle text-center py-2">
+    <%= vehicle.licence_number %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap py-2">
+    <%= vehicle.make_model %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap ps-5 py-2">
+    <%= vehicle.po_number %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap ps-5 py-2">
+    <%= vehicle.unit_number %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap ps-5 py-2">
+    <%= vehicle.year %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap py-2 text-end">
+    <%= link_to 'Edit', edit_users_vehicle_path(vehicle), data: { turbo_frame: "_top" }, class: "btn btn-outline-primary"%>
+    <%= link_to "Delete", users_vehicle_path(vehicle), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" }, class: 'btn btn-danger' %>
+  </td>
+</tr>

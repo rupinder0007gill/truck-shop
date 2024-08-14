@@ -49,7 +49,16 @@ class Clients::CustomersController < ApplicationController
 
   def destroy
     @customer.destroy
-    redirect_to clients_customer_path, notice: 'Customer was successfully deleted.'
+    flash.now[:alert] = 'Customer was successfully destroyed.'
+    respond_to do |format|
+      format.html { redirect_to users_customers_url, alert: 'Customer was successfully destroyed.' }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove(@customer),
+          turbo_stream.update('flash', partial: 'layouts/partials/flash')
+        ]
+      end
+    end
   end
 
   def set_customer

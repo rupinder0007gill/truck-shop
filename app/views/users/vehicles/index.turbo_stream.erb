@@ -1,0 +1,13 @@
+<!-- append @tools to the #article_list turbo_frame -->
+<%= turbo_stream.append("vehicles_listing") do %>
+  <%- @vehicles.each do |vehicle| %>
+    <%= render partial: 'vehicle', locals: { vehicle: vehicle } %>
+  <% end %>
+<% end %>
+
+<!-- replace #users_pagination frame by our content loader when it gets visible (our turbo_frame_tag with loading="lazy" attribute -->
+<% if @pagy.next.present? %>
+  <%= turbo_stream.replace "vehicles_pagination" do %>
+    <%= turbo_frame_tag "vehicles_pagination", src: users_vehicles_url(query: params[:query], sort: params[:sort], direction: params[:direction], page: @pagy.next, format: "turbo_stream"), loading: "lazy" %>
+  <% end %>
+<% end %>

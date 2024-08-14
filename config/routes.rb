@@ -72,6 +72,16 @@
 #                      users_notifications GET    /users/notifications(.:format)                                                                    users/notifications#index
 #                       users_notification GET    /users/notifications/:id(.:format)                                                                users/notifications#show
 #                                          DELETE /users/notifications/:id(.:format)                                                                users/notifications#destroy
+#                           users_settings GET    /users/settings(.:format)                                                                         users/settings#index
+#                                          POST   /users/settings(.:format)                                                                         users/settings#create
+#                           users_vehicles GET    /users/vehicles(.:format)                                                                         users/vehicles#index
+#                                          POST   /users/vehicles(.:format)                                                                         users/vehicles#create
+#                        new_users_vehicle GET    /users/vehicles/new(.:format)                                                                     users/vehicles#new
+#                       edit_users_vehicle GET    /users/vehicles/:id/edit(.:format)                                                                users/vehicles#edit
+#                            users_vehicle GET    /users/vehicles/:id(.:format)                                                                     users/vehicles#show
+#                                          PATCH  /users/vehicles/:id(.:format)                                                                     users/vehicles#update
+#                                          PUT    /users/vehicles/:id(.:format)                                                                     users/vehicles#update
+#                                          DELETE /users/vehicles/:id(.:format)                                                                     users/vehicles#destroy
 #                        clients_customers GET    /clients/customers(.:format)                                                                      clients/customers#index
 #                                          POST   /clients/customers(.:format)                                                                      clients/customers#create
 #                     new_clients_customer GET    /clients/customers/new(.:format)                                                                  clients/customers#new
@@ -157,6 +167,8 @@ Rails.application.routes.draw do
       end
     end
     resources :notifications, only: %i[index show destroy]
+    resources :settings, only: %i[index create]
+    resources :vehicles
   end
 
   namespace :clients do

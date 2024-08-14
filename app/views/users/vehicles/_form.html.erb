@@ -1,0 +1,58 @@
+<%= form_with model: vehicle, url: url, data: { turbo: false } do |form| %>
+  <% if vehicle.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% vehicle.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row g-0">
+    <div class="col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header bg-body-tertiary">
+          <h6 class="mb-0">vehicle information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row gx-2">
+            <div class="col-12 mb-3">
+              <%= form.label :vin, 'VIN', class: 'form-label' %>
+              <%= form.text_field :vin, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :licence_number, 'Licence No', class: 'form-label' %>
+              <%= form.text_field :licence_number, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :make_model, 'Make-Model', class: 'form-label' %>
+              <%= form.text_field :make_model, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :po_number, 'PO No', class: 'form-label' %>
+              <%= form.text_field :po_number, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :unit_number, 'Unit No', class: 'form-label' %>
+              <%= form.text_field :unit_number, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :year, 'Year', class: 'form-label' %>
+              <%= form.text_field :year, class: 'form-control' %>
+            </div>
+            <div class="col-12 mb-3">
+              <%= form.label :customer_id, 'Customer', class: 'form-label' %>
+              <%= form.select :customer_id, Customer.all.collect { |customer| [ "#{customer.name} (#{customer.email})", customer.id ] }, {}, class: 'form-select' %>
+            </div>
+          </div>
+          <div class="row justify-content-between align-items-center">
+            <div class="col-auto">
+              <%= form.submit 'Add vehicle', class: 'btn btn-primary' %>
+              <%= link_to 'Discard', users_vehicles_url, class: 'btn btn-link text-secondary p-0 me-3 fw-medium' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

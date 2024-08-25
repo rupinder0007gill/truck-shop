@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invoice_items
@@ -5,6 +7,7 @@
 #  id                :bigint           not null, primary key
 #  archived_at       :datetime
 #  deleted_at        :datetime
+#  description       :text
 #  final_price_cents :bigint
 #  invoice_type      :integer
 #  is_core_product   :boolean          default(FALSE)
@@ -28,6 +31,6 @@
 #
 require 'rails_helper'
 
-RSpec.describe InvoiceItem, type: :model do
+RSpec.describe InvoiceItem do
   pending "add some examples to (or delete) #{__FILE__}"
 end

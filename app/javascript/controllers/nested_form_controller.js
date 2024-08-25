@@ -24,6 +24,31 @@ export default class extends NestedForm {
     }));
   }
 
+  // Action method triggered by the button
+  triggerAction(event) {
+    // Find the parent controller instance
+    const parentElement = this.element.closest('[data-controller="invoice-nested-form"]');
+    console.log('dsfsdfdsf', parentElement)
+    if (parentElement) {
+      // Access the Stimulus application
+      const application = this.application;
+
+      // Get the parent controller instance
+      const parentController = application.getControllerForElementAndIdentifier(parentElement, "invoice-nested-form");
+
+      if (parentController) {
+        // Call a method on the parent controller
+        event.preventDefault();
+        super.remove(event);
+        parentController.change();
+      } else {
+        console.error("Parent controller instance not found.");
+      }
+    } else {
+      console.error("Parent element with second-controller not found.");
+    }
+  }
+
   change() {
     console.log("hello");
     var orderTotal = 0;

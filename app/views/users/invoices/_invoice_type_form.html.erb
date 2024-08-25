@@ -1,13 +1,13 @@
 <tr class="border-200 nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
   <td class="align-middle">
-    <%= f.hidden_field :hourly_rate, value: (Setting.last.hourly_rate rescue 0), class: 'input', data: { 'invoice-nested-form-target': 'hourlyRate' } %>
     <%= f.select :invoice_type, InvoiceItem.invoice_types.map {|k,v| [k.humanize,k]}, {}, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectType" } } %>
   </td>
   <td class="align-middle">
-    <%= f.select :product_id, Product.available_stocks.map {|product| [product.name, product.id, 'data-price': product.selling_price]}, { include_blank: true }, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectProduct" } } %>
-    <%= f.text_field :description,  class: 'form-control d-none', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemDescription" } %>
+    <%= f.select :product_id, Product.available_stocks.map {|product| [product.name, product.id, 'data-price': product.selling_price, 'data-core-price': product.core_price, 'data-name': product.name]}, { include_blank: true }, { class: "form-select #{(f.object.invoice_type == 'product' || f.object.new_record?) ? '' : 'd-none'}", data: { action: "change->invoice-nested-form#check_core_price", "invoice-nested-form-target": "selectProduct" } } %>
+
+    <%= f.text_field :description,  class: "form-control #{(f.object.invoice_type == 'labour' || f.object.invoice_type == 'core_product') ? '' : 'd-none'}", data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemDescription" } %>
   </td>
-  <td class="align-middle text-center"><%= f.number_field :qty, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemQuantity" } %></td>
+  <td class="align-middle text-center"><%= f.number_field :qty, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemQuantity" }, step: '0.5' %></td>
   <td class="align-middle text-center"><%= f.number_field :price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemPrice" } %></td>
   <td class="align-middle text-center"><%= f.number_field :final_price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemFinalPrice" } %></td>
   <td class="align-middle text-end">

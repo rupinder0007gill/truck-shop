@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: invoice_items
@@ -5,6 +7,7 @@
 #  id                :bigint           not null, primary key
 #  archived_at       :datetime
 #  deleted_at        :datetime
+#  description       :text
 #  final_price_cents :bigint
 #  invoice_type      :integer
 #  is_core_product   :boolean          default(FALSE)
@@ -43,13 +46,12 @@ class InvoiceItem < ApplicationRecord
 
   ##############################################################################
   ### Associations #############################################################
-  has_rich_text :description
   belongs_to :invoice
   belongs_to :product, optional: true
 
   ##############################################################################
   ### Validations ##############################################################
-  validates :quantity, presence: true, numericality: true
+  validates :qty, presence: true, numericality: true
 
   ##############################################################################
   ### Scopes ###################################################################
@@ -58,7 +60,8 @@ class InvoiceItem < ApplicationRecord
   ### Other ####################################################################
   enum invoice_type: {
     product: 0,
-    labour: 1
+    labour: 1,
+    core_product: 3
   }
 
   ##############################################################################

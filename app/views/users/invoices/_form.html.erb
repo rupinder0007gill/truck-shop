@@ -121,10 +121,11 @@
       <div class="row mt-4">
         <div class="col-12">
           <h5 class="mb-3 fs-9">Items</h5>
+          <%= form.hidden_field :hourly_rate, value: (Setting.last.hourly_rate rescue 0), class: 'input', data: { 'invoice-nested-form-target': 'hourlyRate' } %>
         </div>
         <div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-form-wrapper">
           <template data-nested-form-target="template">
-            <%= form.fields_for :invoice_items, invoice.invoice_items.build(price_cents: 0, final_price_cents: 0, qty: 1), child_index: 'NEW_RECORD' do |invoice_item_fields| %>
+            <%= form.fields_for :invoice_items, invoice.invoice_items.build(price_cents: 0, final_price_cents: 0, qty: 0), child_index: 'NEW_RECORD' do |invoice_item_fields| %>
               <%= render "invoice_type_form", f: invoice_item_fields %>
             <% end %>
           </template>
@@ -146,8 +147,8 @@
                 <% end %>
 
                 <!-- Inserted elements will be injected before that target. -->
-                <tr data-nested-form-target="target"></tr>
-                <tr>
+                <tr data-nested-form-target="target" data-invoice-nested-form-target="invoiceItems"></tr>
+                <tr >
                   <td colspan="5">
                     <button type="button" data-action="nested-form#add" class="btn btn-primary">Add Item</button>
                   </td>
@@ -166,16 +167,18 @@
               <td class="fw-semi-bold">
                 <div class="input-group ">
                   <span class="input-group-text" id="basic-addon1">$</span>
-                  <%= form.number_field :price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "orderPrice" } %>
+                  <%= form.number_field :price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "orderPrice" }, readonly: true %>
                 </div>
               </td>
             </tr>
             <tr>
-              <th class="text-900 align-content-center">Tax 0%:</th>
+              <%- tax_percentage = Setting.last.tax_percentage rescue 0 %>
+              <th class="text-900 align-content-center">Tax <%= tax_percentage %>%:</th>
               <td class="fw-semi-bold">
-                <div class="input-group ">
+                <div class="input-group">
                   <span class="input-group-text" id="basic-addon1">$</span>
-                  <%= form.number_field :tax, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "orderTax" } %>
+                  <%= form.hidden_field :tax_percentage, value: tax_percentage, data: { "invoice-nested-form-target": "taxPercentage" } %>
+                  <%= form.number_field :tax, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "orderTax" }, readonly: true %>
                 </div>
               </td>
             </tr>
@@ -193,7 +196,7 @@
               <td class="fw-semi-bold">
                 <div class="input-group ">
                   <span class="input-group-text" id="basic-addon1">$</span>
-                  <%= form.number_field :total_price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "orderTotalPrice" } %>
+                  <%= form.number_field :total_price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "orderTotalPrice" }, readonly: true %>
                 </div>
               </td>
             </tr>

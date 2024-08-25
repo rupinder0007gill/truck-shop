@@ -73,8 +73,8 @@ class Invoice < ApplicationRecord
   has_many :products, through: :invoice_items
   has_many :invoice_items, dependent: :destroy
   accepts_nested_attributes_for :invoice_items, allow_destroy: true, reject_if: proc { |attributes|
-                                                                                     attributes['qty'].blank?
-                                                                                   }
+                                                                                  attributes['qty'] == '0'
+                                                                                }
   belongs_to :user
   belongs_to :customer, optional: true
   belongs_to :vehicle, optional: true
@@ -120,9 +120,10 @@ class Invoice < ApplicationRecord
   #######
   def check_available_stock
     invoice_items.each do |invoice_item|
-      next unless invoice_item.product.present?
+      next if invoice_item.product.blank?
+
       product = invoice_item.product
-      errors.add(:base, "We have only #{product.available_stocks} #{product.name} available, we are out of stock.") if invoice_item.quantity > product.available_stocks
+      errors.add(:base, "We have only #{product.available_stocks} #{product.name} available, we are out of stock.") if invoice_item.qty > product.available_stocks
     end
   end
 
@@ -132,9 +133,10 @@ class Invoice < ApplicationRecord
 
   def reduce_products_stocks
     invoice_items.each do |invoice_item|
-      next unless invoice_item.product.present?
+      next if invoice_item.product.blank?
+
       product = invoice_item.product
-      product.update(available_stocks: (product.available_stocks - invoice_item.quantity))
+      product.update(available_stocks: (product.available_stocks - invoice_item.qty))
     end
   end
 
@@ -142,14 +144,16 @@ class Invoice < ApplicationRecord
     return if status == 'paid'
 
     invoice_items.each do |invoice_item|
-      next unless invoice_item.product.present?
+      next if invoice_item.product.blank?
+
       product = invoice_item.product
-      product.update(available_stocks: (product.available_stocks + invoice_item.quantity))
+      product.update(available_stocks: (product.available_stocks + invoice_item.qty))
     end
   end
 
   def set_invoice_id
     return if customer_id.present?
+    return if customer_email.blank?
 
     customer = Customer.find_by(email: customer_email)
     if customer.blank?
@@ -173,7 +177,11 @@ class Invoice < ApplicationRecord
   def create_notifications
     User.joins(:role).where('lower(roles.name) = ?', 'admin').find_each do |admin_user|
       invoice_url = Rails.application.routes.url_helpers.users_invoice_url(id)
-      user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} open a service for #{customer.name}. please check the <a href='#{invoice_url}'>invoice</a>")
+      user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} open a service for #{begin
+        customer.name
+      rescue StandardError
+        ''
+      end}. please check the <a href='#{invoice_url}'>invoice</a>")
     end
   end
 

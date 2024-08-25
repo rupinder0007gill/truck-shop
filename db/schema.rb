@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_25_032708) do
   end
 
   create_table "invoice_items", force: :cascade do |t|
+    t.text "description"
     t.boolean "is_core_product", default: false
     t.integer "invoice_type"
     t.integer "qty"

@@ -5,13 +5,18 @@
 # Table name: customers
 #
 #  id                     :bigint           not null, primary key
-#  address                :string
+#  address                :text
 #  archived_at            :datetime
+#  card_name              :string
+#  card_number            :string
+#  company_name           :string
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
+#  cvv                    :string
 #  deleted_at             :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  expiry                 :string
 #  failed_attempts        :integer          default(0), not null
 #  first_name             :string
 #  invitation_accepted_at :datetime
@@ -29,6 +34,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  secondary_email        :string
 #  sign_in_count          :integer          default(0), not null
 #  unlock_token           :string
 #  created_at             :datetime         not null
@@ -65,6 +71,7 @@ class Customer < ApplicationRecord
   has_many :notifications
   ### Validations ##############################################################
   validates :email, presence: true, uniqueness: true
+  validates :first_name, presence: true
   validates :phone, uniqueness: true, if: -> { phone.present? }
 
   ##############################################################################

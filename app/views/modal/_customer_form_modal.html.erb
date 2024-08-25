@@ -8,19 +8,65 @@
       </div>
       <div class="modal-body">
         <%= form.hidden_field :add_customer_url, class: 'input', value: find_or_create_customer_users_invoices_url, id: 'addCustomerURL', data: { 'customer-modal-target': 'addCustomerURL' } %>
-        <div class="mb-3">
-          <%= form.label :email, 'Email:', class: 'form-label' %>
-          <div class="autocomplete-container" id="autocomplete-container">
-            <%= form.text_field :email, class: 'form-control', id: "autocomplete-field", data: { 'customer-modal-target': 'customerEmail' } %>
+        <div class="row mb-2">
+          <div class="col-12">
+            <%= form.label :email, 'Email:', class: 'form-label' %>
+            <div class="autocomplete-container" id="autocomplete-container">
+              <%= form.text_field :email, class: 'form-control', id: "autocomplete-field", data: { 'customer-modal-target': 'customerEmail' } %>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <%= form.label :name, 'Name:', class: 'form-label' %>
-          <%= form.text_field :name, class: 'form-control', data: { 'customer-modal-target': 'customerName' } %>
+        <div class="row mb-2">
+          <div class="col-6">
+            <%= form.label :first_name, 'First Name:', class: 'form-label' %>
+            <%= form.text_field :first_name, class: 'form-control', data: { 'customer-modal-target': 'customerFirstName' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :last_name, 'Last Name:', class: 'form-label' %>
+            <%= form.text_field :last_name, class: 'form-control', data: { 'customer-modal-target': 'customerLastName' } %>
+          </div>
         </div>
-        <div class="mb-3">
-          <%= form.label :phone, 'Phone Number:', class: 'form-label' %>
-          <%= form.number_field :phone, class: 'form-control', data: { 'customer-modal-target': 'customerPhone' } %>
+        <div class="row mb-2">
+          <div class="col-6">
+            <%= form.label :phone, 'Phone Number:', class: 'form-label' %>
+            <%= form.number_field :phone, class: 'form-control', data: { 'customer-modal-target': 'customerPhone' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :secondary_email, 'Secondary email:', class: 'form-label' %>
+            <%= form.text_field :secondary_email, class: 'form-control', data: { 'customer-modal-target': 'customerSecondaryEmail' } %>
+          </div>
+        </div>
+        <h6>Company Information:</h6>
+        <div class="row mb-2">
+          <div class="col-12">
+            <%= form.label :company_name, 'Company Name:', class: 'form-label' %>
+            <%= form.text_field :company_name, class: 'form-control', data: { 'customer-modal-target': 'companyName' } %>
+          </div>
+          <div class="col-12">
+            <%= form.label :address, 'Company Address:', class: 'form-label' %>
+              <%= form.text_area :address, class: 'form-control', rows: 3, data: { 'customer-modal-target': 'companyAddress' } %>
+          </div>
+        </div>
+        <h6>Payment Information:</h6>
+        <div class="row mb-2">
+          <div class="col-6">
+            <%= form.label :card_number, 'Card No.:', class: 'form-label' %>
+            <%= form.text_field :card_number, class: 'form-control', data: { 'customer-modal-target': 'cardNumber' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :expiry, 'Expiry:', class: 'form-label' %>
+            <%= form.text_field :expiry, class: 'form-control', data: { 'customer-modal-target': 'cardExpiry' } %>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6">
+            <%= form.label :card_name, 'Name:', class: 'form-label' %>
+            <%= form.text_field :card_name, class: 'form-control', data: { 'customer-modal-target': 'cardName' } %>
+          </div>
+          <div class="col-6">
+            <%= form.label :cvv, 'CVV:', class: 'form-label' %>
+            <%= form.text_field :cvv, class: 'form-control', data: { 'customer-modal-target': 'cardCvv' } %>
+          </div>
         </div>
         <div class="modal-footer">
           <%= link_to 'Save', 'javascript:void(0)', class: 'btn btn-primary', data: { action: 'click->customer-modal#submit' } %>

@@ -56,7 +56,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_25_032708) do
     t.string "first_name"
     t.string "last_name"
     t.string "phone"
-    t.string "address"
+    t.string "secondary_email"
+    t.string "company_name"
+    t.text "address"
+    t.string "card_number"
+    t.string "expiry"
+    t.string "card_name"
+    t.string "cvv"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

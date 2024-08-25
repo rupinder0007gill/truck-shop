@@ -83,20 +83,19 @@ class Users::InvoicesController < ApplicationController
 
   def find_or_create_customer
     customer = Customer.find_by(email: params[:email])
-    name = params[:name].split
     if customer.blank?
       generated_password = Devise.friendly_token(64)
-      customer = if params[:name].present?
-                   Customer.new(first_name: name[0], last_name: name[1], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
-                 else
-                   Customer.new(phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password)
-                 end
+      customer = Customer.new(first_name: params[:first_name], last_name: params[:last_name], phone: params[:phone], email: params[:email], password: generated_password, password_confirmation: generated_password, secondary_email: params[:secondary_email], company_name: params[:company_name], address: params[:address], card_number: params[:card_number], expiry: params[:expiry], card_name: params[:card_name], cvv: params[:cvv])
     else
       customer.phone = params[:phone] if customer.phone.blank?
-      if params[:name].present? && params[:name] != customer.name
-        customer.first_name = name[0]
-        customer.last_name = name[1]
-      end
+      customer.last_name = params[:last_name] if customer.last_name.blank?
+      customer.secondary_email = params[:secondary_email] if customer.secondary_email.blank?
+      customer.company_name = params[:company_name] if customer.company_name.blank?
+      customer.address = params[:address] if customer.address.blank?
+      customer.card_number = params[:card_number] if customer.card_number.blank?
+      customer.expiry = params[:expiry] if customer.expiry.blank?
+      customer.card_name = params[:card_name] if customer.card_name.blank?
+      customer.cvv = params[:cvv] if customer.cvv.blank?
     end
 
     if customer.save

@@ -7,7 +7,13 @@ class DeviseCreateCustomers < ActiveRecord::Migration[7.1]
       t.string :first_name
       t.string :last_name
       t.string :phone
-      t.string :address
+      t.string :secondary_email
+      t.string :company_name
+      t.text :address
+      t.string :card_number
+      t.string :expiry
+      t.string :card_name
+      t.string :cvv
 
       ## Database authenticatable
       t.string :email,              null: false, default: ''

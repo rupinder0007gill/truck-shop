@@ -17,6 +17,7 @@ module AppSeeds
                       { first_name: 'Manager', last_name: 'Account', email: 'manager@test.com', password: 'test1234', role: manager },
                       { first_name: 'Technician', last_name: 'Account', email: 'technician@test.com', password: 'test1234', role: techinician }
                     ])
+        Setting.create(tax_name: 'GST', tax_percentage: 13, hourly_rate: 25)
       end
     end
   end

@@ -3,20 +3,22 @@ import { Modal } from "bootstrap";
 
 // Connects to data-controller="customer-modal"
 export default class extends Controller {
-  static targets = ["modal", "form", "customerEmail", "customerId", "customerName", "customerPhone", "searchURL", "invoiceCustomerEmail", "invoiceCustomerName", "invoiceCustomerPhone", "addCustomerURL" ]
+  static targets = ["modal", "form", "customerEmail", "customerId", "customerFirstName", "customerLastName", "customerPhone", "customerSecondaryEmail", "companyName", "companyAddress", "cardNumber", "cardExpiry", "cardName", "cardCvv", "searchURL", "invoiceCustomerEmail", "invoiceCustomerName", "invoiceCustomerPhone", "addCustomerURL" ]
 
   connect() {
     this.modal = new Modal(this.modalTarget);
     this.addressAutocomplete(document.getElementById("autocomplete-container"), (data) => {
-      if (data.first_name && data.last_name) {
-        this.customerNameTarget.value = data.first_name + ' ' + data.last_name
-      } else if (data.first_name) {
-        this.customerNameTarget.value = data.first_name
-      } else if (data.last_name) {
-        this.customerNameTarget.value = data.last_name
-      }
+      this.customerFirstNameTarget.value = data.first_name;
+      this.customerLastNameTarget.value = data.last_name;
       this.customerIdTarget.value = data.id;
       this.customerPhoneTarget.value = data.phone;
+      this.customerSecondaryEmailTarget.value = data.secondary_email;
+      this.companyNameTarget.value = data.company_name;
+      this.companyAddressTarget.value = data.address;
+      this.cardNumberTarget.value = data.card_number;
+      this.cardExpiryTarget.value = data.expiry;
+      this.cardNameTarget.value = data.card_name;
+      this.cardCvvTarget.value = data.cvv;
     });
   }
 
@@ -32,14 +34,22 @@ export default class extends Controller {
   clearForm() {
     // Reset form fields
     this.customerEmailTarget.value = ''
-    this.customerNameTarget.value = ''
+    this.customerFirstNameTarget.value = ''
+    this.customerLastNameTarget.value = ''
     this.customerPhoneTarget.value = ''
+    this.customerSecondaryEmailTarget.value = ''
+    this.companyNameTarget.value = ''
+    this.companyAddressTarget.value = ''
+    this.cardNumberTarget.value = ''
+    this.cardExpiryTarget.value = ''
+    this.cardNameTarget.value = ''
+    this.cardCvvTarget.value = ''
   }
 
   async submit(event) {
     event.preventDefault()
 
-    const url = this.addCustomerURLTarget.value + '?email=' + this.customerEmailTarget.value + '&name=' + this.customerNameTarget.value + '&phone=' + this.customerPhoneTarget.value;
+    const url = this.addCustomerURLTarget.value + '?email=' + this.customerEmailTarget.value + '&first_name=' + this.customerFirstNameTarget.value + '&last_name=' + this.customerLastNameTarget.value + '&phone=' + this.customerPhoneTarget.value + '&secondary_email=' + this.customerSecondaryEmailTarget.value + '&company_name=' + this.companyNameTarget.value + '&address=' + this.companyAddressTarget.value + '&card_number=' + this.cardNumberTarget.value + '&expiry=' + this.cardExpiryTarget.value + '&card_name=' + this.cardNameTarget.value + '&cvv=' + this.cardCvvTarget.value;
 
     const response = await fetch(url, {
       method: 'GET'

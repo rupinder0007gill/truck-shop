@@ -21,7 +21,7 @@
       <div class="col text-sm-end mt-3 mt-sm-0">
         <h2 class="mb-3">Invoice</h2>
         <h5>BIG RIGS TRUCK CENTRE</h5>
-        <p class="fs-10 mb-0">960 PONDMILLS RD<br />LONDON, ON, N6N 1A1</p>
+        <p class="fs-10 mb-0"><%= invoice.customer.address rescue '' %></p>
         <p class="fs-10 mb-0">HST NO: 727910473RT0001</p>
         <p class="fs-10 mb-0">PH NO: 6479854783</p>
         <p class="fs-10 mb-0">mvarchus@yahoo.com</p>
@@ -33,11 +33,11 @@
     <div class="row align-items-center">
       <div class="col">
         <h6 class="text-500">Bill to</h6>
-        <h5><%= customer.name %></h5>
-        <p class="fs-10"><%= customer.address %></p>
+        <h5><%= customer.name rescue '' %></h5>
+        <p class="fs-10"><%= customer.address rescue '' %></p>
         <p class="fs-10">
-          <%= link_to customer.email, "mailto:#{customer.email}" %><br />
-          <%= link_to customer.phone, "mailto:#{customer.phone}" if customer.phone.present? %>
+          <%= link_to customer.email, "mailto:#{customer.email}" if customer && customer.email.present? %><br />
+          <%= link_to customer.phone, "mailto:#{customer.phone}" if customer && customer.phone.present? %>
         </p>
       </div>
       <div class="col-sm-auto ms-auto">
@@ -107,33 +107,20 @@
         <thead data-bs-theme="light">
           <tr class="bg-primary dark__bg-1000">
             <th class="text-white border-0">Products</th>
-            <th class="text-white border-0 text-center" style="width: 350px;">Description</th>
             <th class="text-white border-0 text-center">Quantity</th>
             <th class="text-white border-0 text-end">Rate</th>
             <th class="text-white border-0 text-end">Amount</th>
           </tr>
         </thead>
         <tbody>
-          <%- invoice.invoice_products.each do |invoice_product| %>
+          <%- invoice.invoice_items.each do |invoice_item| %>
             <tr>
               <td class="align-middle">
-                <h6 class="mb-0 text-nowrap"><%= invoice_product.product.name %></h6>
+                <h6 class="mb-0 text-nowrap"><%= invoice_item.product.name rescue invoice_item.description %></h6>
               </td>
-              <td class="align-middle text-center"><%= invoice_product.product.description %></td>
-              <td class="align-middle text-center"><%= invoice_product.quantity %></td>
-              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_product.price %></td>
-              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_product.final_price %></td>
-            </tr>
-          <%- end %>
-          <%- invoice.invoice_services.each do |invoice_service| %>
-            <tr>
-              <td class="align-middle">
-                <h6 class="mb-0 text-nowrap"><%= invoice_service.name %></h6>
-              </td>
-              <td class="align-middle text-center"><%= %></td>
-              <td class="align-middle text-center"><%= %></td>
-              <td class="align-middle text-center"><%= %></td>
-              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_service.price %></td>
+              <td class="align-middle text-center"><%= invoice_item.qty %></td>
+              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_item.price %></td>
+              <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_item.final_price %></td>
             </tr>
           <%- end %>
         </tbody>
@@ -147,11 +134,12 @@
             <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.price %></td>
           </tr>
           <tr>
-            <th class="text-900">Tax %:</th>
+            <%- tax_percentage = Setting.last.tax_percentage rescue 0 %>
+            <th class="text-900">Tax <%= tax_percentage %>%:</th>
             <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.tax %></td>
           </tr>
           <tr>
-            <th class="text-900">Tax %:</th>
+            <th class="text-900">Discount %:</th>
             <td class="fw-semi-bold"><%= humanized_money_with_symbol invoice.discount %></td>
           </tr>
           <tr class="border-top">

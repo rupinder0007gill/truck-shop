@@ -1,0 +1,17 @@
+<tr class="border-200 nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
+  <td class="align-middle">
+    <%= f.hidden_field :hourly_rate, value: (Setting.last.hourly_rate rescue 0), class: 'input', data: { 'invoice-nested-form-target': 'hourlyRate' } %>
+    <%= f.select :invoice_type, InvoiceItem.invoice_types.map {|k,v| [k.humanize,k]}, {}, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectType" } } %>
+  </td>
+  <td class="align-middle">
+    <%= f.select :product_id, Product.available_stocks.map {|product| [product.name, product.id, 'data-price': product.selling_price]}, { include_blank: true }, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectProduct" } } %>
+    <%= f.text_field :description,  class: 'form-control d-none', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemDescription" } %>
+  </td>
+  <td class="align-middle text-center"><%= f.number_field :qty, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemQuantity" } %></td>
+  <td class="align-middle text-center"><%= f.number_field :price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemPrice" } %></td>
+  <td class="align-middle text-center"><%= f.number_field :final_price, class: 'form-control', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "itemFinalPrice" } %></td>
+  <td class="align-middle text-end">
+    <button type="button" data-action="nested-form#invoiceRemove" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+    <%= f.hidden_field :_destroy, data: { "invoice-nested-form-target": "itemDestroy" } %>
+  </td>
+</tr>

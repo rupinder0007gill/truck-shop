@@ -1,15 +1,15 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
-# Table name: invoice_products
+# Table name: invoice_items
 #
 #  id                :bigint           not null, primary key
 #  archived_at       :datetime
 #  deleted_at        :datetime
 #  final_price_cents :bigint
+#  invoice_type      :integer
+#  is_core_product   :boolean          default(FALSE)
 #  price_cents       :bigint
-#  quantity          :bigint
+#  qty               :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  invoice_id        :bigint
@@ -17,16 +17,16 @@
 #
 # Indexes
 #
-#  index_invoice_products_on_deleted_at  (deleted_at)
-#  index_invoice_products_on_invoice_id  (invoice_id)
-#  index_invoice_products_on_product_id  (product_id)
+#  index_invoice_items_on_deleted_at  (deleted_at)
+#  index_invoice_items_on_invoice_id  (invoice_id)
+#  index_invoice_items_on_product_id  (product_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (invoice_id => invoices.id)
 #  fk_rails_...  (product_id => products.id)
 #
-class InvoiceProduct < ApplicationRecord
+class InvoiceItem < ApplicationRecord
   ##############################################################################
   ### Attributes ###############################################################
   monetize :price_cents
@@ -45,7 +45,7 @@ class InvoiceProduct < ApplicationRecord
   ### Associations #############################################################
   has_rich_text :description
   belongs_to :invoice
-  belongs_to :product
+  belongs_to :product, optional: true
 
   ##############################################################################
   ### Validations ##############################################################
@@ -56,6 +56,10 @@ class InvoiceProduct < ApplicationRecord
 
   ##############################################################################
   ### Other ####################################################################
+  enum invoice_type: {
+    product: 0,
+    labour: 1
+  }
 
   ##############################################################################
   ### Class Methods ############################################################

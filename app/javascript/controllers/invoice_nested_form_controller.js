@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="invoice-nested-form"
 export default class extends Controller {
-  static targets = ['selectProduct', 'productQuantity', 'productPrice', 'productFinalPrice', 'orderPrice', 'orderTax', 'orderDiscount', 'orderTotalPrice', 'productDestroy', 'serviceName', 'servicePrice', 'serviceDestroy'];
+  static targets = ['hourlyRate', 'selectType', 'selectProduct', 'itemDescription', 'itemQuantity', 'itemPrice', 'itemFinalPrice', 'orderPrice', 'orderTax', 'orderDiscount', 'orderTotalPrice', 'itemDestroy'];
 
   connect() {
     console.log("connect");
@@ -11,24 +11,33 @@ export default class extends Controller {
   change() {
     console.log("invoice hello");
     var orderTotal = 0;
-    this.selectProductTargets.forEach((element, index) => {
-      if(element.options[element.selectedIndex].dataset.price) {
-        if(this.productDestroyTargets[index].value != 1) {
-          this.productPriceTargets[index].value = element.options[element.selectedIndex].dataset.price;
-          var productFinalPrice = element.options[element.selectedIndex].dataset.price * this.productQuantityTargets[index].value;
-          this.productFinalPriceTargets[index].value = productFinalPrice;
+    this.selectTypeTargets.forEach((element, index) => {
+      console.log('thisssssss', this);
+      if(element.value == 'product') {
+        this.selectProductTargets[index].classList.remove('d-none')
+        this.itemDescriptionTargets[index].classList.add('d-none')
+        var selectedProduct = this.selectProductTargets[index];
+        if(selectedProduct.options[selectedProduct.selectedIndex].dataset.price) {
+          if(this.itemDestroyTargets[index].value != 1) {
+            this.itemPriceTargets[index].value = selectedProduct.options[selectedProduct.selectedIndex].dataset.price;
+            var itemFinalPrice = selectedProduct.options[selectedProduct.selectedIndex].dataset.price * this.itemQuantityTargets[index].value;
+            this.itemFinalPriceTargets[index].value = itemFinalPrice;
 
-          orderTotal = orderTotal + productFinalPrice;
+            orderTotal = orderTotal + itemFinalPrice;
+          }
+        }
+      } else if(element.value == 'labour') {
+        this.selectProductTargets[index].classList.add('d-none')
+        this.itemDescriptionTargets[index].classList.remove('d-none')
+        if(this.itemDestroyTargets[index].value != 1) {
+          this.itemPriceTargets[index].value = this.hourlyRateTargets[index].value;
+          var itemFinalPrice = this.hourlyRateTargets[index].value * this.itemQuantityTargets[index].value;
+          this.itemFinalPriceTargets[index].value = itemFinalPrice;
+
+          orderTotal = orderTotal + itemFinalPrice;
         }
       }
     });
-    this.servicePriceTargets.forEach((element, index) => {
-      if(this.serviceDestroyTargets[index].value != 1) {
-        var servicePrice = this.servicePriceTargets[index].value;
-
-        orderTotal = parseFloat(orderTotal) + parseFloat(servicePrice);
-      }
-    })
 
     this.orderPriceTarget.value = parseFloat(orderTotal);
     this.orderTotalPriceTarget.value = parseFloat(orderTotal) + parseFloat(this.orderTaxTarget.value) - parseFloat(this.orderDiscountTarget.value);

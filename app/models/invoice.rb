@@ -70,15 +70,10 @@ class Invoice < ApplicationRecord
   ### Associations #############################################################
   has_one_attached :file
   has_rich_text :description
-  has_many :invoice_products, dependent: :destroy
-  has_many :products, through: :invoice_products
-  has_many :invoice_services, dependent: :destroy
-  has_many :services, through: :invoice_services
-  accepts_nested_attributes_for :invoice_products, allow_destroy: true, reject_if: proc { |attributes|
-                                                                                     attributes['product_id'].blank?
-                                                                                   }
-  accepts_nested_attributes_for :invoice_services, allow_destroy: true, reject_if: proc { |attributes|
-                                                                                     attributes['name'].blank?
+  has_many :products, through: :invoice_items
+  has_many :invoice_items, dependent: :destroy
+  accepts_nested_attributes_for :invoice_items, allow_destroy: true, reject_if: proc { |attributes|
+                                                                                     attributes['qty'].blank?
                                                                                    }
   belongs_to :user
   belongs_to :customer, optional: true
@@ -124,9 +119,10 @@ class Invoice < ApplicationRecord
 
   #######
   def check_available_stock
-    invoice_products.each do |invoice_product|
-      product = invoice_product.product
-      errors.add(:base, "We have only #{product.available_stocks} #{product.name} available, we are out of stock.") if invoice_product.quantity > product.available_stocks
+    invoice_items.each do |invoice_item|
+      next unless invoice_item.product.present?
+      product = invoice_item.product
+      errors.add(:base, "We have only #{product.available_stocks} #{product.name} available, we are out of stock.") if invoice_item.quantity > product.available_stocks
     end
   end
 
@@ -135,18 +131,20 @@ class Invoice < ApplicationRecord
   end
 
   def reduce_products_stocks
-    invoice_products.each do |invoice_product|
-      product = invoice_product.product
-      product.update(available_stocks: (product.available_stocks - invoice_product.quantity))
+    invoice_items.each do |invoice_item|
+      next unless invoice_item.product.present?
+      product = invoice_item.product
+      product.update(available_stocks: (product.available_stocks - invoice_item.quantity))
     end
   end
 
   def add_products_stocks
     return if status == 'paid'
 
-    invoice_products.each do |invoice_product|
-      product = invoice_product.product
-      product.update(available_stocks: (product.available_stocks + invoice_product.quantity))
+    invoice_items.each do |invoice_item|
+      next unless invoice_item.product.present?
+      product = invoice_item.product
+      product.update(available_stocks: (product.available_stocks + invoice_item.quantity))
     end
   end
 

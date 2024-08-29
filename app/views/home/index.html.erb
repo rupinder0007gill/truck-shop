@@ -120,10 +120,10 @@
             <div class="col ps-x1 py-1 position-static">
               <div class="d-flex align-items-center">
                 <div class="avatar avatar-xl me-3">
-                  <%= user_and_customers_image(invoice.customer, size = 32) %>
+                  <%= user_and_customers_image(invoice.customer, size = 32) rescue '-' %>
                 </div>
                 <div class="flex-1">
-                  <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link" href="#!"><%= invoice.customer.name %></a><span class="badge rounded-pill ms-2 bg-200 text-primary">38%</span></h6>
+                  <h6 class="mb-0 d-flex align-items-center"><a class="text-800 stretched-link" href="#!"><%= invoice.customer.name rescue '-' %></a><span class="badge rounded-pill ms-2 bg-200 text-primary">38%</span></h6>
                 </div>
               </div>
             </div>

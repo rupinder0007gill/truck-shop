@@ -32,6 +32,7 @@ class Clients::CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save!
+      @customer.invite!
       redirect_to clients_customer_path(@customer), notice: 'Customer was successfully created.'
     else
       render :new, status: :unprocessable_entity

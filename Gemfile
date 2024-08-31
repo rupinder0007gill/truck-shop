@@ -153,6 +153,9 @@ group :development do
   gem 'annotate', '~> 3.2'
   gem 'foreman'
   gem 'guard-rspec', require: false
+  # When mail is sent from your application, Letter Opener will open a preview in the browser instead of sending.
+  # Read more: https://github.com/ryanb/letter_opener
+  gem 'letter_opener', '~> 1.4', '>= 1.4.1'
   gem 'listen', '~> 3.8'
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'

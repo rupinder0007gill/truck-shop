@@ -96,6 +96,6 @@ class Customer < ApplicationRecord
   #######
 
   def invite_customer
-    invite!
+    # invite!
   end
 end

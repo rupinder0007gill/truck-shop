@@ -8,13 +8,13 @@ export default class extends Controller {
   connect() {
     console.log("connect");
     this.nestedForm = new NestedForm(this.element);
-    this.change();
+    //this.change();
   }
 
   change() {
     var orderTotal = 0;
+    var countOfCoreProductAndServices = 0
     this.selectTypeTargets.forEach((element, index) => {
-      console.log('thisssssss', this);
       // Find the <tr> element containing the changed <select>
       const trElement = element.closest('tr');
       // Get all <td> elements within this <tr>
@@ -31,7 +31,7 @@ export default class extends Controller {
         if(element.value == 'product') {
           selectProduct.classList.remove('d-none')
           textFieldDescription.classList.add('d-none')
-          var selectedProduct = this.selectProductTargets[index];
+          var selectedProduct = this.selectProductTargets[index - countOfCoreProductAndServices];
           if(selectedProduct.options[selectedProduct.selectedIndex].dataset.price) {
             this.itemPriceTargets[index].value = selectedProduct.options[selectedProduct.selectedIndex].dataset.price;
             var itemFinalPrice = selectedProduct.options[selectedProduct.selectedIndex].dataset.price * this.itemQuantityTargets[index].value;
@@ -58,6 +58,7 @@ export default class extends Controller {
           this.itemFinalPriceTargets[index].value = itemFinalPrice;
 
           orderTotal = orderTotal + itemFinalPrice;
+          countOfCoreProductAndServices = countOfCoreProductAndServices + 1;
         }
       }
     });
@@ -71,6 +72,7 @@ export default class extends Controller {
 
   check_core_price(event) {
     console.log("invoice hello");
+    this.change();
     var selectedProduct = event.target.options[event.target.selectedIndex]
     var corePrice = selectedProduct.dataset.corePrice;
     var name = selectedProduct.dataset.name;
@@ -79,7 +81,6 @@ export default class extends Controller {
         this.appendNewItem(corePrice, name);
       }
     }
-    this.change();
   }
 
   appendNewItem(corePrice = 0, name = '') {

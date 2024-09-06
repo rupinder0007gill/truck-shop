@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::SettingsController < ApplicationController
+  load_and_authorize_resource
+
   def index
     @setting = Setting.last || Setting.new
   end

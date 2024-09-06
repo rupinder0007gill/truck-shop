@@ -65,10 +65,18 @@ class Customer < ApplicationRecord
   devise :invitable, :database_authenticatable, :lockable,
          :recoverable, :rememberable, :trackable
 
+  ##############################################################################
+  ### Callbacks ################################################################
+  after_create :invite_customer
+
+  ##############################################################################
+  ### Associations #############################################################
   has_one_attached :avatar
   has_many :invoices, dependent: :destroy
   has_many :vehicles, dependent: :destroy
   has_many :notifications
+
+  ##############################################################################
   ### Validations ##############################################################
   validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true
@@ -79,5 +87,15 @@ class Customer < ApplicationRecord
 
   def name
     [first_name, last_name].compact.join(' ')
+  end
+
+  #######
+
+  private
+
+  #######
+
+  def invite_customer
+    invite!
   end
 end

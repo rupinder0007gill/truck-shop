@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_25_032708) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_06_114649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -140,6 +140,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_25_032708) do
     t.string "odometer"
     t.string "licence_number"
     t.bigint "vehicle_id"
+    t.text "parts_rejection_comment"
     t.index ["customer_id"], name: "index_invoices_on_customer_id"
     t.index ["deleted_at"], name: "index_invoices_on_deleted_at"
     t.index ["user_id"], name: "index_invoices_on_user_id"

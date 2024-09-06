@@ -34,7 +34,7 @@ class Users::InvoicesController < ApplicationController
 
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to users_invoices_path, notice: 'Invoice was successfully created.' }
+        format.html { redirect_to users_invoices_path, notice: 'Work Order was successfully created.' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -44,7 +44,7 @@ class Users::InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update(invoice_params)
-        format.html { redirect_to users_invoices_url, notice: 'Invoice was successfully updated.' }
+        format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully updated.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -57,17 +57,49 @@ class Users::InvoicesController < ApplicationController
     @invoice.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: 'invoice was successfully destroyed.' }
+      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully destroyed.' }
+    end
+  end
+
+  def parts_approved
+    @invoice.update(status: :parts_approved, parts_rejection_comment: '', current_admin: current_user)
+
+    respond_to do |format|
+      format.html { redirect_to users_invoices_url, notice: "Work Order's parts was successfully approved." }
+    end
+  end
+
+  def parts_rejected
+    @invoice.update(status: :parts_rejected, parts_rejection_comment: params[:invoice][:comment], current_admin: current_user)
+
+    respond_to do |format|
+      format.html { redirect_to users_invoices_url, notice: "Work Order's parts was rejected." }
+    end
+  end
+
+  def completed
+    redirect_to users_invoices_url, alert: 'Parts are not approved by manager, please contact to manager' and return unless @invoice.parts_approved?
+
+    @invoice.update(status: :completed, service_end_time: Time.zone.now, current_admin: current_user)
+
+    respond_to do |format|
+      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully completed.' }
+    end
+  end
+
+  def approved
+    @invoice.update(status: :approved, current_admin: current_user)
+
+    respond_to do |format|
+      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully approved.' }
     end
   end
 
   def paid
-    redirect_to users_invoices_url, alert: 'You are not authorized to perform this action, please ask to admin or manager to update status' and return if current_user.role.name == 'Technician'
-
-    @invoice.update(status: :paid, service_end_time: Time.zone.now, current_admin: current_user)
+    @invoice.update(status: :paid, current_admin: current_user)
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: 'invoice was successfully paid.' }
+      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully paid.' }
     end
   end
 

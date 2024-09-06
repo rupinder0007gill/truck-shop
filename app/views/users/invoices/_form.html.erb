@@ -14,7 +14,7 @@
     <!--/.bg-holder-->
 
     <div class="card-body position-relative">
-      <h5><%= invoice.new_record? ? "New invoice Details:" : "Edit invoice Details: ##{invoice.id}" %></h5>
+      <h5><%= invoice.new_record? ? "New work order Details:" : "Edit work order Details: ##{invoice.id}" %></h5>
       <div><strong class="me-2">Status: </strong>
         <%- if current_user.role.name == 'admin' %>
           <%= form.select :status, Invoice.statuses.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
@@ -205,7 +205,7 @@
       </div>
       <div class="row g-0 mb-3 justify-content-start">
         <div class="col-12">
-          <%= form.submit class: 'btn btn-primary' %>
+          <%= form.submit "Save", class: 'btn btn-primary' %>
           <%= link_to "Cancel", users_invoices_path, class: 'btn btn-danger' %>
         </div>
       </div>

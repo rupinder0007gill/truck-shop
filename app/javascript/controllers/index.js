@@ -22,6 +22,9 @@ application.register("invoice-nested-form", InvoiceNestedFormController)
 import NestedFormController from "./nested_form_controller"
 application.register("nested-form", NestedFormController)
 
+import RejectPartsModalController from "./reject_parts_modal_controller"
+application.register("reject-parts-modal", RejectPartsModalController)
+
 import SearchFormController from "./search_form_controller"
 application.register("search-form", SearchFormController)
 

@@ -4,17 +4,29 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new
+    # user ||= User.new
+    return unless user.present? && user.has_any_role?
 
-    # Admin Manage All Entities
-    can :manage, :all if user.role.name == 'Admin' || user.role.name == 'Manager'
+    case user.role.name
+    when 'Admin' || 'Manager'
+      # Admin Manage All Entities
+      can :manage, :all
+    when 'Technician'
+      can %i[read create update], Vehicle
+      can %i[read create search_customer search_vehicle find_or_create_customer find_or_create_vehicle completed], Invoice
+      can [:update], Invoice, user:, status: 'pending'
+    when 'Supervisor'
+      can :manage, Vehicle
+      can :manage, Invoice
+    when 'Product Manager'
+      can :manage, Product
+      can %i[read search_customer search_vehicle parts_approved parts_rejected], Invoice
+    else
+      # Define default permissions for other users
+    end
 
-    return unless user.has_any_role?
-
-    can %i[read create search_customer], Invoice
-    can [:update], Invoice, user:, status: 'pending'
-    can :manage, Product
     can :manage, Customer
+    can :manage, Notification
 
     # can [:edit_current, :update_current], User
     # Conditional TL Scoped Case Management Ability

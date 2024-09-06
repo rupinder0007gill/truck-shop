@@ -1,0 +1,27 @@
+<!-- Modal Structure -->
+<div class="modal fade" tabindex="-1" data-reject-parts-modal-target="rejectParts">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reason for reject</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: invoice, url: parts_rejected_users_invoice_path(invoice), data: { turbo: false }) do |form| %>
+        
+          <div class="row mb-3">
+            <div class="col-12">
+              <%= form.label :comment, 'Comment:', class: 'form-label' %>
+              <%= form.text_area :comment, class: 'form-control', data: { 'reject-parts-modal-target': 'rejectComment' } %>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <%= form.submit "Save", class: 'btn btn-primary' %>
+            <%#= link_to 'Save', 'javascript:void(0)', class: 'btn btn-primary', data: { action: 'click->vehicle-modal#submit' } %>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        <%- end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,12 +2,29 @@
   <div class="card-body">
     <div class="row justify-content-between align-items-center">
       <div class="col-md">
-        <h5 class="mb-2 mb-md-0">Order #<%= invoice.id %></h5>
+        <h5 class="mb-2 mb-md-0">Work Order #<%= invoice.id %></h5>
       </div>
-      <div class="col-auto">
+      <div class="col-auto" data-controller='reject-parts-modal'>
         <button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button"><span class="fas fa-arrow-down me-1"> </span>Download (.pdf)</button>
         <button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button"><span class="fas fa-print me-1"> </span>Print</button>
-        <button class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fas fa-dollar-sign me-1"></span>Receive Payment</button>
+        <%- if can?(:parts_approved, Invoice) && (invoice.pending? || invoice.parts_rejected?) %>
+          <a href="<%= parts_approved_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-check"></span></span> Parts Approved</a>
+        <%- end %>
+        <%- if can?(:parts_rejected, Invoice) && (invoice.pending? || invoice.parts_rejected?) %>
+          <a class="btn btn-falcon-danger btn-sm mb-2 mb-sm-0" type="button" data-action="click->reject-parts-modal#open"><span class="fa-solid fa-trash"></span></span> Parts Rejected</a>
+          <%= turbo_frame_tag "customer_form" do %>
+            <%= render 'modal/reject_parts_modal', invoice: invoice %>
+          <% end %>
+        <%- end %>
+        <%- if can?(:completed, Invoice) && invoice.parts_approved? %>
+          <a href="<%= completed_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-check"></span></span> Completed</a>
+        <%- end %>
+        <%- if can?(:approved, Invoice) && invoice.completed? %>
+          <a href="<%= approved_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-check"></span></span> Approved</a>
+        <%- end %>
+        <%- if can?(:paid, Invoice) && invoice.approved? %>
+          <a href="<%= paid_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fas fa-dollar-sign me-1"></span>Receive Payment</a>
+        <%- end %>
       </div>
     </div>
   </div>
@@ -91,12 +108,12 @@
         </thead>
         <tbody>
           <tr>
-            <td class="align-middle text-center"><%= invoice.vin_number %></td>
-            <td class="align-middle text-center"><%= invoice.make_model %></td>
-            <td class="align-middle text-center"><%= invoice.unit_number %></td>
-            <td class="align-middle text-center"><%= invoice.year %></td>
+            <td class="align-middle text-center"><%= invoice.vehicle.vin %></td>
+            <td class="align-middle text-center"><%= invoice.vehicle.make_model %></td>
+            <td class="align-middle text-center"><%= invoice.vehicle.unit_number %></td>
+            <td class="align-middle text-center"><%= invoice.vehicle.year %></td>
             <td class="align-middle text-center"><%= invoice.odometer %></td>
-            <td class="align-middle text-center"><%= invoice.licence_number %></td>
+            <td class="align-middle text-center"><%= invoice.vehicle.licence_number %></td>
           </tr>
         </tbody>
       </table>

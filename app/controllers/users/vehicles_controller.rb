@@ -2,6 +2,7 @@
 
 class Users::VehiclesController < ApplicationController
   before_action :set_vehicle, only: %i[edit update destroy]
+  load_and_authorize_resource
 
   # GET /users/vehicles or /users/vehicles.json
   def index

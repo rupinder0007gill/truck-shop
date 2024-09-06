@@ -39,6 +39,10 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
+#             parts_approved_users_invoice GET    /users/invoices/:id/parts_approved(.:format)                                                      users/invoices#parts_approved
+#             parts_rejected_users_invoice PATCH  /users/invoices/:id/parts_rejected(.:format)                                                      users/invoices#parts_rejected
+#                  completed_users_invoice GET    /users/invoices/:id/completed(.:format)                                                           users/invoices#completed
+#                   approved_users_invoice GET    /users/invoices/:id/approved(.:format)                                                            users/invoices#approved
 #                       paid_users_invoice GET    /users/invoices/:id/paid(.:format)                                                                users/invoices#paid
 #           search_customer_users_invoices GET    /users/invoices/search_customer(.:format)                                                         users/invoices#search_customer
 #   find_or_create_customer_users_invoices GET    /users/invoices/find_or_create_customer(.:format)                                                 users/invoices#find_or_create_customer
@@ -151,6 +155,10 @@ Rails.application.routes.draw do
   namespace :users do
     resources :invoices do
       member do
+        get :parts_approved
+        patch :parts_rejected
+        get :completed
+        get :approved
         get :paid
       end
       collection do

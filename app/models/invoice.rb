@@ -4,30 +4,31 @@
 #
 # Table name: invoices
 #
-#  id                    :bigint           not null, primary key
-#  archived_at           :datetime
-#  deleted_at            :datetime
-#  discount_cents        :bigint
-#  licence_number        :string
-#  make_model            :string
-#  odometer              :string
-#  payment_method        :integer          default("cash"), not null
-#  price_cents           :bigint
-#  service_end_time      :datetime
-#  service_estimted_time :integer
-#  service_start_time    :datetime
-#  status                :integer          default("pending"), not null
-#  tax_cents             :bigint
-#  total_price_cents     :bigint
-#  unit_number           :string
-#  vin_number            :string
-#  year                  :string
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  customer_id           :bigint
-#  transaction_id        :string
-#  user_id               :bigint
-#  vehicle_id            :bigint
+#  id                      :bigint           not null, primary key
+#  archived_at             :datetime
+#  deleted_at              :datetime
+#  discount_cents          :bigint
+#  licence_number          :string
+#  make_model              :string
+#  odometer                :string
+#  parts_rejection_comment :text
+#  payment_method          :integer          default("cash"), not null
+#  price_cents             :bigint
+#  service_end_time        :datetime
+#  service_estimted_time   :integer
+#  service_start_time      :datetime
+#  status                  :integer          default("pending"), not null
+#  tax_cents               :bigint
+#  total_price_cents       :bigint
+#  unit_number             :string
+#  vin_number              :string
+#  year                    :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  customer_id             :bigint
+#  transaction_id          :string
+#  user_id                 :bigint
+#  vehicle_id              :bigint
 #
 # Indexes
 #
@@ -60,11 +61,10 @@ class Invoice < ApplicationRecord
 
   ##############################################################################
   ### Callbacks ################################################################
-  before_save :invoice_paid_notification
+  before_save :invoice_status_change_notification
   before_create :set_service_start_time
-  after_create :reduce_products_stocks, :set_invoice_id, :create_notifications, :set_customer_id_to_vehicles
+  after_create :set_invoice_id, :create_notifications, :set_customer_id_to_vehicles
   after_update :set_invoice_id
-  before_destroy :add_products_stocks
 
   ##############################################################################
   ### Associations #############################################################
@@ -92,7 +92,11 @@ class Invoice < ApplicationRecord
   ### Other ####################################################################
   enum status: {
     pending: 0,
-    paid: 1
+    parts_approved: 1,
+    parts_rejected: 2,
+    completed: 3,
+    approved: 4,
+    paid: 5
   }
 
   enum payment_method: {
@@ -131,26 +135,6 @@ class Invoice < ApplicationRecord
     self.service_start_time = Time.zone.now
   end
 
-  def reduce_products_stocks
-    invoice_items.each do |invoice_item|
-      next if invoice_item.product.blank?
-
-      product = invoice_item.product
-      product.update(available_stocks: (product.available_stocks - invoice_item.qty))
-    end
-  end
-
-  def add_products_stocks
-    return if status == 'paid'
-
-    invoice_items.each do |invoice_item|
-      next if invoice_item.product.blank?
-
-      product = invoice_item.product
-      product.update(available_stocks: (product.available_stocks + invoice_item.qty))
-    end
-  end
-
   def set_invoice_id
     return if customer_id.present?
     return if customer_email.blank?
@@ -164,24 +148,48 @@ class Invoice < ApplicationRecord
     update(customer_id: customer.id)
   end
 
-  def invoice_paid_notification
-    return unless status_changed? && status == 'paid'
-
-    # send notification
-    return unless current_admin != user
+  def invoice_status_change_notification
+    return unless status_changed?
 
     invoice_url = Rails.application.routes.url_helpers.users_invoice_url(id)
-    current_admin.notifications.create(to_user_id: user.id, css_class: 'alert-success', notification_body: "#{current_admin.name} marked invoice to paid. please check the <a href='#{invoice_url}'>invoice</a>")
+
+    case status
+    when 'parts_approved'
+      User.joins(:role).where('lower(roles.name) = ? or users.id = ?', 'supervisor', user_id).find_each do |supervisor|
+        current_admin.notifications.create(to_user_id: supervisor.id, css_class: 'alert-success', notification_body: "#{current_admin.name} is approved requested parts. please check the <a href='#{invoice_url}'>work order</a>")
+      end
+      invoice_items.each do |invoice_item|
+        next if invoice_item.product.blank?
+
+        product = invoice_item.product
+        product.update(available_stocks: (product.available_stocks - invoice_item.qty))
+      end
+    when 'parts_rejected'
+      User.joins(:role).where('lower(roles.name) = ? or users.id = ?', 'supervisor', user_id).find_each do |supervisor|
+        current_admin.notifications.create(to_user_id: supervisor.id, css_class: 'alert-success', notification_body: "#{current_admin.name} is rejected requested parts, reason for rejection is '#{parts_rejection_comment.html_safe}'. please check the <a href='#{invoice_url}'>invoice</a>")
+      end
+    when 'completed'
+      User.joins(:role).where('lower(roles.name) = ?', 'supervisor').find_each do |supervisor|
+        current_admin.notifications.create(to_user_id: supervisor.id, css_class: 'alert-success', notification_body: "#{current_admin.name} marked invoice to completed. please check the <a href='#{invoice_url}'>invoice</a>")
+      end
+    when 'paid'
+      # send notification
+      return unless current_admin != user
+
+      User.joins(:role).where('lower(roles.name) = ? OR lower(roles.name) = ?', 'admin', 'manager').find_each do |_supervisor|
+        current_admin.notifications.create(to_user_id: user.id, css_class: 'alert-success', notification_body: "#{current_admin.name} marked invoice to paid. please check the <a href='#{invoice_url}'>invoice</a>")
+      end
+    end
   end
 
   def create_notifications
-    User.joins(:role).where('lower(roles.name) = ?', 'admin').find_each do |admin_user|
+    User.joins(:role).where('lower(roles.name) IN (?)', ['admin', 'manager', 'supervisor', 'product manager']).find_each do |admin_user|
       invoice_url = Rails.application.routes.url_helpers.users_invoice_url(id)
-      user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} open a service for #{begin
+      user.notifications.create(to_user_id: admin_user.id, css_class: 'alert-info', notification_body: "#{user.name} open a work order for #{begin
         customer.name
       rescue StandardError
-        ''
-      end}. please check the <a href='#{invoice_url}'>invoice</a>")
+        '-'
+      end}. please check the <a href='#{invoice_url}'>work order</a>")
     end
   end
 

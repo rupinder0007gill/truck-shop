@@ -2,6 +2,7 @@
 
 class Users::UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy enable_user]
+  load_and_authorize_resource
 
   def index
     @search_url = users_users_path

@@ -114,7 +114,7 @@ class User < ApplicationRecord
   end
 
   def has_any_role?
-    role.name == 'Admin' || role.name == 'Manager' || role.name == 'Technician'
+    role.name == 'Admin' || role.name == 'Manager' || role.name == 'Product Manager' || role.name == 'Supervisor' || role.name == 'Technician'
   end
 
   ##############################################################################

@@ -8,4 +8,10 @@ class Users::NotificationsController < ApplicationController
   end
 
   def show; end
+
+  def mark_as_read
+    notification = Notification.find(params[:id])
+    notification.update(is_read_by_receiver: true)
+    redirect_to users_notifications_path, notice: 'Notification successfully marked as read.'
+  end
 end

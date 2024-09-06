@@ -73,6 +73,7 @@
 #                                          PATCH  /users/users/:id(.:format)                                                                        users/users#update
 #                                          PUT    /users/users/:id(.:format)                                                                        users/users#update
 #                                          DELETE /users/users/:id(.:format)                                                                        users/users#destroy
+#          mark_as_read_users_notification GET    /users/notifications/:id/mark_as_read(.:format)                                                   users/notifications#mark_as_read
 #                      users_notifications GET    /users/notifications(.:format)                                                                    users/notifications#index
 #                       users_notification GET    /users/notifications/:id(.:format)                                                                users/notifications#show
 #                                          DELETE /users/notifications/:id(.:format)                                                                users/notifications#destroy
@@ -174,7 +175,11 @@ Rails.application.routes.draw do
         post :enable_user
       end
     end
-    resources :notifications, only: %i[index show destroy]
+    resources :notifications, only: %i[index show destroy] do
+      member do
+        get :mark_as_read
+      end
+    end
     resources :settings, only: %i[index create]
     resources :vehicles
   end

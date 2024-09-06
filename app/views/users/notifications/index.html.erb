@@ -12,7 +12,7 @@
         <thead class="bg-200">
           <tr>
             <th class="no-sort" width="10%">ID</th>
-            <th class="no-sort" width="20%">To</th>
+            <th class="no-sort" width="20%">From</th>
             <th class="no-sort">Message</th>
           </tr>
         </thead>
@@ -20,9 +20,9 @@
           <%- @notifications.each do |notification| %>
             <tr class="btn-reveal-trigger" id="inotifications_<%=notification.id%>">
               <td class="py-2 align-middle white-space-nowrap">
-                <strong>#<%= notification.id %></strong>
+                <strong><%= link_to "##{notification.id}", mark_as_read_users_notification_path(notification.id) %></strong>
               </td>
-              <td class="py-2 align-middle white-space-nowrap"><%= notification.admin_user.name %></td>
+              <td class="py-2 align-middle white-space-nowrap"><%= notification.user.name %></td>
               <td class="date py-2 align-middle"><%= notification.notification_body %></td>
             </tr>
           <%- end %>

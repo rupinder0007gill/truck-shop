@@ -74,7 +74,12 @@
           <!-- parent pages-->
           <%- if can?(:read, Notification) %>
             <a class="nav-link <%= 'active' if controller_name == "notifications" %>" href="<%= users_notifications_path %>" role="button">
-              <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-comments"></span></span><span class="nav-link-text ps-1">Notifications</span>
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon">
+                  <span class="fas fa-comments"></span>
+                </span>
+                <%- notifications_count = Notification.where(to_user_id: current_user.id, is_read_by_receiver: false).count %>
+                <span class="nav-link-text ps-1">Notifications <%- if notifications_count > 0 %><span class="badge text-bg-danger"><%=notifications_count%></span><%- end %></span>
               </div>
             </a>
           <%- end %>

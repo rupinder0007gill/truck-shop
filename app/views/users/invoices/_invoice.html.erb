@@ -82,7 +82,27 @@
                   <th class="text-warning-emphasis text-sm-end">Status:</th>
                   <td class="text-warning-emphasis">Pending</td>
                 </tr>
-              <%- else %>
+              <%- elsif invoice.parts_approved? %>
+                <tr class="alert alert-primary fw-bold">
+                  <th class="text-primary-emphasis text-sm-end">Status:</th>
+                  <td class="text-primary-emphasis">Parts Approved</td>
+                </tr>
+              <%- elsif invoice.parts_rejected? %>
+                <tr class="alert alert-danger fw-bold">
+                  <th class="text-danger-emphasis text-sm-end">Status:</th>
+                  <td class="text-danger-emphasis">Parts Rejected</td>
+                </tr>
+              <%- elsif invoice.completed? %>
+                <tr class="alert alert-info fw-bold">
+                  <th class="text-info-emphasis text-sm-end">Status:</th>
+                  <td class="text-info-emphasis">Completed</td>
+                </tr>
+              <%- elsif invoice.approved? %>
+                <tr class="alert alert-info fw-bold">
+                  <th class="text-info-emphasis text-sm-end">Status:</th>
+                  <td class="text-info-emphasis">Approved</td>
+                </tr>
+              <%- elsif invoice.paid? %>
                 <tr class="alert alert-success fw-bold">
                   <th class="text-success-emphasis text-sm-end">Status:</th>
                   <td class="text-success-emphasis">Paid</td>
@@ -107,14 +127,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="align-middle text-center"><%= invoice.vehicle.vin %></td>
-            <td class="align-middle text-center"><%= invoice.vehicle.make_model %></td>
-            <td class="align-middle text-center"><%= invoice.vehicle.unit_number %></td>
-            <td class="align-middle text-center"><%= invoice.vehicle.year %></td>
-            <td class="align-middle text-center"><%= invoice.odometer %></td>
-            <td class="align-middle text-center"><%= invoice.vehicle.licence_number %></td>
-          </tr>
+          <%- if invoice.vehicle.present? %>
+            <tr>
+              <td class="align-middle text-center"><%= invoice.vehicle.vin %></td>
+              <td class="align-middle text-center"><%= invoice.vehicle.make_model %></td>
+              <td class="align-middle text-center"><%= invoice.vehicle.unit_number %></td>
+              <td class="align-middle text-center"><%= invoice.vehicle.year %></td>
+              <td class="align-middle text-center"><%= invoice.odometer %></td>
+              <td class="align-middle text-center"><%= invoice.vehicle.licence_number %></td>
+            </tr>
+          <%- end %>
         </tbody>
       </table>
     </div>

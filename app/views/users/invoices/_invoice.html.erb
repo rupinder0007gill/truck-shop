@@ -11,10 +11,10 @@
           <a href="<%= edit_users_invoice_path(invoice) %>" class="btn btn-falcon-primary btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-edit"></span> Edit </a>
           <%- end %>
         <%- if can?(:parts_approved, Invoice) && (invoice.pending? || invoice.parts_rejected?) %>
-          <a href="<%= parts_approved_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-check"></span></span> Parts Approved</a>
+          <a href="<%= parts_approved_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-check"></span></span> Approve</a>
         <%- end %>
         <%- if can?(:parts_rejected, Invoice) && (invoice.pending? || invoice.parts_rejected?) %>
-          <a class="btn btn-falcon-danger btn-sm mb-2 mb-sm-0" type="button" data-action="click->reject-parts-modal#open"><span class="fa-solid fa-trash"></span></span> Parts Rejected</a>
+          <a class="btn btn-falcon-danger btn-sm mb-2 mb-sm-0" type="button" data-action="click->reject-parts-modal#open"><span class="fa-solid fa-trash"></span></span> Reject</a>
           <%= turbo_frame_tag "customer_form" do %>
             <%= render 'modal/reject_parts_modal', invoice: invoice %>
           <% end %>

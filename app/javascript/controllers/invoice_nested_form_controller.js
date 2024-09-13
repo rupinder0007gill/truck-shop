@@ -77,7 +77,7 @@ export default class extends Controller {
     var corePrice = selectedProduct.dataset.corePrice;
     var name = selectedProduct.dataset.name;
     if (corePrice > 0) {
-      if(confirm('Are we need to add core product?')){
+      if(confirm('Do you need to add core product?')){
         this.appendNewItem(corePrice, name);
       }
     }

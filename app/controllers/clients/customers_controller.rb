@@ -32,7 +32,7 @@ class Clients::CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
-      redirect_to clients_customer_path(@customer), notice: 'Customer was successfully created.'
+      redirect_to clients_customer_path(@customer), notice: 'Customer created successfully.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class Clients::CustomersController < ApplicationController
   def update
     @customer.update(customer_params)
     if @customer.save!
-      redirect_to clients_customer_path(@customer), notice: 'Customer was successfully updated.'
+      redirect_to clients_customer_path(@customer), notice: 'Customer updated successfully.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,9 +49,9 @@ class Clients::CustomersController < ApplicationController
 
   def destroy
     @customer.destroy
-    flash.now[:alert] = 'Customer was successfully destroyed.'
+    flash.now[:alert] = 'Customer destroyed successfully.'
     respond_to do |format|
-      format.html { redirect_to users_customers_url, alert: 'Customer was successfully destroyed.' }
+      format.html { redirect_to users_customers_url, alert: 'Customer destroyed successfully.' }
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.remove(@customer),

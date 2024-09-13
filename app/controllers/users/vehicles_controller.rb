@@ -34,7 +34,7 @@ class Users::VehiclesController < ApplicationController
   def create
     @vehicle = Vehicle.new(vehicle_params)
     if @vehicle.save
-      redirect_to users_vehicles_path, notice: 'Vehicle was successfully created.'
+      redirect_to users_vehicles_path, notice: 'Vehicle created successfully.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class Users::VehiclesController < ApplicationController
   # PATCH/PUT /users/vehicles/1 or /users/vehicles/1.json
   def update
     if @vehicle.update(vehicle_params)
-      redirect_to users_vehicles_path, notice: 'Vehicle was successfully updated.'
+      redirect_to users_vehicles_path, notice: 'Vehicle updated successfully.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -52,10 +52,10 @@ class Users::VehiclesController < ApplicationController
   # DELETE /users/vehicles/1 or /users/vehicles/1.json
   def destroy
     @vehicle.destroy!
-    flash.now[:alert] = 'Vehicle was successfully destroyed.'
+    flash.now[:alert] = 'Vehicle destroyed successfully.'
 
     respond_to do |format|
-      format.html { redirect_to users_vehicles_url, alert: 'Vehicle was successfully destroyed.' }
+      format.html { redirect_to users_vehicles_url, alert: 'Vehicle destroyed successfully.' }
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.remove(@vehicle),

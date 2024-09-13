@@ -13,7 +13,7 @@ class Users::SettingsController < ApplicationController
     @setting.hourly_rate = user_params[:hourly_rate]
     @setting.tax_percentage = user_params[:tax_percentage]
     if @setting.save
-      redirect_to users_settings_path, notice: 'Setting was successfully updated.'
+      redirect_to users_settings_path, notice: 'Settings updated successfully.'
     else
       render :index, status: :unprocessable_entity
     end

@@ -30,7 +30,7 @@ class Users::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_users_url, notice: 'User was successfully created.'
+      redirect_to users_users_url, notice: 'User created successfully.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class Users::UsersController < ApplicationController
     @user.password = params[:user][:password] unless params[:user][:password].to_s.empty?
     @user.avatar.purge if params[:user][:remove_avatar] == '1'
     if @user.update(user_params)
-      redirect_to users_users_url, notice: 'User was successfully updated.'
+      redirect_to users_users_url, notice: 'User updated successfully.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,12 +49,12 @@ class Users::UsersController < ApplicationController
   def destroy
     # @user.destroy
     @user.update(archived_at: DateTime.now)
-    redirect_to users_users_url, alert: 'User was successfully disabled.'
+    redirect_to users_users_url, alert: 'User disabled successfully.'
   end
 
   def enable_user
     @user.update(archived_at: nil)
-    redirect_to users_users_url, alert: 'User was successfully enabled.'
+    redirect_to users_users_url, alert: 'User enabled successfully.'
   end
 
   private

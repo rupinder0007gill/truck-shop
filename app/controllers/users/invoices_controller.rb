@@ -34,7 +34,7 @@ class Users::InvoicesController < ApplicationController
 
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to users_invoices_path, notice: 'Work Order was successfully created.' }
+        format.html { redirect_to users_invoices_path, notice: 'Work Order created successfully.' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -44,7 +44,7 @@ class Users::InvoicesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice.update(invoice_params)
-        format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully updated.' }
+        format.html { redirect_to users_invoices_url, notice: 'Work Order updated successfully.' }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -52,12 +52,12 @@ class Users::InvoicesController < ApplicationController
   end
 
   def destroy
-    redirect_to users_invoices_url, alert: "You are not authorized to perform this action, invoice is paid you can't delete it" and return if @invoice.paid?
+    redirect_to users_invoices_url, alert: "You are not authorized to perform this action, invoice is paid and you can't delete it" and return if @invoice.paid?
 
     @invoice.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully destroyed.' }
+      format.html { redirect_to users_invoices_url, notice: 'Work Order destroyed successfully.' }
     end
   end
 
@@ -65,7 +65,7 @@ class Users::InvoicesController < ApplicationController
     @invoice.update(status: :parts_approved, parts_rejection_comment: '', current_admin: current_user)
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: "Work Order's parts was successfully approved." }
+      format.html { redirect_to users_invoices_url, notice: "Work Order's parts is/are approved successfully." }
     end
   end
 
@@ -73,17 +73,17 @@ class Users::InvoicesController < ApplicationController
     @invoice.update(status: :parts_rejected, parts_rejection_comment: params[:invoice][:comment], current_admin: current_user)
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: "Work Order's parts was rejected." }
+      format.html { redirect_to users_invoices_url, notice: "Work Order's parts are rejected." }
     end
   end
 
   def completed
-    redirect_to users_invoices_url, alert: 'Parts are not approved by manager, please contact to manager' and return unless @invoice.parts_approved?
+    redirect_to users_invoices_url, alert: 'Parts are not approved by Manager, please contact Manager' and return unless @invoice.parts_approved?
 
     @invoice.update(status: :completed, service_end_time: Time.zone.now, current_admin: current_user)
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully completed.' }
+      format.html { redirect_to users_invoices_url, notice: 'Work Order is completed successfully.' }
     end
   end
 
@@ -91,7 +91,7 @@ class Users::InvoicesController < ApplicationController
     @invoice.update(status: :approved, current_admin: current_user)
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully approved.' }
+      format.html { redirect_to users_invoices_url, notice: 'Work Order is approved successfully.' }
     end
   end
 
@@ -99,7 +99,7 @@ class Users::InvoicesController < ApplicationController
     @invoice.update(status: :paid, current_admin: current_user)
 
     respond_to do |format|
-      format.html { redirect_to users_invoices_url, notice: 'Work Order was successfully paid.' }
+      format.html { redirect_to users_invoices_url, notice: 'Work Order is paid successfully.' }
     end
   end
 

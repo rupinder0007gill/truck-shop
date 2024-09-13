@@ -37,7 +37,7 @@ class Users::ProductsController < ApplicationController
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to users_products_url, notice: 'Product was successfully created.'
+      redirect_to users_products_url, notice: 'Product created successfully.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -46,7 +46,7 @@ class Users::ProductsController < ApplicationController
   # PATCH/PUT /users/products/1
   def update
     if @product.update(product_params)
-      redirect_to users_products_url, notice: 'Product was successfully updated.'
+      redirect_to users_products_url, notice: 'Product updated successfully.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -55,10 +55,10 @@ class Users::ProductsController < ApplicationController
   # DELETE /users/products/1 or /users/products/1.json
   def destroy
     @product.destroy!
-    flash.now[:alert] = 'Product was successfully destroyed.'
+    flash.now[:alert] = 'Product destroyed successfully.'
 
     respond_to do |format|
-      format.html { redirect_to users_products_url, alert: 'Product was successfully destroyed.' }
+      format.html { redirect_to users_products_url, alert: 'Product destroyed successfully.' }
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.remove(@product),

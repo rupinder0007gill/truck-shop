@@ -10,12 +10,14 @@
 #  base_price_cents    :bigint
 #  core_price_cents    :bigint
 #  deleted_at          :datetime
+#  location            :text
 #  name                :string
 #  product_number      :string
 #  selling_price_cents :bigint
 #  slug                :string
 #  total_stocks        :bigint           default(0)
 #  used_stocks         :bigint           default(0)
+#  warranty_period     :text
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

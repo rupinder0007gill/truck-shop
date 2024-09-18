@@ -23,6 +23,12 @@
   <td class="align-middle text-center white-space-nowrap py-2">
     <%= product.available_stocks %>
   </td>
+  <td class="align-middle text-center white-space-nowrap py-2">
+    <%= product.warranty_period %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap py-2">
+    <%= product.location %>
+  </td>
   <td class="align-middle text-center white-space-nowrap py-2 text-end">
     <%= link_to 'Edit', edit_users_product_path(product), data: { turbo_frame: "_top" }, class: "btn btn-outline-primary"%>
     <%= link_to "Delete", users_product_path(product), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" }, class: 'btn btn-danger' %>

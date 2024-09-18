@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_06_114649) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_18_061940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -176,6 +176,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_06_114649) do
     t.datetime "updated_at", null: false
     t.datetime "archived_at"
     t.datetime "deleted_at"
+    t.text "location"
+    t.text "warranty_period"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
   end
 

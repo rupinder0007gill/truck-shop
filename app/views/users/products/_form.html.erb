@@ -39,13 +39,21 @@
             </div>
           </div>
           <div class="row gx-2">
-            <div class="col-6 mb-3">
+            <div class="col-3 mb-3">
               <%= form.label :available_stocks, 'Available Stocks:', class: 'form-label' %>
               <%= form.text_field :available_stocks, class: 'form-control', disabled: true %>
             </div>
-            <div class="col-6 mb-3">
+            <div class="col-3 mb-3">
               <%= form.label :add_stock, 'Add Stock:', class: 'form-label' %>
               <%= form.number_field :add_stock, class: 'form-control' %>
+            </div>
+            <div class="col-3 mb-3">
+              <%= form.label :location, 'Location:', class: 'form-label' %>
+              <%= form.text_field :location, class: 'form-control' %>
+            </div>
+            <div class="col-3 mb-3">
+              <%= form.label :warranty_period, 'Warranty Period:', class: 'form-label' %>
+              <%= form.text_field :warranty_period, class: 'form-control' %>
             </div>
           </div>
           <div class="row gx-2">

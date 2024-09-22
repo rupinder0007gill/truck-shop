@@ -8,6 +8,15 @@
       </div>
     </div>
   </div>
+  <% if vendor.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% vendor.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row g-0">
     <div class="col-12">
       <div class="card mb-3">

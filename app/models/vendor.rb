@@ -14,4 +14,5 @@
 #  index_vendors_on_deleted_at  (deleted_at)
 #
 class Vendor < ApplicationRecord
+  validates :name, presence: true
 end

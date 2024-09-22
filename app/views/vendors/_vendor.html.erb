@@ -1,0 +1,14 @@
+<tr class="btn-reveal-trigger" id="<%= dom_id vendor %>">
+  <td class="name align-middle text-center white-space-nowrap py-2">
+    <%= link_to edit_vendor_path(vendor), data: { turbo_frame: "_top" } do %>
+      <div class="d-flex d-flex align-items-center">
+        <div class="flex-1">
+          <h5 class="mb-0 fs-10"><%= vendor.name %></h5>
+        </div>
+      </div>
+    <%- end %>
+  </td>
+  <td class="align-middle text-center white-space-nowrap py-2 text-end">
+    <%= link_to "Delete", vendor_path(vendor), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" }, class: 'btn btn-danger' %>
+  </td>
+</tr>

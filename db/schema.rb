@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_18_061940) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_19_075600) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -255,6 +255,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_061940) do
     t.datetime "deleted_at"
     t.index ["customer_id"], name: "index_vehicles_on_customer_id"
     t.index ["deleted_at"], name: "index_vehicles_on_deleted_at"
+  end
+
+  create_table "vendors", force: :cascade do |t|
+    t.text "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "archived_at"
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_vendors_on_deleted_at"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

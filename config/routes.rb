@@ -39,6 +39,15 @@
 #                                          POST   /users/invitation(.:format)                                                                       devise/invitations#create
 #                       rails_health_check GET    /up(.:format)                                                                                     rails/health#show
 #                                     root GET    /                                                                                                 home#index
+#                      deliver_users_order GET    /users/orders/:id/deliver(.:format)                                                               users/orders#deliver
+#                             users_orders GET    /users/orders(.:format)                                                                           users/orders#index
+#                                          POST   /users/orders(.:format)                                                                           users/orders#create
+#                          new_users_order GET    /users/orders/new(.:format)                                                                       users/orders#new
+#                         edit_users_order GET    /users/orders/:id/edit(.:format)                                                                  users/orders#edit
+#                              users_order GET    /users/orders/:id(.:format)                                                                       users/orders#show
+#                                          PATCH  /users/orders/:id(.:format)                                                                       users/orders#update
+#                                          PUT    /users/orders/:id(.:format)                                                                       users/orders#update
+#                                          DELETE /users/orders/:id(.:format)                                                                       users/orders#destroy
 #             parts_approved_users_invoice GET    /users/invoices/:id/parts_approved(.:format)                                                      users/invoices#parts_approved
 #             parts_rejected_users_invoice PATCH  /users/invoices/:id/parts_rejected(.:format)                                                      users/invoices#parts_rejected
 #                  completed_users_invoice GET    /users/invoices/:id/completed(.:format)                                                           users/invoices#completed
@@ -162,6 +171,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :users do
+    resources :orders do
+      member do
+        get :deliver
+      end
+    end
     resources :invoices do
       member do
         get :parts_approved

@@ -8,8 +8,11 @@ class Ability
     return unless user.present? && user.has_any_role?
 
     case user.role.name
-    when 'Admin' || 'Manager'
+    when 'Admin'
       # Admin Manage All Entities
+      can :manage, :all
+    when 'Manager'
+      # Manager Manage All Entities
       can :manage, :all
     when 'Technician'
       can %i[read create update], Vehicle
@@ -20,6 +23,8 @@ class Ability
       can :manage, Invoice
     when 'Product Manager'
       can :manage, Product
+      can :manage, Order
+      can :manage, OrderProduct
       can %i[read search_customer search_vehicle parts_approved parts_rejected], Invoice
     else
       # Define default permissions for other users

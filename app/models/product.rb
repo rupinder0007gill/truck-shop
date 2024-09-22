@@ -64,7 +64,10 @@ class Product < ApplicationRecord
   # has_many :order_products, dependent: :destroy
   # has_many :orders, through: :order_products
   # belongs_to :user
-  belongs_to :vendor
+  # Assuming Product can be linked to multiple InvoiceItems
+  has_many :invoice_items
+  has_many :core_invoice_items, class_name: 'InvoiceItem', foreign_key: 'core_product_id'
+  belongs_to :vendor, optional: true
 
   ##############################################################################
   ### Validations ##############################################################

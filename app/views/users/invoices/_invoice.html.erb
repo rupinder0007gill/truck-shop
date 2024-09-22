@@ -158,7 +158,16 @@
           <%- invoice.invoice_items.each do |invoice_item| %>
             <tr>
               <td class="align-middle">
-                <h6 class="mb-0 text-nowrap"><%= invoice_item.product.name rescue invoice_item.description %></h6>
+                <h6 class="mb-0 text-nowrap">
+                  <%= if invoice_item.product.present?
+                        invoice_item.product.name
+                      elsif invoice_item.core_product.present?
+                        "Core price of #{invoice_item.core_product.name}"
+                      else
+                        invoice_item.description
+                      end
+                  %>
+                </h6>
               </td>
               <td class="align-middle text-center"><%= invoice_item.qty %></td>
               <td class="align-middle text-end"><%= humanized_money_with_symbol invoice_item.price %></td>

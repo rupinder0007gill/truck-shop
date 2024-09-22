@@ -16,7 +16,6 @@
 #  index_vendors_on_deleted_at  (deleted_at)
 #
 class Vendor < ApplicationRecord
-
   ##############################################################################
   ### Associations #############################################################
   has_many :products

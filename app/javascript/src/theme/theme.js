@@ -4683,24 +4683,6 @@ var searchInit = function searchInit() {
   });
 };
 
-/*-----------------------------------------------
-|   Select2
------------------------------------------------*/
-
-var select2Init = function select2Init() {
-  if (window.jQuery) {
-    var $ = window.jQuery;
-    var select2 = $('.selectpicker');
-    select2.length && select2.each(function (index, value) {
-      var $this = $(value);
-      var options = $.extend({
-        theme: 'bootstrap-5'
-      }, $this.data('options'));
-      $this.select2(options);
-    });
-  }
-};
-
 /* -------------------------------------------------------------------------- */
 /*                                 SortableJS                                 */
 /* -------------------------------------------------------------------------- */
@@ -13893,7 +13875,6 @@ document.addEventListener('turbo:load', function () {
 // docReady(trendingKeywordsInit);
 // docReady(D3PackedBubbleInit);
 // docReady(dataTablesInit);
-// docReady(select2Init);
 // docReady(hideOnCollapseInit);
 // docReady(unresolvedTicketsTabInit);
 // docReady(inputmaskInit);

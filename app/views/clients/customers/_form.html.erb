@@ -1,4 +1,13 @@
 <%= form_with model: customer, url: url, data: { turbo_frame: 'customer' } do |form| %>
+  <% if customer.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% customer.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row g-0">
     <div class="col-lg-12 pe-lg-2">
       <div class="card mb-3">

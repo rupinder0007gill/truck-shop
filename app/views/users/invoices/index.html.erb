@@ -1,21 +1,27 @@
 <div class="card mb-3">
-  <div class="card-header">
-    <div class="row flex-between-center">
-      <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
-        <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Work Orders</h5>
-      </div>
-      <div class="col-8 col-sm-auto ms-auto text-end ps-0">
-        <div id="orders-actions">
-          <%= link_to new_users_invoice_path, class: 'btn btn-falcon-default btn-sm' do %>
-            <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
-            <span class="d-none d-sm-inline-block ms-1">New</span>
-          <%-end%>
-          <button class="btn btn-falcon-default btn-sm mx-2" type="button"><span class="fas fa-filter" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Filter</span></button>
-          <button class="btn btn-falcon-default btn-sm" type="button"><span class="fas fa-external-link-alt" data-fa-transform="shrink-3 down-2"></span><span class="d-none d-sm-inline-block ms-1">Export</span></button>
+  <%= form_with url: @search_url, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "search_results", turbo_action: "advance", 'bs-toggle': "search",  'bs-display': "static" }, class: "position-relative" do |form| %>
+    <div class="card-header">
+      <div class="row flex-between-center">
+        <div class="col-4 col-sm-auto d-flex align-items-center pe-0">
+          <h5 class="fs-9 mb-0 text-nowrap py-2 py-xl-0">Work Orders</h5>
+        </div>
+        <div class="col-8 col-sm-auto ms-auto text-end ps-0">
+          <div id="orders-actions">
+            <%= form.text_field :invoice_id, placeholder: 'Enter invoice number', value: params[:invoice_id], class: "form-control-sm d-inline-block w-auto border border-muted mb-2", data: { action: "input->search-form#submit" } %>
+            <%= form.select :status, options_for_select(Invoice.statuses.map {|k,v| [k.humanize,k]}, params[:status]), { include_blank: 'Select the status' }, class: 'form-select-sm d-inline-block w-auto border border-muted mb-2', data: { action: "change->search-form#submit" } %>
+            <%= form.collection_select :customer_id, Customer.all, :id, :name, { include_blank: 'Select the customer', selected: params[:customer_id] }, { class: "form-select-sm d-inline-block w-auto border border-muted mb-2", data: { action: "change->search-form#submit", options: '{"removeItemButton":true, "placeholder":true}' } } %>
+            <%= form.date_field :start_date, placeholder: 'Start Date', value: params[:start_date], class: "form-control-sm d-inline-block w-auto border border-muted mb-2 datetimepicker date-range-picker", data: { action: "input->search-form#submit" } %>
+            <%= form.date_field :end_date, placeholder: 'End Date', value: params[:start_date], class: "form-control-sm d-inline-block w-auto border border-muted mb-2 datetimepicker date-range-picker", data: { action: "input->search-form#submit" } %>
+
+            <%= link_to new_users_invoice_path, class: 'btn btn-success btn-sm' do %>
+              <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+              <span class="d-none d-sm-inline-block ms-1">New</span>
+            <%-end%>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <%- end %>
   <div class="card-body p-0">
     <div class="table-responsive scrollbar">
       <%= turbo_frame_tag 'search_results' do %>
@@ -33,7 +39,7 @@
               <th class="no-sort"></th>
             </tr>
           </thead>
-          <%= turbo_frame_tag "users_list", src: users_invoices_url(format: :turbo_stream, page: params[:page], query: params[:query], sort: params[:sort], direction: params[:direction]), loading: "lazy", autoscroll: "true" do %>
+          <%= turbo_frame_tag "invoices_list", src: users_invoices_url(format: :turbo_stream, page: params[:page], query: params[:query], sort: params[:sort], direction: params[:direction], invoice_id: params[:invoice_id], status: params[:status], customer_id: params[:customer_id], start_date: params[:start_date], end_date: params[:end_date]), loading: "lazy", autoscroll: "true" do %>
             <tbody class="list" id="invoices_listingg">
               <!-- Adjust this to your Pagy default item count -->
             </tbody>

@@ -9,7 +9,7 @@
         <button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button"><span class="fas fa-print me-1"> </span>Print</button>
         <%- if can?(:update, Invoice) %>
           <a href="<%= edit_users_invoice_path(invoice) %>" class="btn btn-falcon-primary btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-edit"></span> Edit </a>
-          <%- end %>
+        <%- end %>
         <%- if can?(:parts_approved, Invoice) && (invoice.pending? || invoice.parts_rejected?) %>
           <a href="<%= parts_approved_users_invoice_path(invoice) %>" class="btn btn-falcon-success btn-sm mb-2 mb-sm-0" type="button"><span class="fa-solid fa-check"></span></span>Approve Parts</a>
         <%- end %>

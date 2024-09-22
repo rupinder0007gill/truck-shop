@@ -1,6 +1,6 @@
 <tr class="btn-reveal-trigger" id="invoices_<%=invoice.id%>">
   <td class="order py-2 align-middle white-space-nowrap">
-    <strong><%= link_to invoice.id, users_invoice_path(invoice), data: { turbo_frame: "_top" } %></strong> for <strong><%= invoice.customer.name rescue '-' %></strong><br />
+    <strong><%= link_to invoice.invoice_number, users_invoice_path(invoice), data: { turbo_frame: "_top" } %></strong> for <strong><%= invoice.customer.name rescue '-' %></strong><br />
     <%- if invoice.customer.present? %>
       <a href="mailto:<%= invoice.customer.email %>"><%= invoice.customer.email %></a>
     <%- end %>

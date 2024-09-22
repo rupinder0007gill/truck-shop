@@ -14,6 +14,11 @@ class Users::InvoicesController < ApplicationController
                 else
                   Invoice.includes(%i[user customer]).all
                 end
+    @invoices = @invoices.where(id: params[:invoice_id]) if params[:invoice_id].present?
+    @invoices = @invoices.where(status: params[:status]) if params[:status].present?
+    @invoices = @invoices.where(customer_id: params[:customer_id]) if params[:customer_id].present?
+    @invoices = @invoices.where('created_at >= ?', Date.parse(params[:start_date]).beginning_of_day) if params[:start_date].present?
+    @invoices = @invoices.where('created_at <= ?', Date.parse(params[:end_date]).end_of_day) if params[:end_date].present?
     @pagy, @invoices = pagy(@invoices.order("#{sort_column} #{sort_direction}"), items: 10)
     respond_to do |format|
       format.html

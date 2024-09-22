@@ -8,6 +8,7 @@
 #  archived_at             :datetime
 #  deleted_at              :datetime
 #  discount_cents          :bigint
+#  invoice_number          :string
 #  licence_number          :string
 #  make_model              :string
 #  odometer                :string
@@ -32,10 +33,11 @@
 #
 # Indexes
 #
-#  index_invoices_on_customer_id  (customer_id)
-#  index_invoices_on_deleted_at   (deleted_at)
-#  index_invoices_on_user_id      (user_id)
-#  index_invoices_on_vehicle_id   (vehicle_id)
+#  index_invoices_on_customer_id     (customer_id)
+#  index_invoices_on_deleted_at      (deleted_at)
+#  index_invoices_on_invoice_number  (invoice_number) UNIQUE
+#  index_invoices_on_user_id         (user_id)
+#  index_invoices_on_vehicle_id      (vehicle_id)
 #
 # Foreign Keys
 #
@@ -63,6 +65,7 @@ class Invoice < ApplicationRecord
   ### Callbacks ################################################################
   before_save :invoice_status_change_notification
   before_create :set_service_start_time
+  before_create :generate_invoice_number
   after_create :set_invoice_id, :create_notifications, :set_customer_id_to_vehicles
   after_update :set_invoice_id
 
@@ -199,5 +202,23 @@ class Invoice < ApplicationRecord
     return unless vehicle.present? && vehicle.customer_id.nil?
 
     vehicle.update(customer_id:)
+  end
+
+  def generate_invoice_number
+    last_invoice = Invoice.order(:created_at).last
+    if last_invoice
+      # Extract the numeric part and increment it
+      last_number = last_invoice.invoice_number[/\d+/].to_i
+      new_number = last_number + 1
+    else
+      new_number = 1 # Start with 1 if no previous invoice exists
+    end
+
+    # Format the new invoice number
+    self.invoice_number = format_invoice_number(new_number)
+  end
+
+  def format_invoice_number(number)
+    "BRG#{number.to_s.rjust(4, '0')}" # Pad with zeros to ensure 4 digits
   end
 end

@@ -8,6 +8,7 @@
 #  archived_at             :datetime
 #  deleted_at              :datetime
 #  discount_cents          :bigint
+#  invoice_number          :string
 #  licence_number          :string
 #  make_model              :string
 #  odometer                :string
@@ -32,10 +33,11 @@
 #
 # Indexes
 #
-#  index_invoices_on_customer_id  (customer_id)
-#  index_invoices_on_deleted_at   (deleted_at)
-#  index_invoices_on_user_id      (user_id)
-#  index_invoices_on_vehicle_id   (vehicle_id)
+#  index_invoices_on_customer_id     (customer_id)
+#  index_invoices_on_deleted_at      (deleted_at)
+#  index_invoices_on_invoice_number  (invoice_number) UNIQUE
+#  index_invoices_on_user_id         (user_id)
+#  index_invoices_on_vehicle_id      (vehicle_id)
 #
 # Foreign Keys
 #

@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="bg-holder d-none d-md-block bg-card" style="background-image:url(<%= image_path('theme/corner-6.png') %>);">
+        </div>
+        <div class="row g3 align-items-center">
+          <div class="col">
+            <h5 class="mb-0 mt-1">All Vendors</h5>
+          </div>
+          <div class="col position-sm-relative position-absolute ">
+            <div class="row g-0 g-md-3 justify-content-end">
+              <div class="col-auto">
+                <div id="table-customers-replace-element">
+                  <%= link_to new_vendor_path, class: 'btn btn-falcon-default btn-sm' do %>
+                    <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+                    <span class="d-none d-sm-inline-block ms-1">New</span>
+                  <%- end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3 align-items-center  pt-0 pt-md-3">
+          <div class="col">
+            <%= form_with url: vendors_path, method: :get, data: { controller: "search-form", search_form_target: "form", turbo_frame: "search_results", turbo_action: "advance", 'bs-toggle': "search",  'bs-display': "static" }, class: "position-relative" do %>
+              <%= text_field_tag :query, params[:query], class: "form-control form-control-sm search-input lh-1 rounded-2 ps-4", placeholder: "Search...", data: { action: "input->search-form#search" } %>
+              <div class="position-absolute top-50 start-0 translate-middle-y ms-2"><span class="fas fa-search text-400 fs-10"></span></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive scrollbar">
+      <%= turbo_frame_tag 'search_results' do %>
+        <table class="table table-sm table-striped fs-10 mb-0 overflow-hidden">
+          <thead class="bg-200">
+            <tr>
+              <%= sortable_table_header 'Vendor', :name, :vendors_path %>
+              <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center">Action</th>
+            </tr>
+          </thead>
+          <%= turbo_frame_tag "vendors_list", src: vendors_path(format: :turbo_stream, page: params[:page], query: params[:query], sort: params[:sort], direction: params[:direction]), loading: "lazy", autoscroll: "true" do %>
+            <tbody class="list" id="vendors_listing">
+              <!-- Adjust this to your Pagy default item count -->
+            </tbody>
+          <% end %>
+        </table>
+        <%= turbo_frame_tag "vendors_pagination" %>
+      <%- end %>
+    </div>
+  </div>
+</div>

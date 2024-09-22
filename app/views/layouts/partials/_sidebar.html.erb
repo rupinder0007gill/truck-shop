@@ -72,6 +72,27 @@
             </ul>
           <%- end %>
           <!-- parent pages-->
+            <a class="nav-link dropdown-indicator" href="#vendors" role="button" data-bs-toggle="collapse" aria-expanded="<%= controller_name == "vendors" ? true : false %>" aria-controls="vendors">
+              <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-store"></span></span><span class="nav-link-text ps-1">Vendors</span>
+              </div>
+            </a>
+            <ul class="nav collapse <%= 'show' if controller_name == "vendors" %>" id="vendors">
+              <li class="nav-item">
+                <a class="nav-link <%= 'active' if controller_name == "vendors" && action_name == "index" %>" href="<%= vendors_path %>">
+                  <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Vendors List</span>
+                  </div>
+                </a>
+                <!-- more inner pages-->
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <%= 'active' if controller_name == "products" && action_name == "new" %>" href="<%= new_vendor_path %>">
+                  <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Add Vendor</span>
+                  </div>
+                </a>
+                <!-- more inner pages-->
+              </li>
+            </ul>
+          <!-- parent pages-->
           <%- if can?(:read, Notification) %>
             <a class="nav-link <%= 'active' if controller_name == "notifications" %>" href="<%= users_notifications_path %>" role="button">
               <div class="d-flex align-items-center">

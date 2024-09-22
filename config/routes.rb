@@ -95,6 +95,14 @@
 #                                          PATCH  /clients/customers/:id(.:format)                                                                  clients/customers#update
 #                                          PUT    /clients/customers/:id(.:format)                                                                  clients/customers#update
 #                                          DELETE /clients/customers/:id(.:format)                                                                  clients/customers#destroy
+#                                  vendors GET    /vendors(.:format)                                                                                vendors#index
+#                                          POST   /vendors(.:format)                                                                                vendors#create
+#                               new_vendor GET    /vendors/new(.:format)                                                                            vendors#new
+#                              edit_vendor GET    /vendors/:id/edit(.:format)                                                                       vendors#edit
+#                                   vendor GET    /vendors/:id(.:format)                                                                            vendors#show
+#                                          PATCH  /vendors/:id(.:format)                                                                            vendors#update
+#                                          PUT    /vendors/:id(.:format)                                                                            vendors#update
+#                                          DELETE /vendors/:id(.:format)                                                                            vendors#destroy
 #                     analytics_home_index GET    /home/analytics(.:format)                                                                         home#analytics
 #                           crm_home_index GET    /home/crm(.:format)                                                                               home#crm
 #                     ecommerce_home_index GET    /home/ecommerce(.:format)                                                                         home#ecommerce
@@ -187,7 +195,7 @@ Rails.application.routes.draw do
   namespace :clients do
     resources :customers
   end
-
+  resources :vendors
   resources :home do
     collection do
       get :analytics

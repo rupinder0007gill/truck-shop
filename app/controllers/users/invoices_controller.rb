@@ -170,6 +170,6 @@ class Users::InvoicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def invoice_params
-    params.require(:invoice).permit(:status, :price, :tax, :discount, :total_price, :transaction_id, :payment_method, :customer_id, :customer_name, :customer_phone, :customer_email, :vehicle_id, :odometer, invoice_items_attributes: %i[id is_core_product invoice_type product_id description qty price final_price _destroy])
+    params.require(:invoice).permit(:status, :price, :tax, :discount, :total_price, :transaction_id, :payment_method, :customer_id, :customer_name, :customer_phone, :customer_email, :vehicle_id, :odometer, invoice_items_attributes: %i[id is_core_product invoice_type product_id core_product_id description qty price final_price _destroy])
   end
 end

@@ -15,6 +15,7 @@
 #  qty               :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  core_product_id   :bigint
 #  invoice_id        :bigint
 #  product_id        :bigint
 #
@@ -47,7 +48,10 @@ class InvoiceItem < ApplicationRecord
   ##############################################################################
   ### Associations #############################################################
   belongs_to :invoice
-  belongs_to :product, optional: true
+  # Normal product relationship
+  belongs_to :product, class_name: 'Product', optional: true
+  # Core product relationship
+  belongs_to :core_product, class_name: 'Product', optional: true
 
   ##############################################################################
   ### Validations ##############################################################

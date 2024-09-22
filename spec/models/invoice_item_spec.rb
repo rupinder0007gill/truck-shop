@@ -15,6 +15,7 @@
 #  qty               :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  core_product_id   :bigint
 #  invoice_id        :bigint
 #  product_id        :bigint
 #

@@ -1,7 +1,7 @@
 import NestedForm from '@stimulus-components/rails-nested-form'
 
 export default class extends NestedForm {
-  static targets = ['selectProduct', 'productQuantity', 'productPrice', 'productFinalPrice', 'orderPrice', 'orderTax', 'orderDiscount', 'orderTotalPrice', 'productDestroy'];
+  static targets = ['selectProduct', 'productQuantity', 'productPrice', 'productFinalPrice', 'orderPrice', 'orderTax', 'orderDiscount', 'orderTotalPrice', 'taxPercentage', 'productDestroy'];
 
   connect() {
     super.connect()
@@ -63,6 +63,9 @@ export default class extends NestedForm {
         }
       }
     })
+
+    var tax_amount = (this.taxPercentageTarget.value * parseFloat(orderTotal))/100;
+    this.orderTaxTarget.value = parseFloat(tax_amount);
 
     this.orderPriceTarget.value = parseFloat(orderTotal);
     this.orderTotalPriceTarget.value = parseFloat(orderTotal) + parseFloat(this.orderTaxTarget.value) - parseFloat(this.orderDiscountTarget.value);

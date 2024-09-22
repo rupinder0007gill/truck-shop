@@ -10,6 +10,7 @@
 #  base_price_cents    :bigint
 #  core_price_cents    :bigint
 #  deleted_at          :datetime
+#  description         :text
 #  location            :text
 #  name                :string
 #  product_number      :string
@@ -20,10 +21,16 @@
 #  warranty_period     :text
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  vendor_id           :bigint
 #
 # Indexes
 #
 #  index_products_on_deleted_at  (deleted_at)
+#  index_products_on_vendor_id   (vendor_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (vendor_id => vendors.id)
 #
 class Product < ApplicationRecord
   include PgSearch::Model
@@ -57,6 +64,7 @@ class Product < ApplicationRecord
   # has_many :order_products, dependent: :destroy
   # has_many :orders, through: :order_products
   # belongs_to :user
+  belongs_to :vendor
 
   ##############################################################################
   ### Validations ##############################################################

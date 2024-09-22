@@ -55,6 +55,14 @@
               <%= form.label :warranty_period, 'Warranty Period:', class: 'form-label' %>
               <%= form.text_field :warranty_period, class: 'form-control' %>
             </div>
+            <div class="col-6 mb-3">
+              <%= form.label :vendor_id, 'Vendor', class: 'form-label' %>
+              <%= form.select :vendor_id, Vendor.all.collect { |vendor| [ "#{vendor.name}", vendor.id ] }, {}, class: 'form-select' %>
+            </div>
+            <div class="col-6 mb-3">
+              <%= form.label :description, 'Description/Memo', class: 'form-label' %>
+              <%= form.text_field :description, class: 'form-control' %>
+            </div>
           </div>
           <div class="row gx-2">
             <div class="col-4 mb-3">

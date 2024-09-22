@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: vendors
@@ -15,6 +17,6 @@
 #
 FactoryBot.define do
   factory :vendor do
-    name { "MyText" }
+    name { 'MyText' }
   end
 end

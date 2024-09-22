@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VendorsController < ApplicationController
   before_action :set_vendor, only: %i[show edit update destroy]
 
@@ -5,10 +7,10 @@ class VendorsController < ApplicationController
     sort_column = params[:sort] || 'created_at'
     sort_direction = params[:direction].presence_in(%w[asc desc]) || 'desc'
     @vendors = if params[:query].present?
-                  Vendor.search_for(params[:query])
-                else
-                  Vendor.all
-                end
+                 Vendor.search_for(params[:query])
+               else
+                 Vendor.all
+               end
     @pagy, @vendors = pagy(@vendors.order("#{sort_column} #{sort_direction}"), items: 10)
     respond_to do |format|
       format.html
@@ -55,8 +57,8 @@ class VendorsController < ApplicationController
           turbo_stream.update('flash', partial: 'layouts/partials/flash')
         ]
       end
-      end
     end
+  end
 
   private
 

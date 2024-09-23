@@ -32,6 +32,16 @@
           <h6 class="mb-2"><%= order.transaction_id %></h6>
         </div>
         <div class="col-sm-12 col-md-6 mb-3">
+          <h5 class="mb-3 fs-9">Tracking URL</h5>
+          <h6 class="mb-2"><%= link_to order.trackingurl, order.trackingurl, target: "_blank" %></h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 mb-3">
+          <h5 class="mb-3 fs-9">Estimated Date of Arrival</h5>
+          <h6 class="mb-2"><%= order.eta.strftime("%m/%d/%y") %></h6>
+        </div>
+        <div class="col-sm-12 col-md-6 mb-3">
           <h5 class="mb-3 fs-9">Payment Method</h5>
           <h6 class="mb-2"><%= order.payment_method.humanize %></h6>
         </div>

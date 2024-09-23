@@ -35,6 +35,16 @@
           <%= form.text_field :transaction_id, class: 'form-control' %>
         </div>
         <div class="col-sm-12 col-md-6 mb-3">
+          <%= form.label :trackingurl, 'Tracking URL:', class: 'form-label' %>
+          <%= form.text_field :trackingurl, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 mb-3">
+          <%= form.label :eta, 'Estimated Date of Arrival:', class: 'form-label' %>
+          <%= form.date_field :eta, class: 'form-control datetimepicker date-range-picker' %>
+        </div>
+        <div class="col-sm-12 col-md-6 mb-3">
           <%= form.label :payment_method, 'Payment Method:', class: 'form-label' %>
           <%= form.select :payment_method, Order.payment_methods.map {|k,v| [k.humanize,k]}, {}, class: 'form-select' %>
         </div>

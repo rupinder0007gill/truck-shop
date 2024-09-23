@@ -65,7 +65,7 @@ class InvoiceItem < ApplicationRecord
   enum invoice_type: {
     product: 0,
     labour: 1,
-    core_product: 3
+    core_product: 2
   }
 
   ##############################################################################

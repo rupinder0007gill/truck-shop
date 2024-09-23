@@ -1,9 +1,19 @@
 <tr class="border-200 nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
   <td class="align-middle">
-    <%= f.select :invoice_type, InvoiceItem.invoice_types.map {|k,v| [k.humanize,k]}, {}, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectType" } } %>
+    <%- invoice_types = if current_user.role.name == 'Technician'
+                          InvoiceItem.invoice_types.reject { |key, _value| key == "core_product" }
+                        else
+                          InvoiceItem.invoice_types
+                        end %>
+    <%= f.select :invoice_type, invoice_types.map {|k,v| [k.humanize,k]}, {}, { class: 'form-select', data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "selectType" } } %>
   </td>
   <td class="align-middle">
-    <%= f.select :product_id, Product.available_stocks.map {|product| [product.name, product.id, 'data-price': product.selling_price, 'data-core-price': product.core_price, 'data-name': product.name]}, { include_blank: true }, { class: "form-select product #{(f.object.invoice_type == 'product' || f.object.new_record?) ? '' : 'd-none'}", data: { action: "change->invoice-nested-form#check_core_price", "invoice-nested-form-target": "selectProduct" } } %>
+    <%- select_action = if current_user.role.name == 'Technician'
+                      'change->invoice-nested-form#change'
+                    else
+                      'change->invoice-nested-form#check_core_price'
+                    end %>
+    <%= f.select :product_id, Product.available_stocks.map {|product| [product.name, product.id, 'data-price': product.selling_price, 'data-core-price': product.core_price, 'data-name': product.name]}, { include_blank: true }, { class: "form-select product #{(f.object.invoice_type == 'product' || f.object.new_record?) ? '' : 'd-none'}", data: { action: select_action, "invoice-nested-form-target": "selectProduct" } } %>
     
     <%= f.select :core_product_id, Product.available_stocks.map {|product| ["Core price of #{product.name}", product.id, 'data-price': product.selling_price, 'data-core-price': product.core_price, 'data-name': product.name]}, { include_blank: true }, { class: "form-select core-product #{(f.object.invoice_type == 'core_product') ? '' : 'd-none'}", data: { action: "change->invoice-nested-form#change", "invoice-nested-form-target": "coreProduct" } } %>
 
